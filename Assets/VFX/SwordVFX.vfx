@@ -12,16 +12,131 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d01270efd3285ea4a9d6c555cb0a8027, type: 3}
   m_Name: VFXUI
   m_EditorClassIdentifier: 
-  groupInfos: []
+  groupInfos:
+  - title: Trails
+    position:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 100
+      height: 100
+    contents:
+    - model: {fileID: 8926484042661614923}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614925}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614936}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614937}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614969}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614970}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614971}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614940}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614962}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614965}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614978}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614980}
+      id: 0
+      isStickyNote: 0
+  - title: Particles
+    position:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 100
+      height: 100
+    contents:
+    - model: {fileID: 8926484042661614641}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614642}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614644}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614711}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614765}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614646}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614749}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614657}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614667}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614676}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614679}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614686}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614687}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614689}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614692}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614697}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614699}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614717}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614739}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614984}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661614989}
+      id: 0
+      isStickyNote: 0
   stickyNoteInfos: []
   systemInfos: []
   categories: []
   uiBounds:
     serializedVersion: 2
-    x: 1578
-    y: -122
-    width: 2005
-    height: 2056
+    x: 1553
+    y: -179
+    width: 2055
+    height: 2139
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -330,8 +445,8 @@ VisualEffectResource:
       PARTICLE_PER_STRIP_COUNT);\r\n\t\tInitStripAttributes(particleIndex, attributes,
       stripData);\r\n\t\t// TODO Change seed to be sure we're deterministic on random
       with strip\r\n#endif\r\n        \r\n        {\n            SetAttribute_E62943F(
-      /*inout */attributes.velocity,  /*inout */attributes.seed, float3(-0.5, 0.75,
-      -0.5), float3(0.5, 1.5, 0.5));\n        }\n        {\n            PositionAABox_0(
+      /*inout */attributes.velocity,  /*inout */attributes.seed, float3(-1, 0.75,
+      -1), float3(1, 1.5, 1));\n        }\n        {\n            PositionAABox_0(
       /*inout */attributes.position,  /*inout */attributes.seed, float3(0, 0, 0),
       float3(0.5, 0.5, 0.5));\n        }\n        {\n            SetAttribute_48A7C215(
       /*inout */attributes.angleX,  /*inout */attributes.angleY,  /*inout */attributes.angleZ, 
@@ -1710,9 +1825,9 @@ VisualEffectResource:
         - m_ExpressionIndex: 27
           m_Value: {x: 0, y: 0, z: 0}
         - m_ExpressionIndex: 28
-          m_Value: {x: 0.5, y: 1.5, z: 0.5}
+          m_Value: {x: 1, y: 1.5, z: 1}
         - m_ExpressionIndex: 29
-          m_Value: {x: -0.5, y: 0.75, z: -0.5}
+          m_Value: {x: -1, y: 0.75, z: -1}
         - m_ExpressionIndex: 33
           m_Value: {x: 2, y: 3, z: 2}
       m_Vector4f:
@@ -5722,7 +5837,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"vector":{"x":-0.5,"y":0.75,"z":-0.5}}'
+      m_SerializableObject: '{"vector":{"x":-1.0,"y":0.75,"z":-1.0}}'
     m_Space: 0
   m_Property:
     name: A
@@ -5904,7 +6019,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"vector":{"x":0.5,"y":1.5,"z":0.5}}'
+      m_SerializableObject: '{"vector":{"x":1.0,"y":1.5,"z":1.0}}'
     m_Space: 0
   m_Property:
     name: B
