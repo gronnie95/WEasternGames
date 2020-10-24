@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.MLAgents;
@@ -398,6 +399,36 @@ public class HummingBirdAgent : Agent
                 if(!flower.HasNectar) UpdateNearestFlower();
             }
         }
+    }
+
+    /// <summary>
+    /// Called when the agent collides when the agent collides with something solid
+    /// </summary>
+    /// <param name="other">The collision info</param>
+    private void OnCollisionEnter(Collision other)
+    {
+        if (trainingMode && other.collider.CompareTag("boundary"))
+        {
+            //Collided with the area boundary, give a negative reward
+            AddReward(-.5f);
+        }
+    }
+    
+    //Called every frame
+    private void Update()
+    {
+        //Draw a line from the beak tip to the nearest flower
+        if (_nearestFlower != null) 
+            Debug.DrawLine(beakTip.position, _nearestFlower.FlowerCentrePosition, Color.green);
         
     }
+    //Called every 0.02 seconds
+    private void FixedUpdate()
+    {
+        //Avoids scenario where nearest flower nectar is stolen by opponent and the nearest flower isn't updated
+        if(_nearestFlower != null && !_nearestFlower.HasNectar)
+            UpdateNearestFlower();
+    }
+    
+    
 }
