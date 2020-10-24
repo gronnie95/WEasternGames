@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - nectar
+  - flower_plant
+  - boundary
   layers:
   - Default
   - TransparentFX

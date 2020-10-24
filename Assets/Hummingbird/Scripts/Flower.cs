@@ -76,7 +76,7 @@ public class Flower : MonoBehaviour
     /// <summary>
     /// Resets the flower colour, nectar amount and colliders
     /// </summary>
-    public void ResetFLower()
+    public void ResetFlower()
     {
         //Refill Nectar
         NectarAmount = 1f;

@@ -39,7 +39,7 @@ public class FlowerArea : MonoBehaviour
             //Reset each flower
             foreach (Flower flower in Flowers)
             {
-                flower.ResetFLower();
+                flower.ResetFlower();
             }
         }
     }
@@ -49,7 +49,7 @@ public class FlowerArea : MonoBehaviour
     /// </summary>
     /// <param name="collider">The nectar collider</param>
     /// <returns>The matching flower</returns>
-    public Flower GetFLowerFromNectar(Collider collider)
+    public Flower GetFlowerFromNectar(Collider collider)
     {
         return _nectarFlowerDictionary[collider];
     }
@@ -82,7 +82,7 @@ public class FlowerArea : MonoBehaviour
         {
             Transform child = parent.GetChild(i);
 
-            if (CompareTag("flower_plant"))
+            if (child.CompareTag("flower_plant"))
             {
                 //Found a flower plant add it to the list
                 _flowerPlants.Add(child.gameObject);
