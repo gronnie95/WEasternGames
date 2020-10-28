@@ -29,6 +29,9 @@ public class PlayerMovement : MonoBehaviour
     private float acclerationTime = 0.2f;
     private float acclerationCoolDown = 0.5f;
 
+    //Remove later once network implementation is finished
+    public bool player2;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -102,41 +105,85 @@ public class PlayerMovement : MonoBehaviour
     public void Movement()
     {
         camDirection = (this.CameraPivot.transform.position - this.playerCamera.transform.position).normalized; // Get direction formula https://answers.unity.com/questions/697830/how-to-calculate-direction-between-2-objects.html
-        //Debug.Log(camDirection.normalized);
-        if (Input.GetKey(KeyCode.W) && isOnKnockBack == false)
-        {
-            Sprint();
-            Vector3 moveVector = new Vector3(camDirection.x * moveSpeed, 0, camDirection.z * moveSpeed);
-            myController.Move(moveVector * Time.deltaTime);
-            //Debug.Log("pressing W");
-            //this.transform.position += new Vector3(camDirection.x * moveSpeed, 0, camDirection.z * moveSpeed);
-        }
 
-        if (Input.GetKey(KeyCode.A) && isOnKnockBack == false)
+        if (player2)
         {
-            Sprint();
-            Vector3 moveVector = -this.playerCamera.transform.right.normalized * moveSpeed;
-            myController.Move(moveVector * Time.deltaTime);
-            //Debug.Log("pressing A");
-            //this.transform.position += -this.playerCamera.transform.right * moveSpeed;
-        }
+            //Debug.Log(camDirection.normalized);
+            if (Input.GetKey(KeyCode.UpArrow) && isOnKnockBack == false)
+            {
+                Sprint();
+                Vector3 moveVector = new Vector3(camDirection.x * moveSpeed, 0, camDirection.z * moveSpeed);
+                myController.Move(moveVector * Time.deltaTime);
+                //Debug.Log("pressing W");
+                //this.transform.position += new Vector3(camDirection.x * moveSpeed, 0, camDirection.z * moveSpeed);
+            }
 
-        if (Input.GetKey(KeyCode.S) && isOnKnockBack == false)
-        {
-            Sprint();
-            Vector3 moveVector = new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
-            myController.Move(moveVector * Time.deltaTime);
-            //Debug.Log("pressing S");
-            //this.transform.position += new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
-        }
+            if (Input.GetKey(KeyCode.LeftArrow) && isOnKnockBack == false)
+            {
+                Sprint();
+                Vector3 moveVector = -this.playerCamera.transform.right.normalized * moveSpeed;
+                myController.Move(moveVector * Time.deltaTime);
+                //Debug.Log("pressing A");
+                //this.transform.position += -this.playerCamera.transform.right * moveSpeed;
+            }
 
-        if (Input.GetKey(KeyCode.D) && isOnKnockBack == false)
-        {
-            Sprint();
-            Vector3 moveVector = this.playerCamera.transform.right.normalized * moveSpeed;
-            myController.Move(moveVector * Time.deltaTime);
-            //Debug.Log("pressing D");
-            //this.transform.position += this.playerCamera.transform.right * moveSpeed;
+            if (Input.GetKey(KeyCode.DownArrow) && isOnKnockBack == false)
+            {
+                Sprint();
+                Vector3 moveVector = new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
+                myController.Move(moveVector * Time.deltaTime);
+                //Debug.Log("pressing S");
+                //this.transform.position += new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
+            }
+
+            if (Input.GetKey(KeyCode.RightArrow) && isOnKnockBack == false)
+            {
+                Sprint();
+                Vector3 moveVector = this.playerCamera.transform.right.normalized * moveSpeed;
+                myController.Move(moveVector * Time.deltaTime);
+                //Debug.Log("pressing D");
+                //this.transform.position += this.playerCamera.transform.right * moveSpeed;
+            }
         }
+        else
+        {
+            //Debug.Log(camDirection.normalized);
+            if (Input.GetKey(KeyCode.W) && isOnKnockBack == false)
+            {
+                Sprint();
+                Vector3 moveVector = new Vector3(camDirection.x * moveSpeed, 0, camDirection.z * moveSpeed);
+                myController.Move(moveVector * Time.deltaTime);
+                //Debug.Log("pressing W");
+                //this.transform.position += new Vector3(camDirection.x * moveSpeed, 0, camDirection.z * moveSpeed);
+            }
+
+            if (Input.GetKey(KeyCode.A) && isOnKnockBack == false)
+            {
+                Sprint();
+                Vector3 moveVector = -this.playerCamera.transform.right.normalized * moveSpeed;
+                myController.Move(moveVector * Time.deltaTime);
+                //Debug.Log("pressing A");
+                //this.transform.position += -this.playerCamera.transform.right * moveSpeed;
+            }
+
+            if (Input.GetKey(KeyCode.S) && isOnKnockBack == false)
+            {
+                Sprint();
+                Vector3 moveVector = new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
+                myController.Move(moveVector * Time.deltaTime);
+                //Debug.Log("pressing S");
+                //this.transform.position += new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
+            }
+
+            if (Input.GetKey(KeyCode.D) && isOnKnockBack == false)
+            {
+                Sprint();
+                Vector3 moveVector = this.playerCamera.transform.right.normalized * moveSpeed;
+                myController.Move(moveVector * Time.deltaTime);
+                //Debug.Log("pressing D");
+                //this.transform.position += this.playerCamera.transform.right * moveSpeed;
+            }
+        }
+        
     }
 }
