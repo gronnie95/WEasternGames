@@ -667,13 +667,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 412b7a8b3aa0d9f448030d55040828d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  danger: {fileID: 724731439}
-  light1: {fileID: 866674949}
-  light2: {fileID: 29786831}
-  light3: {fileID: 588730078}
-  light4: {fileID: 1117184506}
-  heavy1: {fileID: 1452335521}
-  heavy2: {fileID: 1395071675}
 --- !u!143 &630120001
 CharacterController:
   m_ObjectHideFlags: 0
@@ -705,7 +698,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 2075462327}
-  anim: {fileID: 0}
   moveSpeed: 4
   horizontalVelocity: 0
   verticalVelocity: 0
@@ -1199,13 +1191,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 412b7a8b3aa0d9f448030d55040828d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  danger: {fileID: 724731439}
-  light1: {fileID: 866674949}
-  light2: {fileID: 29786831}
-  light3: {fileID: 588730078}
-  light4: {fileID: 1117184506}
-  heavy1: {fileID: 1452335521}
-  heavy2: {fileID: 1395071675}
 --- !u!143 &1072543737
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1237,7 +1222,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 178491980}
-  anim: {fileID: 0}
   moveSpeed: 4
   horizontalVelocity: 0
   verticalVelocity: 0
@@ -1476,7 +1460,7 @@ Transform:
   m_Children:
   - {fileID: 1775826183}
   m_Father: {fileID: 1837587355}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1395071674
 GameObject:
@@ -1980,13 +1964,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 412b7a8b3aa0d9f448030d55040828d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  danger: {fileID: 0}
-  light1: {fileID: 0}
-  light2: {fileID: 0}
-  light3: {fileID: 0}
-  light4: {fileID: 0}
-  heavy1: {fileID: 0}
-  heavy2: {fileID: 0}
 --- !u!143 &1837587358
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2018,19 +1995,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 1775826179}
-  anim: {fileID: 1837587360}
   moveSpeed: 4
   horizontalVelocity: 0
   verticalVelocity: 0
   myController: {fileID: 1837587358}
   isOnKnockBack: 0
   player2: 0
---- !u!95 &1837587360 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 044c326a2424d984e8e45eb9604c5393,
-    type: 3}
-  m_PrefabInstance: {fileID: 1990790944}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1965628236
 GameObject:
   m_ObjectHideFlags: 0
@@ -2132,6 +2102,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 41134854}
     m_Modifications:
+    - target: {fileID: -8955316372418814459, guid: 044c326a2424d984e8e45eb9604c5393,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 044c326a2424d984e8e45eb9604c5393,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2192,6 +2167,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ybot
       objectReference: {fileID: 0}
+    - target: {fileID: 2484128538761520324, guid: 044c326a2424d984e8e45eb9604c5393,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465940246521907071, guid: 044c326a2424d984e8e45eb9604c5393,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 044c326a2424d984e8e45eb9604c5393,
         type: 3}
       propertyPath: m_Controller
@@ -2200,14 +2185,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: 044c326a2424d984e8e45eb9604c5393,
         type: 3}
       propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
-        'mixamorig:LeftHandThumb2'\n\tTransform 'mixamorig:LeftHandIndex1'\n\tTransform
-        'mixamorig:LeftHandPinky2'\n\tTransform 'mixamorig:RightHandRing2'\n\tTransform
-        'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:LeftHandThumb3'\n\tTransform
-        'mixamorig:RightArm'\n\tand more ...\n\tFrom animation clip 'Idle'\n\tFrom
-        animation clip 'Walk With Briefcase'"
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 044c326a2424d984e8e45eb9604c5393, type: 3}

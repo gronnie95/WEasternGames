@@ -11,9 +11,9 @@ public class PlayerMovement : MonoBehaviour
     //Animator Values
     private int _zVelHash;
     private int _xVelHash;
-    private float _zVel;
-    private float _xVel;
-    
+    private float _zVel = 0f;
+    private float _xVel = 0f;
+
     //Move Setting
     public float moveSpeed = 4f;
     public float horizontalVelocity;
@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
         myController = GetComponent<CharacterController>();
 
         anim = GetComponent<Animator>();
-        
+
         _zVelHash = Animator.StringToHash("velZ");
         _xVelHash = Animator.StringToHash("velX");
     }
@@ -54,11 +54,17 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        bool forwardPressed = Input.GetKey(KeyCode.W);
+        bool rightPressed = Input.GetKey(KeyCode.D);
+        bool leftPressed = Input.GetKey(KeyCode.A);
+        bool backPressed = Input.GetKey(KeyCode.S);
+        bool runPressed = Input.GetKey(KeyCode.LeftShift);
+
+        Movement(forwardPressed, rightPressed, leftPressed, backPressed, runPressed);
         Jump();
-        
-        anim.SetFloat(_xVelHash, 1f);
-        anim.SetFloat(_zVelHash, 1f);
+
+        anim.SetFloat(_xVelHash, _xVel);
+        anim.SetFloat(_zVelHash, _zVel);
     }
 
     private void Sprint()
@@ -119,33 +125,35 @@ public class PlayerMovement : MonoBehaviour
         myController.Move(jumpVector * Time.deltaTime);
     }
 
-    public void Movement()
+    public void Movement(bool forwardPressed, bool rightPressed, bool leftPressed, bool backPressed, bool runPressed)
     {
         camDirection =
             (this.CameraPivot.transform.position - this.playerCamera.transform.position)
             .normalized; // Get direction formula https://answers.unity.com/questions/697830/how-to-calculate-direction-between-2-objects.html
         //Debug.Log(camDirection.normalized);
-        if (Input.GetKey(KeyCode.W) && isOnKnockBack == false)
+        if (forwardPressed && isOnKnockBack == false)
         {
             anim.SetBool("walking", true);
             Sprint();
             Vector3 moveVector = new Vector3(camDirection.x * moveSpeed, 0, camDirection.z * moveSpeed);
             myController.Move(moveVector * Time.deltaTime);
+            _zVel = 1;
             //Debug.Log("pressing W");
             //this.transform.position += new Vector3(camDirection.x * moveSpeed, 0, camDirection.z * moveSpeed);
         }
 
-        if (Input.GetKey(KeyCode.A) && isOnKnockBack == false)
+        if (rightPressed && isOnKnockBack == false)
         {
             anim.SetBool("walking", true);
             Sprint();
             Vector3 moveVector = -this.playerCamera.transform.right.normalized * moveSpeed;
             myController.Move(moveVector * Time.deltaTime);
+            _xVel = -1;
             //Debug.Log("pressing A");
             //this.transform.position += -this.playerCamera.transform.right * moveSpeed;
         }
 
-        if (Input.GetKey(KeyCode.S) && isOnKnockBack == false)
+        if (backPressed && isOnKnockBack == false)
         {
             anim.SetBool("walking", true);
             Sprint();
@@ -155,16 +163,25 @@ public class PlayerMovement : MonoBehaviour
             //this.transform.position += new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
         }
 
-        if (Input.GetKey(KeyCode.D) && isOnKnockBack == false)
+        if (leftPressed && isOnKnockBack == false)
         {
             anim.SetBool("walking", true);
             Sprint();
             Vector3 moveVector = this.playerCamera.transform.right.normalized * moveSpeed;
             myController.Move(moveVector * Time.deltaTime);
+            _xVel = 1;
             //Debug.Log("pressing D");
             //this.transform.position += this.playerCamera.transform.right * moveSpeed;
         }
 
-        
+        if (!leftPressed || !rightPressed)
+        {
+            _xVel = 0.0f;
+        }
+
+        if (!forwardPressed)
+        {
+            _zVel = 0.0f;
+        }
     }
 }

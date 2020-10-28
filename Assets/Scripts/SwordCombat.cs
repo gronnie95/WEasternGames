@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SwordCombat : MonoBehaviour
 {
+    private Animator _anim;
+    /*
     public AudioSource danger;
     public AudioSource light1;
     public AudioSource light2;
@@ -11,6 +13,7 @@ public class SwordCombat : MonoBehaviour
     public AudioSource light4;
     public AudioSource heavy1;
     public AudioSource heavy2;
+    */
     private float EnemyDistance;
     public static bool isEnemyAttack = false;
     bool isPlayerBlock = false;
@@ -31,6 +34,7 @@ public class SwordCombat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _anim = GetComponent<Animator>();
         player = GameObject.Find("Player");
         capsule = GameObject.Find("Capsule");
         cameraPivot = GameObject.Find("CameraPivot");
@@ -41,13 +45,13 @@ public class SwordCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DetectAttack();
+        //DetectAttack();
         Attack();
-        KnockBackPlayer();
+        //KnockBackPlayer();
         //Debug.Log(enemyAttackTimer);
     }
 
-    void DetectAttack()
+    /*void DetectAttack()
     {
         EnemyDistance = Vector3.Distance(player.transform.position, capsule.transform.position);
         //Debug.Log(EnemyDistance);
@@ -66,11 +70,15 @@ public class SwordCombat : MonoBehaviour
             isPlayerBlock = false;
             isEnemyAttack = false;
         } 
-    }
+    }*/
 
     void Attack()
     {
-
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            _anim.SetTrigger("Attacking");
+        }
+        /*
         #region Play Sound
         if(!light1.isPlaying && !light2.isPlaying && !light3.isPlaying && !light4.isPlaying && !heavy1.isPlaying && !heavy2.isPlaying)
         {
@@ -124,9 +132,11 @@ public class SwordCombat : MonoBehaviour
         }
 
         #endregion
+        */
     }
 
-    void KnockBackPlayer()
+    
+    /*void KnockBackPlayer()
     {
         if(blockBar >= 20)
         {
@@ -146,5 +156,5 @@ public class SwordCombat : MonoBehaviour
             player.GetComponent<PlayerMovement>().isOnKnockBack = false;
         }
 
-    }
+    }*/
 }
