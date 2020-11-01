@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - nectar
+  - flower_plant
+  - boundary
+  - Enemy
   layers:
   - Default
   - TransparentFX
