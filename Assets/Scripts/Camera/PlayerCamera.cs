@@ -67,6 +67,7 @@ public class PlayerCamera : MonoBehaviour
         }
 
         Vector3 camDirection = this.CameraPivot.transform.position - this.Camera.transform.position;
+        this.CameraPivot.transform.position = this.Player.transform.position;
         
     }
 

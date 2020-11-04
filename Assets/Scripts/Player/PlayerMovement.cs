@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Camera playerCamera;
+    public Transform playerCamera;
     private Animator anim;
 
     //Animator Values
@@ -15,8 +15,11 @@ public class PlayerMovement : MonoBehaviour
     private float _xVel = 0f;
 
     //Move Setting
+    public float turnSmooth = 0.1f;
+    float turnSmoothVelocity;
     public float moveSpeed = 4f;
     public float horizontalVelocity;
+    private bool _sprinting;
 
     //Jump Setting
     public float verticalVelocity;
@@ -42,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.CameraPivot = this.playerCamera.transform.parent;
+        //this.CameraPivot = this.playerCamera.transform.parent;
         myController = GetComponent<CharacterController>();
 
         anim = GetComponent<Animator>();
@@ -82,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (isAcclerationCoolDownOn == true && acclerationTime >= 0) // player instant accleration 
         {
+            _sprinting = true;
             moveSpeed = 15f;
             acclerationTime -= Time.deltaTime;
         }
@@ -101,6 +105,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
+            _sprinting = false;
             moveSpeed = 4f;
             isAcceleratedFinished = false;
         }
@@ -127,54 +132,51 @@ public class PlayerMovement : MonoBehaviour
 
     public void Movement(bool forwardPressed, bool rightPressed, bool leftPressed, bool backPressed, bool runPressed)
     {
-        camDirection =
-            (this.CameraPivot.transform.position - this.playerCamera.transform.position)
-            .normalized; // Get direction formula https://answers.unity.com/questions/697830/how-to-calculate-direction-between-2-objects.html
-        //Debug.Log(camDirection.normalized);
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        //Normalized so that if two keys are pressed the character doesn't go faster
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
         if (forwardPressed && isOnKnockBack == false)
         {
-            anim.SetBool("walking", true);
             Sprint();
-            Vector3 moveVector = new Vector3(camDirection.x * moveSpeed, 0, camDirection.z * moveSpeed);
-            myController.Move(moveVector * Time.deltaTime);
-            _zVel = 1;
-            //Debug.Log("pressing W");
-            //this.transform.position += new Vector3(camDirection.x * moveSpeed, 0, camDirection.z * moveSpeed);
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + playerCamera.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            myController.Move(moveDir.normalized * moveSpeed * Time.deltaTime);
+            _zVel = _sprinting ? 2 : 1;
         }
 
-        if (rightPressed && isOnKnockBack == false)
+        if (leftPressed && isOnKnockBack == false)
         {
-            anim.SetBool("walking", true);
             Sprint();
             Vector3 moveVector = -this.playerCamera.transform.right.normalized * moveSpeed;
             myController.Move(moveVector * Time.deltaTime);
-            _xVel = -1;
-            //Debug.Log("pressing A");
-            //this.transform.position += -this.playerCamera.transform.right * moveSpeed;
+            _xVel = _sprinting ? -2 : -1;
         }
 
+        /*
         if (backPressed && isOnKnockBack == false)
         {
             anim.SetBool("walking", true);
             Sprint();
             Vector3 moveVector = new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
             myController.Move(moveVector * Time.deltaTime);
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(moveVector.normalized), 0.1f);
             //Debug.Log("pressing S");
             //this.transform.position += new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
-        }
+        }*/
 
-        if (leftPressed && isOnKnockBack == false)
+        if (rightPressed && isOnKnockBack == false)
         {
-            anim.SetBool("walking", true);
             Sprint();
             Vector3 moveVector = this.playerCamera.transform.right.normalized * moveSpeed;
             myController.Move(moveVector * Time.deltaTime);
-            _xVel = 1;
-            //Debug.Log("pressing D");
-            //this.transform.position += this.playerCamera.transform.right * moveSpeed;
+            _xVel = _sprinting ? 2 : 1;
         }
 
-        if (!leftPressed || !rightPressed)
+        if (!leftPressed && !rightPressed)
         {
             _xVel = 0.0f;
         }
