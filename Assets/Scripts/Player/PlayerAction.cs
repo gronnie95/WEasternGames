@@ -59,4 +59,8 @@ public class PlayerAction : MonoBehaviour
             }
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> Caoilinn.PPAnimationCol

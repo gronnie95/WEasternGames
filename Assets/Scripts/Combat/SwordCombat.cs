@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SwordCombat : MonoBehaviour
 {
+   
+    
     public AudioSource danger;
     public AudioSource light1;
     public AudioSource light2;
@@ -39,7 +41,7 @@ public class SwordCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DetectAttack();
+       DetectAttack();
         //Debug.Log(enemyAttackTimer);
     }
 

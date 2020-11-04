@@ -83,4 +83,8 @@ public class WeaponCollision : MonoBehaviour
             isHeavyHit = false;
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> Caoilinn.PPAnimationCol
