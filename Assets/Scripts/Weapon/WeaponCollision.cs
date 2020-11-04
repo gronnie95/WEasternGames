@@ -31,23 +31,25 @@ public class WeaponCollision : MonoBehaviour
     {
         if(gameObject.tag == "Enemy")
         {
-            if(PlayerBehaviour.isLightHit == true)
+            if (PlayerBehaviour.isLightHit == true)
             {
                 isLightHit = true;
-                gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, Quaternion.LookRotation(-other.transform.forward.normalized), 1f);
+                //gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, Quaternion.LookRotation(-other.transform.forward.normalized), 1f);
+                Debug.Log("knock back");
             }
 
             if (PlayerBehaviour.isHeavyHit == true)
             {
                 isHeavyHit = true;
-                gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, Quaternion.LookRotation(-other.transform.forward.normalized), 1f);
+                //gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, Quaternion.LookRotation(-other.transform.forward.normalized), 1f);
+                
+                Debug.Log("knock back");
             }
 
             Debug.Log(other.ToString());
             Debug.Log("Hit Enemy");
             
         }
-        
     }
 
     void LightKnockBackEnemy(GameObject enemy)
@@ -56,7 +58,8 @@ public class WeaponCollision : MonoBehaviour
         if (enemyLightAtkKnockBackTime > 0 && isLightHit == true)
         {
             enemyLightAtkKnockBackTime -= Time.deltaTime;
-            Vector3 knockBackVector = -enemy.transform.forward * Velocity;
+            
+            Vector3 knockBackVector = (GameObject.Find("Player").transform.forward * Velocity).normalized;
             enemy.GetComponent<Enemy>().enemyController.Move(knockBackVector);
         }
 
@@ -69,17 +72,17 @@ public class WeaponCollision : MonoBehaviour
 
     void HeavyKnockBackEnemy(GameObject enemy)
     {
-        float Velocity = 1.0f;
+        float Velocity = 0.5f;
         if (enemyHeavyAtkKnockBackTime > 0 && isHeavyHit == true)
         {
             enemyHeavyAtkKnockBackTime -= Time.deltaTime;
-            Vector3 knockBackVector = -enemy.transform.forward * Velocity;
+            Vector3 knockBackVector = (GameObject.Find("Player").transform.forward * Velocity).normalized;
             enemy.GetComponent<Enemy>().enemyController.Move(knockBackVector);
         }
 
         if (enemyHeavyAtkKnockBackTime <= 0)
         {
-            enemyHeavyAtkKnockBackTime = 0.4f;
+            enemyHeavyAtkKnockBackTime = 0.2f;
             isHeavyHit = false;
         }
     }
