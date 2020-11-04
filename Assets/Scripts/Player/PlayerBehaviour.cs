@@ -6,12 +6,8 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     public int playerAction;
-<<<<<<< HEAD
-
-=======
     private Animator _anim;
     
->>>>>>> Caoilinn.PPAnimationCol
     public GameObject weapon;
 
     #region Attack Status Check
@@ -25,11 +21,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     #region Light Attack
     float beforeLAtkTime = 0.3f;
-<<<<<<< HEAD
-    float duringLAtkTime = 0.6f;
-=======
     float duringLAtkTime = 0.001f;
->>>>>>> Caoilinn.PPAnimationCol
     float afterLAtkTime = 0.2f;
 
     //float lightAction1 = 0.3f;
@@ -41,11 +33,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     #region Heavy Attack
     float beforeHAtkTime = 0.8f;
-<<<<<<< HEAD
-    float duringHAtkTime = 2.0f;
-=======
     float duringHAtkTime = 0.5f;
->>>>>>> Caoilinn.PPAnimationCol
     float afterHAtkTime = 0.5f;
 
     //float heavyAction1 = 0.3f;
@@ -56,10 +44,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Start()
     {
-<<<<<<< HEAD
-=======
         _anim = GetComponent<Animator>();
->>>>>>> Caoilinn.PPAnimationCol
         playerAction = GetComponent<PlayerAction>().PlayerStatus;
     }
 
@@ -100,23 +85,15 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
-=======
   
 
->>>>>>> Caoilinn.PPAnimationCol
     private void doHeavyAttack()
     {
         if (isOnAttackAction == true)
         {
             if (beforeHAtkTime > 0 && beforeDoATK == false) // before do Action
             {
-<<<<<<< HEAD
-                waveWeapon(-45.0f);
-                beforeHAtkTime -= Time.deltaTime;
-=======
                beforeHAtkTime -= Time.deltaTime;
->>>>>>> Caoilinn.PPAnimationCol
             }
             if (beforeHAtkTime <= 0 && beforeDoATK == false) //check before do atk action is finished
             {
@@ -128,26 +105,11 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 if (duringHAtkTime > 0 && duringDoATK == false) // doing attack action
                 {
-<<<<<<< HEAD
-                    if (duringHAtkTime >= 0.6f * heavyDuringTotal)
-                    {
-                        waveWeapon(45.0f);
-                    }
-                    if (duringHAtkTime >= 0.8f && duringHAtkTime < 1.0f)
-                    {
-                        pushWeapon(2.0f, heavyAction2Time);
-                        isHeavyHit = true;
-                    }
-                    if (duringHAtkTime >= 0.5f && duringHAtkTime < 0.7f)
-                    {
-                        pushWeapon(-2.0f, heavyAction3Time);
-=======
                    
                     if (duringHAtkTime >= 0.5f && duringHAtkTime < 0.7f)
                     {
                         //pushWeapon(-2.0f, heavyAction3Time);
                         _anim.SetTrigger("Heavy Attack");
->>>>>>> Caoilinn.PPAnimationCol
                     }
 
                     duringHAtkTime -= Time.deltaTime;
@@ -176,11 +138,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (afterDoATK == true || isOnAttackAction == false) //reset all values
         {
             beforeHAtkTime = 0.8f;
-<<<<<<< HEAD
-            duringHAtkTime = 2.0f;
-=======
             duringHAtkTime = 0.5f;
->>>>>>> Caoilinn.PPAnimationCol
             afterHAtkTime = 0.5f;
             isOnAttackAction = false;
             beforeDoATK = false;
@@ -202,38 +160,13 @@ public class PlayerBehaviour : MonoBehaviour
         {
             if (beforeLAtkTime > 0 && beforeDoATK == false) // before do Action
             {
-<<<<<<< HEAD
-                waveWeapon(-45.0f);
-                beforeLAtkTime -= Time.deltaTime;
-=======
                beforeLAtkTime -= Time.deltaTime;
->>>>>>> Caoilinn.PPAnimationCol
             }
             if (beforeLAtkTime <= 0 && beforeDoATK == false) //check before do atk action is finished
             {
                 Debug.Log("Before Action is Done");
                 beforeDoATK = true;
             }
-<<<<<<< HEAD
-
-            if (beforeDoATK == true && duringDoATK == false) // do Action
-            {
-                if (duringLAtkTime > 0 && duringDoATK == false) // doing attack action
-                {
-                    if(duringLAtkTime >= 0.5f * lightDuringTotal)
-                    {
-                        waveWeapon(45.0f);
-                    }
-                    if(duringLAtkTime >= 0.25f * lightDuringTotal && duringLAtkTime <= 0.45f * lightDuringTotal)
-                    {
-                        isLightHit = true;
-                        pushWeapon(4.0f, lightAction2Time);
-                    }
-                    if (duringLAtkTime >= 0 && duringLAtkTime <= 0.20f * lightDuringTotal)
-                    {
-                        pushWeapon(-4.0f, lightAction3Time);
-                    }
-=======
            
             if (beforeDoATK == true && duringDoATK == false) // do Action
             {
@@ -241,7 +174,6 @@ public class PlayerBehaviour : MonoBehaviour
                 if (duringLAtkTime > 0 && duringDoATK == false) // doing attack action
                 {
                     _anim.SetTrigger("Light Attack");
->>>>>>> Caoilinn.PPAnimationCol
 
                     duringLAtkTime -= Time.deltaTime;
                 }
@@ -269,11 +201,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (afterDoATK == true || isOnAttackAction == false) //reset all values
         {
             beforeLAtkTime = 0.3f;
-<<<<<<< HEAD
-            duringLAtkTime = 0.6f;
-=======
             duringLAtkTime = 0.001f;
->>>>>>> Caoilinn.PPAnimationCol
             afterLAtkTime = 0.2f;
             isOnAttackAction = false;
             beforeDoATK = false;
@@ -288,20 +216,4 @@ public class PlayerBehaviour : MonoBehaviour
             isLightHit = false;
         }
     }
-<<<<<<< HEAD
-
-    private void pushWeapon(float moveValue, float time )
-    {
-        this.weapon.transform.position = Vector3.MoveTowards(this.weapon.transform.position,
-                                        this.weapon.transform.position + moveValue*weapon.transform.forward,
-                                        time);
-    }
-
-    private void waveWeapon(float rotValue)
-    {
-        this.weapon.transform.Rotate(rotValue * Time.deltaTime, 0, 0);
-    }
 }
-=======
-}
->>>>>>> Caoilinn.PPAnimationCol
