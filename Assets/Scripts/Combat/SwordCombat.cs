@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 public class SwordCombat : MonoBehaviour
@@ -19,30 +20,62 @@ public class SwordCombat : MonoBehaviour
     private float enemyAttackTimer = 0.0f;
     private float enemyAttackCoolDown = 5.0f;
     private bool isAttackSoundPlaying = false;
-    private float blockBar = 0;
-    private Vector3 camDirection;
+    //private Vector3 camDirection;
     private GameObject player;
-    private GameObject capsule;
+    //private GameObject capsule;
     private GameObject[] enemys;
-    private GameObject playerCamera;
+    //private GameObject playerCamera;
     private float knockBackTime = 0.0f;
     private float knockBackForce = 0.5f;
     private float Velocity;
+
+    public bool isEncounter = false; //used for restore stamina
+    public bool isOnCombat = false;
+    public float resetOutOfCombatTime = 0;
+    public float resetBodyBalanceTime = 0;
+    public bool isLostBodyBalance = false;
+
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player");
-        capsule = GameObject.Find("Capsule");
+        //capsule = GameObject.Find("Capsule");
         enemys = GameObject.FindGameObjectsWithTag("Enemy");
-        playerCamera = GameObject.Find("PlayerCamera");
+        //playerCamera = GameObject.Find("PlayerCamera");
     }
 
     // Update is called once per frame
     void Update()
     {
-       DetectAttack();
+        DetectAttack();
+        ResetOutOfCombat();
         //Debug.Log(enemyAttackTimer);
+    }
+
+    void ResetOutOfCombat()
+    {
+        if (isEncounter == true)
+        {
+            resetOutOfCombatTime = setOutOfCombatTime();
+            isEncounter = false;
+            isOnCombat = true;
+            GetComponent<PlayerStats>().readyToRestoreStaminaTime = GetComponent<PlayerStats>().setReadyToRestoreStaminaTime();
+        }
+        if (resetOutOfCombatTime > 0)
+        {
+            resetOutOfCombatTime -= Time.deltaTime;
+        }
+        if (resetOutOfCombatTime <= 0)
+        {
+            isOnCombat = false;
+        }
+        //Debug.Log(resetOutOfCombatTime);
+    }
+    
+    public float setOutOfCombatTime()
+    {
+        return 3f;
     }
 
     void DetectAttack()
@@ -86,14 +119,12 @@ public class SwordCombat : MonoBehaviour
             isAttackSoundPlaying = true;
             isPlayerBlock = true;
             heavy1.Play();
-            Debug.Log("Block Bar: " + blockBar);
         }
         else if(enemyAttackTimer > 1.2f && enemyAttackTimer <= 1.5f && Input.GetMouseButtonDown(1) && isAttackSoundPlaying == false && EnemyDistance < 3 && isPlayerBlock == false)
         {
             isAttackSoundPlaying = true;
             isPlayerBlock = true;
             heavy2.Play();
-            Debug.Log("Block Bar: " + blockBar);
         }
         else if((enemyAttackTimer < 0.8f || enemyAttackTimer >1.5f) && Input.GetMouseButtonDown(1) && isAttackSoundPlaying == false && EnemyDistance < 3 && isPlayerBlock == false)
         {
@@ -104,26 +135,46 @@ public class SwordCombat : MonoBehaviour
             if(playSoundNo == 1)
             {
                 light1.Play();
-                blockBar += 20;
-                Debug.Log("Block Bar: " + blockBar);
+                GetComponent<PlayerStats>().stamina -= 40;
+                GetComponent<PlayerStats>().health -= 25;
+                isEncounter = true;
+                if (GetComponent<PlayerStats>().stamina <= 0)
+                {
+                    player.GetComponent<PlayerMovement>().isOnKnockBack = true;
+                }
             }
             else if(playSoundNo == 2)
             {
                 light2.Play();
-                blockBar += 20;
-                Debug.Log("Block Bar: " + blockBar);
+                GetComponent<PlayerStats>().stamina -= 40;
+                GetComponent<PlayerStats>().health -= 25;
+                isEncounter = true;
+                if (GetComponent<PlayerStats>().stamina <= 0)
+                {
+                    player.GetComponent<PlayerMovement>().isOnKnockBack = true;
+                }
             }
             else if (playSoundNo == 3)
             {
                 light3.Play();
-                blockBar += 20;
-                Debug.Log("Block Bar: " + blockBar);
+                GetComponent<PlayerStats>().stamina -= 40;
+                GetComponent<PlayerStats>().health -= 25;
+                isEncounter = true;
+                if (GetComponent<PlayerStats>().stamina <= 0)
+                {
+                    player.GetComponent<PlayerMovement>().isOnKnockBack = true;
+                }
             }
             else if (playSoundNo == 4)
             {
                 light4.Play();
-                blockBar += 20;
-                Debug.Log("Block Bar: " + blockBar);
+                GetComponent<PlayerStats>().stamina -= 40;
+                GetComponent<PlayerStats>().health -= 25;
+                isEncounter = true;
+                if (GetComponent<PlayerStats>().stamina <= 0)
+                {
+                    player.GetComponent<PlayerMovement>().isOnKnockBack = true;
+                }
             }
         }
 
@@ -132,23 +183,39 @@ public class SwordCombat : MonoBehaviour
 
     void KnockBackPlayer(float EnemyDistance)
     {
-        if(blockBar >= 20)
+        if(player.GetComponent<PlayerMovement>().isOnKnockBack == true)
         {
-            player.GetComponent<PlayerMovement>().isOnKnockBack = true;
-            blockBar = 0;
-            knockBackTime = 0.4f;
+            player.GetComponent<PlayerMovement>().isOnKnockBack = false;
+            isLostBodyBalance = true;
+            knockBackTime = setKnockBackTime();
+            resetBodyBalanceTime = setBodyBalanceTime();
         }
-        if(player.GetComponent<PlayerMovement>().isOnKnockBack == true && knockBackTime >= 0)
+        if(knockBackTime > 0)
         {
             knockBackTime -= Time.deltaTime;
             Velocity = knockBackForce;
             Vector3 knockBackVector = -player.transform.forward * knockBackForce;
             player.GetComponent<PlayerMovement>().myController.Move(knockBackVector);
         }
-        if(knockBackTime <= 0)
+        if(resetBodyBalanceTime > 0)
         {
-            player.GetComponent<PlayerMovement>().isOnKnockBack = false;
+            resetBodyBalanceTime -= Time.deltaTime;
         }
+        if(resetBodyBalanceTime <= 0 && isLostBodyBalance == true)
+        {
+            isLostBodyBalance = false;
+        }
+        Debug.Log("reset body balance" + resetBodyBalanceTime);
+    }
+
+    private float setKnockBackTime()
+    {
+        return 0.3f;
+    }
+
+    public float setBodyBalanceTime()
+    {
+        return 4.0f;
     }
 
 
