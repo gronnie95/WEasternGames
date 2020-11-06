@@ -11,7 +11,9 @@ public class PlayerBehaviour : MonoBehaviour
     public GameObject weapon;
 
     #region Attack Status Check
-    public bool isOnAttackAction = false;
+    //public bool isOnAttackAction = false;
+    public bool isOnLightAction = false;
+    public bool isOnHeavyAction = false;
     private bool beforeDoATK = false;
     private bool duringDoATK = false;
     private bool afterDoATK = false;
@@ -26,7 +28,7 @@ public class PlayerBehaviour : MonoBehaviour
     #endregion
 
     #region Heavy Attack
-    float beforeHAtkTime = 0.8f;
+    float beforeHAtkTime = 0.1f;
     float duringHAtkTime = 0.5f;
     float afterHAtkTime = 1.0f;
     #endregion
@@ -63,22 +65,20 @@ public class PlayerBehaviour : MonoBehaviour
                 break;
 
             case (int)ActionType.LightAttack:
-                isOnAttackAction = true;
+                isOnLightAction = true;
                 doLightAttack();
                 break;
 
             case (int)ActionType.HeavyAttack:
-                isOnAttackAction = true;
+                isOnHeavyAction = true;
                 doHeavyAttack();
                 break;
         }
     }
 
-  
-
     private void doHeavyAttack()
     {
-        if (isOnAttackAction == true)
+        if (isOnHeavyAction == true)
         {
             if (beforeHAtkTime > 0 && beforeDoATK == false) // before do Action
             {
@@ -86,7 +86,10 @@ public class PlayerBehaviour : MonoBehaviour
             }
             if (beforeHAtkTime <= 0 && beforeDoATK == false) //check before do atk action is finished
             {
-                Debug.Log("Before Action is Done");
+                GetComponent<PlayerStats>().stamina -= 10;
+                GetComponent<PlayerStats>().readyToRestoreStaminaTime = GetComponent<PlayerStats>().setReadyToRestoreStaminaTime();
+                //Debug.Log("Before Action is Done");
+                // Debug.Log(GetComponent<PlayerStats>().stamina);
                 beforeDoATK = true;
             }
 
@@ -95,10 +98,9 @@ public class PlayerBehaviour : MonoBehaviour
                 if (duringHAtkTime > 0 && duringDoATK == false) // doing attack action
                 {
                    
-                    if (duringHAtkTime >= 0.5f && duringHAtkTime < 0.7f)
+                    if (duringHAtkTime >= 0.5f && duringHAtkTime <= 0.7f)
                     {
                         isHeavyHit = true;
-                        //pushWeapon(-2.0f, heavyAction3Time);
                         _anim.SetTrigger("Heavy Attack");
                     }
 
@@ -106,7 +108,7 @@ public class PlayerBehaviour : MonoBehaviour
                 }
                 if (duringHAtkTime <= 0 && duringDoATK == false)
                 {
-                    Debug.Log("Doing Action is Done");
+                    //Debug.Log("Doing Action is Done");
                     duringDoATK = true;
                 }
             }
@@ -119,31 +121,30 @@ public class PlayerBehaviour : MonoBehaviour
                 }
                 if (afterHAtkTime <= 0 && afterDoATK == false)
                 {
-                    Debug.Log("After Action is Done");
+                    //Debug.Log("After Action is Done");
                     afterDoATK = true;
                 }
             }
         }
 
-        if (afterDoATK == true || isOnAttackAction == false) //reset all values
+        if (afterDoATK == true || isOnHeavyAction == false) //reset all values
         {
-            beforeHAtkTime = 0.8f;
+            beforeHAtkTime = 0.1f;
             duringHAtkTime = 0.5f;
             afterHAtkTime = 1.0f;
-            isOnAttackAction = false;
+            isOnHeavyAction = false;
             beforeDoATK = false;
             duringDoATK = false;
             afterDoATK = false;
             GetComponent<PlayerAction>().PlayerStatus = (int)ActionType.Idle;
             GetComponent<PlayerAction>().doOnce = false;
-            //heavyAction1 = 0.3f;
             isHeavyHit = false;
         }
     }
 
     private void doLightAttack()
     {
-        if(isOnAttackAction == true)
+        if(isOnLightAction == true)
         {
             if (beforeLAtkTime > 0 && beforeDoATK == false) // before do Action
             {
@@ -151,6 +152,8 @@ public class PlayerBehaviour : MonoBehaviour
             }
             if (beforeLAtkTime <= 0 && beforeDoATK == false) //check before do atk action is finished
             {
+                GetComponent<PlayerStats>().stamina -= 5;
+                //GetComponent<PlayerStats>().readyToRestoreStaminaTime = GetComponent<PlayerStats>().setReadyToRestoreStaminaTime();
                 //Debug.Log("Before Action is Done");
                 beforeDoATK = true;
             }
@@ -161,7 +164,6 @@ public class PlayerBehaviour : MonoBehaviour
                 if (duringLAtkTime > 0 && duringDoATK == false) // doing attack action
                 {
                     isLightHit = true;
-                    Debug.Log("true");
                     _anim.SetTrigger("Light Attack");
 
                     duringLAtkTime -= Time.deltaTime;
@@ -187,18 +189,17 @@ public class PlayerBehaviour : MonoBehaviour
             }
         }
 
-        if (afterDoATK == true || isOnAttackAction == false) //reset all values
+        if (afterDoATK == true || isOnLightAction == false) //reset all values
         {
             beforeLAtkTime = 0.3f;
             duringLAtkTime = 0.001f;
             afterLAtkTime = 1.0f;
-            isOnAttackAction = false;
+            isOnLightAction = false;
             beforeDoATK = false;
             duringDoATK = false;
             afterDoATK = false;
             GetComponent<PlayerAction>().PlayerStatus = (int)ActionType.Idle;
             GetComponent<PlayerAction>().doOnce = false;
-            //lightAction1 = 0.3f;
             isLightHit = false;
         }
     }

@@ -17,9 +17,8 @@ public class PlayerMovement : MonoBehaviour
     //Move Setting
     public float turnSmooth = 0.1f;
     float turnSmoothVelocity;
-    public float moveSpeed = 4f;
     public float horizontalVelocity;
-    private bool _sprinting;
+    public bool _sprinting;
 
     //Jump Setting
     public float verticalVelocity;
@@ -33,11 +32,12 @@ public class PlayerMovement : MonoBehaviour
     public bool isOnKnockBack = false;
 
     //Sprint
-    //private bool isAccelerated = false;
+    public bool isSprinting = false;
     private bool isAcceleratedFinished = false;
     private bool isAcclerationCoolDownOn = false;
     private float acclerationTime = 0.2f;
     private float acclerationCoolDown = 0.5f;
+    private float consumeStaminaSpeedTime = 0;
 
     //Remove later once network implementation is finished
     public bool player2;
@@ -72,43 +72,68 @@ public class PlayerMovement : MonoBehaviour
 
     private void Sprint()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if(GetComponent<PlayerBehaviour>().isOnLightAction == false && GetComponent<PlayerBehaviour>().isOnHeavyAction == false && GetComponent<PlayerStats>().stamina > 0)
         {
-            //isAccelerated = true;
-            isAcclerationCoolDownOn = true;
-        }
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                isSprinting = true;
+                isAcclerationCoolDownOn = true;
+            }
 
-        if (isAcclerationCoolDownOn == true && acclerationCoolDown >= 0) // accleration cool down
-        {
-            acclerationCoolDown -= Time.deltaTime;
-        }
+            if (isAcclerationCoolDownOn == true && acclerationCoolDown >= 0) // accleration cool down
+            {
+                acclerationCoolDown -= Time.deltaTime;
+            }
 
-        if (isAcclerationCoolDownOn == true && acclerationTime >= 0) // player instant accleration 
-        {
-            _sprinting = true;
-            moveSpeed = 15f;
-            acclerationTime -= Time.deltaTime;
-        }
+            if (isAcclerationCoolDownOn == true && acclerationTime >= 0) // player instant accleration 
+            {
+                _sprinting = true;
+                GetComponent<PlayerStats>().speed = 15f;
+                acclerationTime -= Time.deltaTime;
+            }
 
-        if (acclerationCoolDown <= 0)
-        {
-            acclerationTime = 0.2f;
-            acclerationCoolDown = 0.5f;
-            isAcclerationCoolDownOn = false;
-            isAcceleratedFinished = true;
-        }
+            if (acclerationCoolDown <= 0)
+            {
+                acclerationTime = 0.2f;
+                acclerationCoolDown = 0.5f;
+                isAcclerationCoolDownOn = false;
+                isAcceleratedFinished = true;
+            }
 
-        if (Input.GetKey(KeyCode.LeftShift) && isAcceleratedFinished == true)
-        {
-            moveSpeed = 8f;
-        }
+            if (Input.GetKey(KeyCode.LeftShift) && isAcceleratedFinished == true)
+            {
+                GetComponent<PlayerStats>().speed = 8f;
+            }
 
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            _sprinting = false;
-            moveSpeed = 4f;
-            isAcceleratedFinished = false;
+            if(isSprinting == true)
+            {
+                GetComponent<PlayerStats>().readyToRestoreStaminaTime = GetComponent<PlayerStats>().setReadyToRestoreStaminaTime();
+                if (consumeStaminaSpeedTime <= 0)
+                {
+                    GetComponent<PlayerStats>().stamina -= 2;
+                    consumeStaminaSpeedTime = setConsumeStaminaTime();
+                }
+                if(consumeStaminaSpeedTime > 0 && GameObject.Find("Player").transform.hasChanged == true)
+                {
+                    consumeStaminaSpeedTime -= Time.deltaTime;
+                    //Debug.Log(GetComponent<PlayerStats>().stamina);
+                }
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftShift) || GetComponent<PlayerStats>().stamina == 0)
+            {
+                _sprinting = false;
+                GetComponent<PlayerStats>().speed = 4f;
+                isAcceleratedFinished = false;
+                isSprinting = false;
+                consumeStaminaSpeedTime = 0.1f;
+            }
         }
+    }
+
+    float setConsumeStaminaTime()
+    {
+        return 0.1f;
     }
 
     public void Jump()
@@ -137,27 +162,49 @@ public class PlayerMovement : MonoBehaviour
         //Normalized so that if two keys are pressed the character doesn't go faster
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if (forwardPressed && isOnKnockBack == false)
+        /*
+         * change player speed when on heavy attack
+         */
+        if (GetComponent<PlayerBehaviour>().isOnHeavyAction == true) 
+        {
+            GetComponent<PlayerStats>().speed = 0;
+        }
+
+        /*
+         * change player speed when on light attack
+         */
+        if (GetComponent<PlayerBehaviour>().isOnLightAction == true) 
+        {
+            GetComponent<PlayerStats>().speed = 1f;
+        }
+
+        if(GetComponent<PlayerBehaviour>().isOnHeavyAction == false && GetComponent<PlayerBehaviour>().isOnLightAction == false)
+        {
+            GetComponent<PlayerStats>().speed = 4f;
+        }
+
+
+        if (forwardPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
         {
             Sprint();
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + playerCamera.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            myController.Move(moveDir.normalized * moveSpeed * Time.deltaTime);
+            myController.Move(moveDir.normalized * GetComponent<PlayerStats>().speed * Time.deltaTime);
             _zVel = _sprinting ? 2 : 1;
         }
 
-        if (leftPressed && isOnKnockBack == false)
+        if (leftPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
         {
             Sprint();
-            Vector3 moveVector = -this.playerCamera.transform.right.normalized * moveSpeed;
+            Vector3 moveVector = -this.playerCamera.transform.right.normalized * GetComponent<PlayerStats>().speed;
             myController.Move(moveVector * Time.deltaTime);
             _xVel = _sprinting ? -2 : -1;
         }
 
         /*
-        if (backPressed && isOnKnockBack == false)
+        if (backPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
         {
             anim.SetBool("walking", true);
             Sprint();
@@ -168,10 +215,10 @@ public class PlayerMovement : MonoBehaviour
             //this.transform.position += new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
         }*/
 
-        if (rightPressed && isOnKnockBack == false)
+        if (rightPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
         {
             Sprint();
-            Vector3 moveVector = this.playerCamera.transform.right.normalized * moveSpeed;
+            Vector3 moveVector = this.playerCamera.transform.right.normalized * GetComponent<PlayerStats>().speed;
             myController.Move(moveVector * Time.deltaTime);
             _xVel = _sprinting ? 2 : 1;
         }
