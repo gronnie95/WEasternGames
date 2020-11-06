@@ -205,7 +205,7 @@ public class SwordCombat : MonoBehaviour
         {
             isLostBodyBalance = false;
         }
-        Debug.Log("reset body balance" + resetBodyBalanceTime);
+        //Debug.Log("reset body balance" + resetBodyBalanceTime);
     }
 
     private float setKnockBackTime()
