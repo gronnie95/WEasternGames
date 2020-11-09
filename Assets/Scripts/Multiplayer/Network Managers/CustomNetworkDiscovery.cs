@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Mirror.Discovery;
 using UnityEngine;
 
@@ -19,6 +20,5 @@ public class CustomNetworkDiscovery : NetworkDiscovery
             return instance;
         }
     }
-
 
 }

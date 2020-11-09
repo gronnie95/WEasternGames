@@ -6,7 +6,6 @@ namespace Multiplayer
     public class CustomNetworkManager : NetworkManager
     {
         private static CustomNetworkManager instace;
-
         public static CustomNetworkManager Instace
         {
             get
@@ -19,5 +18,6 @@ namespace Multiplayer
             }
         }
 
+        //public static event Action OnClientConnected;
     }
 }

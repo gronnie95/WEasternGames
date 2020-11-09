@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     public Transform playerCamera;
     private Animator anim;
@@ -25,10 +26,10 @@ public class PlayerMovement : MonoBehaviour
     private float gravity = 10f;
     private float jumpForce = 5f;
 
-    private Transform CameraPivot; //empty point on player
+    //private Transform CameraPivot; //empty point on player
     public CharacterController myController;
 
-    private Vector3 camDirection;
+    //private Vector3 camDirection;
     public bool isOnKnockBack = false;
 
     //Sprint
@@ -45,10 +46,9 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //this.CameraPivot = this.playerCamera.transform.parent;
-        myController = GetComponent<CharacterController>();
+       myController = GetComponentInChildren<CharacterController>();
 
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
 
         _zVelHash = Animator.StringToHash("velZ");
         _xVelHash = Animator.StringToHash("velX");
@@ -57,6 +57,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!hasAuthority)
+        {
+            return;
+        }
         bool forwardPressed = Input.GetKey(KeyCode.W);
         bool rightPressed = Input.GetKey(KeyCode.D);
         bool leftPressed = Input.GetKey(KeyCode.A);
@@ -68,11 +72,16 @@ public class PlayerMovement : MonoBehaviour
 
         anim.SetFloat(_xVelHash, _xVel);
         anim.SetFloat(_zVelHash, _zVel);
+
+        //Debug.Log("Normalized Vector: " + this.playerCamera+ ": " + this.playerCamera.right.normalized);
+        Debug.Log("Normalized Vector: Main Camera: " + Camera.main.transform.right.normalized);
+        
     }
 
     private void Sprint()
     {
-        if(GetComponent<PlayerBehaviour>().isOnLightAction == false && GetComponent<PlayerBehaviour>().isOnHeavyAction == false && GetComponent<PlayerStats>().stamina > 0)
+        if (GetComponent<PlayerBehaviour>().isOnLightAction == false &&
+            GetComponent<PlayerBehaviour>().isOnHeavyAction == false && GetComponent<PlayerStats>().stamina > 0)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
@@ -105,15 +114,17 @@ public class PlayerMovement : MonoBehaviour
                 GetComponent<PlayerStats>().speed = 8f;
             }
 
-            if(isSprinting == true)
+            if (isSprinting == true)
             {
-                GetComponent<PlayerStats>().readyToRestoreStaminaTime = GetComponent<PlayerStats>().setReadyToRestoreStaminaTime();
+                GetComponent<PlayerStats>().readyToRestoreStaminaTime =
+                    GetComponent<PlayerStats>().setReadyToRestoreStaminaTime();
                 if (consumeStaminaSpeedTime <= 0)
                 {
                     GetComponent<PlayerStats>().stamina -= 2;
                     consumeStaminaSpeedTime = setConsumeStaminaTime();
                 }
-                if(consumeStaminaSpeedTime > 0 && GameObject.Find("Player").transform.hasChanged == true)
+
+                if (consumeStaminaSpeedTime > 0 && GameObject.Find("Player").transform.hasChanged == true)
                 {
                     consumeStaminaSpeedTime -= Time.deltaTime;
                     //Debug.Log(GetComponent<PlayerStats>().stamina);
@@ -165,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
         /*
          * change player speed when on heavy attack
          */
-        if (GetComponent<PlayerBehaviour>().isOnHeavyAction == true) 
+        if (GetComponent<PlayerBehaviour>().isOnHeavyAction == true)
         {
             GetComponent<PlayerStats>().speed = 0;
         }
@@ -173,12 +184,13 @@ public class PlayerMovement : MonoBehaviour
         /*
          * change player speed when on light attack
          */
-        if (GetComponent<PlayerBehaviour>().isOnLightAction == true) 
+        if (GetComponent<PlayerBehaviour>().isOnLightAction == true)
         {
             GetComponent<PlayerStats>().speed = 1f;
         }
 
-        if(GetComponent<PlayerBehaviour>().isOnHeavyAction == false && GetComponent<PlayerBehaviour>().isOnLightAction == false)
+        if (GetComponent<PlayerBehaviour>().isOnHeavyAction == false &&
+            GetComponent<PlayerBehaviour>().isOnLightAction == false)
         {
             GetComponent<PlayerStats>().speed = 4f;
         }
@@ -187,8 +199,9 @@ public class PlayerMovement : MonoBehaviour
         if (forwardPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
         {
             Sprint();
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + playerCamera.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
+            float angle =
+                Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             myController.Move(moveDir.normalized * GetComponent<PlayerStats>().speed * Time.deltaTime);
@@ -198,27 +211,15 @@ public class PlayerMovement : MonoBehaviour
         if (leftPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
         {
             Sprint();
-            Vector3 moveVector = -this.playerCamera.transform.right.normalized * GetComponent<PlayerStats>().speed;
+            Vector3 moveVector = -Camera.main.transform.right.normalized * GetComponent<PlayerStats>().speed;
             myController.Move(moveVector * Time.deltaTime);
             _xVel = _sprinting ? -2 : -1;
         }
 
-        /*
-        if (backPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
-        {
-            anim.SetBool("walking", true);
-            Sprint();
-            Vector3 moveVector = new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
-            myController.Move(moveVector * Time.deltaTime);
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(moveVector.normalized), 0.1f);
-            //Debug.Log("pressing S");
-            //this.transform.position += new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
-        }*/
-
         if (rightPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
         {
             Sprint();
-            Vector3 moveVector = this.playerCamera.transform.right.normalized * GetComponent<PlayerStats>().speed;
+            Vector3 moveVector = Camera.main.transform.right.normalized * GetComponent<PlayerStats>().speed;
             myController.Move(moveVector * Time.deltaTime);
             _xVel = _sprinting ? 2 : 1;
         }

@@ -1388,7 +1388,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4630159190557657216}
-  m_LocalRotation: {x: -0.12797648, y: 0.000000015944321, z: 0.0000000064820935, w: -0.99177724}
+  m_LocalRotation: {x: 0.10181721, y: 0.30002534, z: -0.032225586, w: 0.9479344}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1596,7 +1596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 2.9, z: -4.64}
+  m_FollowOffset: {x: 0, y: 2.688954, z: -4.6489573}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -1616,7 +1616,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: 0
+    Value: 35.12561
     m_MaxSpeed: 300
     m_AccelTime: 0.1
     m_DecelTime: 0.1
@@ -1721,7 +1721,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 2.9, z: -4.64}
+  m_FollowOffset: {x: 0, y: 2.688954, z: -4.6489573}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -1741,7 +1741,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: 0
+    Value: 35.12561
     m_MaxSpeed: 300
     m_AccelTime: 0.1
     m_DecelTime: 0.1
@@ -1846,7 +1846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 2.9, z: -4.64}
+  m_FollowOffset: {x: 0, y: 2.688954, z: -4.6489573}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -1866,7 +1866,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: 0
+    Value: 35.12561
     m_MaxSpeed: 300
     m_AccelTime: 0.1
     m_DecelTime: 0.1
@@ -1937,8 +1937,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4630159191957850069}
-  m_LocalRotation: {x: -0.16637518, y: 0.0000000011646588, z: -0.0000000069026305,
-    w: -0.9860626}
+  m_LocalRotation: {x: 0.13996212, y: 0.2984817, z: -0.04429861, w: 0.94305724}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2012,7 +2011,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4630159192272441204}
-  m_LocalRotation: {x: 0.27568254, y: -0.000000023120595, z: -0.000000011055024, w: 0.96124876}
+  m_LocalRotation: {x: 0.24711679, y: 0.29143843, z: -0.07821354, w: 0.9208038}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2089,8 +2088,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4630159192335846606}
-  m_LocalRotation: {x: 0.1279765, y: -0.000000034129798, z: 0.000000004404025, w: 0.99177724}
-  m_LocalPosition: {x: 0, y: 2.9, z: -4.64}
+  m_LocalRotation: {x: 0.10472297, y: 0.29992512, z: -0.03314527, w: 0.94761777}
+  m_LocalPosition: {x: -2.6748748, y: 2.688954, z: -3.8023477}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4630159191125251704}
@@ -2237,7 +2236,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4630159192362416717}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.9, z: -4.64}
+  m_LocalPosition: {x: -2.6748748, y: 2.688954, z: -3.8023477}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4630159192272441206}
@@ -2282,7 +2281,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_YAxis:
-    Value: 0.5
+    Value: 0.46375126
     m_MaxSpeed: 2
     m_AccelTime: 0.2
     m_DecelTime: 0.1
@@ -2305,7 +2304,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: 0
+    Value: 35.12561
     m_MaxSpeed: 300
     m_AccelTime: 0.1
     m_DecelTime: 0.1
@@ -3121,6 +3120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d90a237bcc0101448cbae0a1210985c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   playerCamera: {fileID: 4630159192335846603}
   turnSmooth: 0.1
   horizontalVelocity: 0
