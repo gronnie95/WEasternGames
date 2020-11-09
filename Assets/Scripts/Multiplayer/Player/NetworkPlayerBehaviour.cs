@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
-public class PlayerBehaviour : MonoBehaviour
+public class NetworkPlayerBehaviour : NetworkBehaviour
 {
     public int playerAction;
-    private Animator _anim;
+    private NetworkAnimator _anim;
     
     public GameObject weapon;
 
@@ -35,12 +35,16 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Start()
     {
-        _anim = GetComponent<Animator>();
+        _anim = GetComponent<NetworkAnimator>();
         playerAction = GetComponent<PlayerAction>().PlayerStatus;
     }
 
     void Update()
     {
+        if (!hasAuthority)
+        {
+            return;
+        }
         playerAction = GetComponent<PlayerAction>().PlayerStatus;
 
         #region Debug

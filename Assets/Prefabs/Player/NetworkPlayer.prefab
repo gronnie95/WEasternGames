@@ -387,17 +387,18 @@ GameObject:
   - component: {fileID: 6312504504922673023}
   - component: {fileID: 2724004266772874781}
   - component: {fileID: 2724004266772874783}
-  - component: {fileID: 2724004266772874784}
+  - component: {fileID: 5176713982392737246}
+  - component: {fileID: 7114010402933223835}
   - component: {fileID: 2724004266772874787}
   - component: {fileID: 2724004266772874786}
   - component: {fileID: 2724004266772874780}
-  - component: {fileID: 2724004266772874782}
+  - component: {fileID: 2871500873179122204}
   - component: {fileID: 474498138263860625}
   - component: {fileID: 9149144673485360380}
   - component: {fileID: -2523158208623073465}
-  - component: {fileID: 2871500873179122204}
+  - component: {fileID: 5528327934198338877}
   m_Layer: 0
-  m_Name: Player
+  m_Name: NetworkPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -472,7 +473,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.93, z: 0}
---- !u!114 &2724004266772874784
+--- !u!114 &5176713982392737246
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -481,9 +482,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 637979918491388300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a8146db61ac5d34aa9cf9a48c76174c, type: 3}
+  m_Script: {fileID: 11500000, guid: faab21462fefe1045ae1610b1526332c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  playerCamera: {fileID: 6425587739196465591}
+  turnSmooth: 0.1
+  horizontalVelocity: 0
+  _sprinting: 0
+  verticalVelocity: 0
+  myController: {fileID: 2724004266772874783}
+  isOnKnockBack: 0
+  isSprinting: 0
+  player2: 0
+--- !u!114 &7114010402933223835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637979918491388300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea19812f6444d4e4ebc1bd77aaa5e7a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   playerAction: 0
   weapon: {fileID: 5036515186953351099}
   isOnLightAction: 0
@@ -509,7 +535,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637979918491388300}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab378e64ba51f9a47b69a528989bab21, type: 3}
   m_Name: 
@@ -544,7 +570,7 @@ MonoBehaviour:
   resetOutOfCombatTime: 0
   resetBodyBalanceTime: 0
   isLostBodyBalance: 0
---- !u!114 &2724004266772874782
+--- !u!114 &2871500873179122204
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -553,20 +579,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 637979918491388300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d90a237bcc0101448cbae0a1210985c, type: 3}
+  m_Script: {fileID: 11500000, guid: 41a7e382c5549b14b8e134ee9de2ed9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  playerCamera: {fileID: 6425587739196465591}
-  turnSmooth: 0.1
-  horizontalVelocity: 0
-  _sprinting: 0
-  verticalVelocity: 0
-  myController: {fileID: 2724004266772874783}
-  isOnKnockBack: 0
-  isSprinting: 0
-  player2: 0
+  _maxFollowOffset: {x: -1, y: 6}
+  _cameraVelocity: {x: 4, y: 0.25}
+  playerTransform: {fileID: 7387106972563756747}
+  _freeLookCamera: {fileID: 2004090643292080864}
 --- !u!114 &474498138263860625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,7 +638,7 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 1
   animator: {fileID: 6312504504922673023}
---- !u!114 &2871500873179122204
+--- !u!114 &5528327934198338877
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -626,15 +647,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 637979918491388300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41a7e382c5549b14b8e134ee9de2ed9e, type: 3}
+  m_Script: {fileID: 11500000, guid: d6078b65b95a477a8218d38c4af2ac1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  _maxFollowOffset: {x: -1, y: 6}
-  _cameraVelocity: {x: 4, y: 0.25}
-  playerTransform: {fileID: 7387106972563756747}
-  _freeLookCamera: {fileID: 2004090643292080864}
+  health: 0
+  stamina: 0
+  speed: 4
+  hpUI: {fileID: 0}
+  staminaUI: {fileID: 0}
+  readyToRestoreStaminaTime: 0
 --- !u!1 &641651687274808059
 GameObject:
   m_ObjectHideFlags: 0
