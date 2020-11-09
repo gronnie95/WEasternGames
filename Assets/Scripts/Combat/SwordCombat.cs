@@ -35,11 +35,12 @@ public class SwordCombat : MonoBehaviour
     public float resetBodyBalanceTime = 0;
     public bool isLostBodyBalance = false;
 
-
+    Animator _anim;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player");
+        _anim = player.GetComponent<Animator>();
         //capsule = GameObject.Find("Capsule");
         enemys = GameObject.FindGameObjectsWithTag("Enemy");
         //playerCamera = GameObject.Find("PlayerCamera");
@@ -82,28 +83,30 @@ public class SwordCombat : MonoBehaviour
     {
         foreach(GameObject dummy in enemys)
         {
-            float EnemyDistance;
-            EnemyDistance = Vector3.Distance(player.transform.position, dummy.transform.position);
-            //Debug.Log(EnemyDistance);
-            if (EnemyDistance < 3 && isEnemyAttack == false)
+            if (dummy.GetComponent<Enemy>().HP > 0)
             {
-                danger.Play();
-                isEnemyAttack = true;
+                float EnemyDistance;
+                EnemyDistance = Vector3.Distance(player.transform.position, dummy.transform.position);
+                //Debug.Log(EnemyDistance);
+                if (EnemyDistance < 3 && isEnemyAttack == false)
+                {
+                    danger.Play();
+                    isEnemyAttack = true;
+                }
+                if (isEnemyAttack == true && enemyAttackTimer <= enemyAttackCoolDown)
+                {
+                    enemyAttackTimer += Time.deltaTime;
+                }
+                if (!danger.isPlaying && isEnemyAttack == true && enemyAttackTimer >= enemyAttackCoolDown)
+                {
+                    enemyAttackTimer = 0;
+                    isPlayerBlock = false;
+                    isEnemyAttack = false;
+                }
+                Attack(EnemyDistance);
+                KnockBackPlayer(EnemyDistance);
             }
-            if (isEnemyAttack == true && enemyAttackTimer <= enemyAttackCoolDown)
-            {
-                enemyAttackTimer += Time.deltaTime;
-            }
-            if (!danger.isPlaying && isEnemyAttack == true && enemyAttackTimer >= enemyAttackCoolDown)
-            {
-                enemyAttackTimer = 0;
-                isPlayerBlock = false;
-                isEnemyAttack = false;
-            }
-            Attack(EnemyDistance);
-            KnockBackPlayer(EnemyDistance);
         }
- 
     }
 
     void Attack(float EnemyDistance)
@@ -116,18 +119,21 @@ public class SwordCombat : MonoBehaviour
 
         if(enemyAttackTimer >= 0.8f && enemyAttackTimer <= 1.2f && Input.GetMouseButtonDown(1) && isAttackSoundPlaying == false && EnemyDistance < 3 && isPlayerBlock == false)
         {
+            _anim.SetTrigger("Block");
             isAttackSoundPlaying = true;
             isPlayerBlock = true;
             heavy1.Play();
         }
         else if(enemyAttackTimer > 1.2f && enemyAttackTimer <= 1.5f && Input.GetMouseButtonDown(1) && isAttackSoundPlaying == false && EnemyDistance < 3 && isPlayerBlock == false)
         {
+            _anim.SetTrigger("Block");
             isAttackSoundPlaying = true;
             isPlayerBlock = true;
             heavy2.Play();
         }
         else if((enemyAttackTimer < 0.8f || enemyAttackTimer >1.5f) && Input.GetMouseButtonDown(1) && isAttackSoundPlaying == false && EnemyDistance < 3 && isPlayerBlock == false)
         {
+            _anim.SetTrigger("Block");
             isAttackSoundPlaying = true;
             isPlayerBlock = true;
             Random ran = new Random();
@@ -177,7 +183,20 @@ public class SwordCombat : MonoBehaviour
                 }
             }
         }
-
+        if ((enemyAttackTimer < 0.8f || enemyAttackTimer > 1.5f))
+        {
+            foreach (GameObject gameObject in enemys)
+            {
+                gameObject.GetComponent<Renderer>().material.color = Color.grey;
+            }
+        }
+        else if ((enemyAttackTimer >= 0.8f || enemyAttackTimer <= 1.5f))
+        {
+            foreach (GameObject gameObject in enemys)
+            {
+                gameObject.GetComponent<Renderer>().material.color = Color.red;
+            }
+        }
         #endregion
     }
 

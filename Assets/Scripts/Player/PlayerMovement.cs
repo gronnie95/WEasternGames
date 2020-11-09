@@ -168,6 +168,8 @@ public class PlayerMovement : MonoBehaviour
         if (GetComponent<PlayerBehaviour>().isOnHeavyAction == true) 
         {
             GetComponent<PlayerStats>().speed = 0;
+            isSprinting = false;
+            _sprinting = false;
         }
 
         /*
@@ -176,6 +178,8 @@ public class PlayerMovement : MonoBehaviour
         if (GetComponent<PlayerBehaviour>().isOnLightAction == true) 
         {
             GetComponent<PlayerStats>().speed = 1f;
+            isSprinting = false;
+            _sprinting = false;
         }
 
         if(GetComponent<PlayerBehaviour>().isOnHeavyAction == false && GetComponent<PlayerBehaviour>().isOnLightAction == false)
