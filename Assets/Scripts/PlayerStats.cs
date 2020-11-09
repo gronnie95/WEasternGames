@@ -97,7 +97,9 @@ public class PlayerStats : MonoBehaviour
         {
             stamina = 0;
             speed = 4;
+            GetComponent<PlayerMovement>().isSprinting = false;
             GetComponent<PlayerMovement>()._sprinting = false;
+
         }
         //Debug.Log(readyToRestoreStaminaTime);
     }
