@@ -90,8 +90,8 @@ public class NetworkPlayerBehaviour : NetworkBehaviour
             }
             if (beforeHAtkTime <= 0 && beforeDoATK == false) //check before do atk action is finished
             {
-                GetComponent<PlayerStats>().stamina -= 10;
-                GetComponent<PlayerStats>().readyToRestoreStaminaTime = GetComponent<PlayerStats>().setReadyToRestoreStaminaTime();
+                GetComponent<NetworkPlayerStats>().stamina -= 10;
+                GetComponent<NetworkPlayerStats>().readyToRestoreStaminaTime = GetComponent<NetworkPlayerStats>().setReadyToRestoreStaminaTime();
                 //Debug.Log("Before Action is Done");
                 // Debug.Log(GetComponent<PlayerStats>().stamina);
                 beforeDoATK = true;
@@ -156,7 +156,7 @@ public class NetworkPlayerBehaviour : NetworkBehaviour
             }
             if (beforeLAtkTime <= 0 && beforeDoATK == false) //check before do atk action is finished
             {
-                GetComponent<PlayerStats>().stamina -= 5;
+                GetComponent<NetworkPlayerStats>().stamina -= 5;
                 //GetComponent<PlayerStats>().readyToRestoreStaminaTime = GetComponent<PlayerStats>().setReadyToRestoreStaminaTime();
                 //Debug.Log("Before Action is Done");
                 beforeDoATK = true;

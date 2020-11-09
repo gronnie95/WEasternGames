@@ -43,9 +43,9 @@ public class NetworkPlayerMovement : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       myController = GetComponentInChildren<CharacterController>();
+       myController = GetComponent<CharacterController>();
 
-        anim = GetComponentInChildren<Animator>();
+        anim = GetComponent<Animator>();
 
         _zVelHash = Animator.StringToHash("velZ");
         _xVelHash = Animator.StringToHash("velX");
@@ -77,7 +77,7 @@ public class NetworkPlayerMovement : NetworkBehaviour
     private void Sprint()
     {
         if (GetComponent<NetworkPlayerBehaviour>().isOnLightAction == false &&
-            GetComponent<NetworkPlayerBehaviour>().isOnHeavyAction == false && GetComponent<PlayerStats>().stamina > 0)
+            GetComponent<NetworkPlayerBehaviour>().isOnHeavyAction == false && GetComponent<NetworkPlayerStats>().stamina > 0)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
@@ -93,7 +93,7 @@ public class NetworkPlayerMovement : NetworkBehaviour
             if (isAcclerationCoolDownOn == true && acclerationTime >= 0) // player instant accleration 
             {
                 _sprinting = true;
-                GetComponent<PlayerStats>().speed = 15f;
+                GetComponent<NetworkPlayerStats>().speed = 15f;
                 acclerationTime -= Time.deltaTime;
             }
 
@@ -107,30 +107,29 @@ public class NetworkPlayerMovement : NetworkBehaviour
 
             if (Input.GetKey(KeyCode.LeftShift) && isAcceleratedFinished == true)
             {
-                GetComponent<PlayerStats>().speed = 8f;
+                GetComponent<NetworkPlayerStats>().speed = 8f;
             }
 
             if (isSprinting == true)
             {
-                GetComponent<PlayerStats>().readyToRestoreStaminaTime =
-                    GetComponent<PlayerStats>().setReadyToRestoreStaminaTime();
+                GetComponent<NetworkPlayerStats>().readyToRestoreStaminaTime =
+                    GetComponent<NetworkPlayerStats>().setReadyToRestoreStaminaTime();
                 if (consumeStaminaSpeedTime <= 0)
                 {
-                    GetComponent<PlayerStats>().stamina -= 2;
+                    GetComponent<NetworkPlayerStats>().stamina -= 2;
                     consumeStaminaSpeedTime = setConsumeStaminaTime();
                 }
 
-                if (consumeStaminaSpeedTime > 0 && GameObject.Find("Player").transform.hasChanged == true)
+                if (consumeStaminaSpeedTime > 0 && this.transform.hasChanged == true)
                 {
                     consumeStaminaSpeedTime -= Time.deltaTime;
-                    //Debug.Log(GetComponent<PlayerStats>().stamina);
                 }
             }
 
-            if (Input.GetKeyUp(KeyCode.LeftShift) || GetComponent<PlayerStats>().stamina == 0)
+            if (Input.GetKeyUp(KeyCode.LeftShift) || GetComponent<NetworkPlayerStats>().stamina == 0)
             {
                 _sprinting = false;
-                GetComponent<PlayerStats>().speed = 4f;
+                GetComponent<NetworkPlayerStats>().speed = 4f;
                 isAcceleratedFinished = false;
                 isSprinting = false;
                 consumeStaminaSpeedTime = 0.1f;
@@ -174,7 +173,7 @@ public class NetworkPlayerMovement : NetworkBehaviour
          */
         if (GetComponent<NetworkPlayerBehaviour>().isOnHeavyAction == true)
         {
-            GetComponent<PlayerStats>().speed = 0;
+            GetComponent<NetworkPlayerStats>().speed = 0;
         }
 
         /*
@@ -182,13 +181,13 @@ public class NetworkPlayerMovement : NetworkBehaviour
          */
         if (GetComponent<NetworkPlayerBehaviour>().isOnLightAction == true)
         {
-            GetComponent<PlayerStats>().speed = 1f;
+            GetComponent<NetworkPlayerStats>().speed = 1f;
         }
 
         if (GetComponent<NetworkPlayerBehaviour>().isOnHeavyAction == false &&
             GetComponent<NetworkPlayerBehaviour>().isOnLightAction == false)
         {
-            GetComponent<PlayerStats>().speed = 4f;
+            GetComponent<NetworkPlayerStats>().speed = 4f;
         }
 
 
@@ -200,14 +199,14 @@ public class NetworkPlayerMovement : NetworkBehaviour
                 Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            myController.Move(moveDir.normalized * GetComponent<PlayerStats>().speed * Time.deltaTime);
+            myController.Move(moveDir.normalized * GetComponent<NetworkPlayerStats>().speed * Time.deltaTime);
             _zVel = _sprinting ? 2 : 1;
         }
 
         if (leftPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
         {
             Sprint();
-            Vector3 moveVector = -Camera.main.transform.right.normalized * GetComponent<PlayerStats>().speed;
+            Vector3 moveVector = -Camera.main.transform.right.normalized * GetComponent<NetworkPlayerStats>().speed;
             myController.Move(moveVector * Time.deltaTime);
             _xVel = _sprinting ? -2 : -1;
         }
@@ -215,7 +214,7 @@ public class NetworkPlayerMovement : NetworkBehaviour
         if (rightPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
         {
             Sprint();
-            Vector3 moveVector = Camera.main.transform.right.normalized * GetComponent<PlayerStats>().speed;
+            Vector3 moveVector = Camera.main.transform.right.normalized * GetComponent<NetworkPlayerStats>().speed;
             myController.Move(moveVector * Time.deltaTime);
             _xVel = _sprinting ? 2 : 1;
         }
