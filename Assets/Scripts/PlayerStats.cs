@@ -25,16 +25,17 @@ public class PlayerStats : MonoBehaviour
         health = 100;
         stamina = 100;
         speed = 4;
-        hpUI.SetMaxHP(health);
-        staminaUI.SetMaxStaminaSlider(stamina);
+        
+        //hpUI.SetMaxHP(health);
+        //staminaUI.SetMaxStaminaSlider(stamina);
     }
 
     void Update()
     {
         restoreStamina();
         loseCondition();
-        setHealthUI();
-        setStaminaUI();
+        //setHealthUI();
+        //setStaminaUI();
     }
 
     void setStaminaUI()
