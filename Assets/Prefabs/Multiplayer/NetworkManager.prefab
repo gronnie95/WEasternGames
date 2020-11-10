@@ -59,7 +59,8 @@ MonoBehaviour:
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 0}
+  playerPrefab: {fileID: 637979918491388300, guid: 719ccee42e4de9344b551cd7e06857ca,
+    type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
@@ -165,3 +166,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 713ddab60e8f0264a89578fa63fbb495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  secretHandshake: 9133078619950948086
+  serverBroadcastListenPort: 47777
+  ActiveDiscoveryInterval: 3
+  transport: {fileID: 0}
+  OnServerFound:
+    m_PersistentCalls:
+      m_Calls: []

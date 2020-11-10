@@ -390,13 +390,13 @@ GameObject:
   - component: {fileID: 5176713982392737246}
   - component: {fileID: 7114010402933223835}
   - component: {fileID: 2724004266772874787}
-  - component: {fileID: 2724004266772874786}
   - component: {fileID: 2724004266772874780}
   - component: {fileID: 2871500873179122204}
   - component: {fileID: 474498138263860625}
   - component: {fileID: 9149144673485360380}
   - component: {fileID: -2523158208623073465}
   - component: {fileID: 5528327934198338877}
+  - component: {fileID: 2848341164408429109}
   m_Layer: 0
   m_Name: NetworkPlayer
   m_TagString: Player
@@ -528,24 +528,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerStatus: 0
   doOnce: 0
---- !u!114 &2724004266772874786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 637979918491388300}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab378e64ba51f9a47b69a528989bab21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  stamina: 0
-  speed: 4
-  hpUI: {fileID: 0}
-  staminaUI: {fileID: 0}
-  readyToRestoreStaminaTime: 0
 --- !u!114 &2724004266772874780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,7 +535,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637979918491388300}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 412b7a8b3aa0d9f448030d55040828d4, type: 3}
   m_Name: 
@@ -656,6 +638,32 @@ MonoBehaviour:
   hpUI: {fileID: 0}
   staminaUI: {fileID: 0}
   readyToRestoreStaminaTime: 0
+--- !u!114 &2848341164408429109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637979918491388300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6808bee7ab64d8a8d75c01a0003a9d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  danger: {fileID: 0}
+  light1: {fileID: 0}
+  light2: {fileID: 0}
+  light3: {fileID: 0}
+  light4: {fileID: 0}
+  heavy1: {fileID: 0}
+  heavy2: {fileID: 0}
+  isEncounter: 0
+  isOnCombat: 0
+  resetOutOfCombatTime: 0
+  resetBodyBalanceTime: 0
+  isLostBodyBalance: 0
 --- !u!1 &641651687274808059
 GameObject:
   m_ObjectHideFlags: 0
