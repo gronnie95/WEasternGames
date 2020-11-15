@@ -7,10 +7,12 @@ public class PlayerStats : MonoBehaviour
 {
     #region Player Stats
     public float health;
-    public int stamina;
+    public float stamina;
     public float speed;
     public HP hpUI;
     public Stamina staminaUI;
+    private float maxStamina;
+    private float restorePerSecond;
     #endregion
 
     #region Trigger
@@ -22,9 +24,11 @@ public class PlayerStats : MonoBehaviour
 
     void Start()
     {
-        health = 100;
-        stamina = 100;
+        health = 200;
+        stamina = 200;
         speed = 4;
+        maxStamina = stamina;
+        restorePerSecond = maxStamina * 1 / 50;
         hpUI.SetMaxHP(health);
         staminaUI.SetMaxStaminaSlider(stamina);
     }
@@ -78,12 +82,12 @@ public class PlayerStats : MonoBehaviour
                 {
                     RestoreStaminaTime -= Time.deltaTime;
                 }
-                if (RestoreStaminaTime <= 0 && stamina <= 100)
+                if (RestoreStaminaTime <= 0 && stamina <= maxStamina)
                 {
-                    stamina += 2;
-                    if (stamina >= 100)
+                    stamina += restorePerSecond;
+                    if (stamina >= maxStamina)
                     {
-                        stamina = 100;
+                        stamina = maxStamina;
                     }
                     if(stamina > 0)
                     {

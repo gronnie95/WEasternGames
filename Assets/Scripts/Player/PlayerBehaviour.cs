@@ -17,32 +17,47 @@ public class PlayerBehaviour : MonoBehaviour
     private bool beforeDoATK = false;
     private bool duringDoATK = false;
     private bool afterDoATK = false;
-    public static bool isLightHit = false;
-    public static bool isHeavyHit = false;
+    public bool canCauseDmgByLightATK = false;
+    public bool canCauseDmgByHeavyATK = false;
+    public float causeDMGTime = 0;
     #endregion
 
     #region Light Attack
-    float beforeLAtkTime = 0.3f;
-    float duringLAtkTime = 0.001f;
-    float afterLAtkTime = 1.0f;
+    float beforeLAtkTime = 0f;
+    float duringLAtkTime = 0.5f;
+    float afterLAtkTime = 0.8f;
     #endregion
 
     #region Heavy Attack
-    float beforeHAtkTime = 0.1f;
-    float duringHAtkTime = 0.5f;
-    float afterHAtkTime = 1.0f;
+    public float beforeHAtkTime = 0f;
+    public float duringHAtkTime = 0.5f;
+    public float afterHAtkTime = 1.6f;
     #endregion
+
+    #region Instant Block
+    public bool isInstantBlock = false;
+    float beforeDoBlockTime = 0.005f;
+    float DoBlockTime = 0.15f;
+    private bool beforeBlock = false;
+    private bool DuringBlock = false;
+    #endregion
+
+    #region Long Block
+    public bool isLongBlock = false;
+    #endregion
+
+    PlayerAction playerActionType;
 
     void Start()
     {
         _anim = GetComponent<Animator>();
         playerAction = GetComponent<PlayerAction>().PlayerStatus;
+        playerActionType = this.GetComponent<PlayerAction>();
     }
 
     void Update()
     {
-        playerAction = GetComponent<PlayerAction>().PlayerStatus;
-
+        playerAction = playerActionType.PlayerStatus;
         #region Debug
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -50,18 +65,17 @@ public class PlayerBehaviour : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            GetComponent<PlayerAction>().PlayerStatus = 0;
+            playerActionType.PlayerStatus = 0;
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            GetComponent<PlayerAction>().PlayerStatus = 2;
+            playerActionType.PlayerStatus = 2;
         }
         #endregion
 
         switch (playerAction)
         {
             case (int)ActionType.Idle:
-                //Debug.Log(playerAction);
                 break;
 
             case (int)ActionType.LightAttack:
@@ -73,6 +87,73 @@ public class PlayerBehaviour : MonoBehaviour
                 isOnHeavyAction = true;
                 doHeavyAttack();
                 break;
+
+            case (int)ActionType.InstantBlock:
+                isInstantBlock = true;
+                doInstantBlock();
+                break;
+
+            case (int)ActionType.LongBlock:
+                isLongBlock = true;
+                doLongBlock();
+                break;
+        }
+    }
+
+    void doLongBlock()
+    {
+        if (isLongBlock == true && Input.GetMouseButton(1))
+        {
+            _anim.SetTrigger("Block");
+            //Debug.Log("is hold blocking button" + GetComponent<PlayerAction>().PlayerStatus);
+        }
+        
+        if(isLongBlock == true && Input.GetMouseButtonUp(1))
+        {
+            GetComponent<PlayerAction>().PlayerStatus = 0;
+            isLongBlock = false;
+            GetComponent<PlayerAction>().doOnce = false;
+            //Debug.Log("release the blocking button" + GetComponent<PlayerAction>().PlayerStatus);
+        }
+    }
+
+    void doInstantBlock()
+    {
+        if (isInstantBlock == true)
+        {
+            if (beforeDoBlockTime > 0 && beforeBlock == false) // before do Action
+            {
+                _anim.SetTrigger("Block");
+                beforeDoBlockTime -= Time.deltaTime;
+            }
+            if (beforeDoBlockTime <= 0 && beforeBlock == false) //check before do atk action is finished
+            {
+                //GetComponent<PlayerStats>().readyToRestoreStaminaTime = GetComponent<PlayerStats>().setReadyToRestoreStaminaTime();
+                beforeBlock = true;
+            }
+            if (beforeBlock == true && DuringBlock == false)
+            {
+                if (DoBlockTime > 0 && DuringBlock == false) 
+                {
+                    DoBlockTime -= Time.deltaTime;
+                }
+                
+                if (DoBlockTime <= 0 && DuringBlock == false)
+                {
+                    DuringBlock = true;
+                }
+            }
+        }
+        if (DuringBlock == true)
+        {
+            playerActionType.PlayerStatus = 0;
+            playerActionType.doOnce = false;
+            isInstantBlock = false;
+            beforeDoBlockTime = 0.005f;
+            DoBlockTime = 0.15f;
+            beforeBlock = false;
+            DuringBlock = false;
+            Debug.Log("release the instant blocking button" + GetComponent<PlayerAction>().PlayerStatus);
         }
     }
 
@@ -88,27 +169,38 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 GetComponent<PlayerStats>().stamina -= 10;
                 GetComponent<PlayerStats>().readyToRestoreStaminaTime = GetComponent<PlayerStats>().setReadyToRestoreStaminaTime();
-                //Debug.Log("Before Action is Done");
-                // Debug.Log(GetComponent<PlayerStats>().stamina);
                 beforeDoATK = true;
+                causeDMGTime = 1.0f;
+                canCauseDmgByHeavyATK = true;
             }
+
+            #region cause damge logic
+            if(causeDMGTime >= 0f)
+            {
+                causeDMGTime -= Time.deltaTime;
+            }
+            if(causeDMGTime > 0f && causeDMGTime < 0.35f)
+            {
+                //Debug.Log("is it time to cause dmg");
+            }
+            if(causeDMGTime <= 0f)
+            {
+                canCauseDmgByHeavyATK = false;
+            }
+            #endregion
 
             if (beforeDoATK == true && duringDoATK == false) // do Action
             {
                 if (duringHAtkTime > 0 && duringDoATK == false) // doing attack action
                 {
-                   
-                    if (duringHAtkTime >= 0.5f && duringHAtkTime <= 0.7f)
+                    if (duringHAtkTime >= 0.5f)
                     {
-                        isHeavyHit = true;
                         _anim.SetTrigger("Heavy Attack");
                     }
-
                     duringHAtkTime -= Time.deltaTime;
                 }
                 if (duringHAtkTime <= 0 && duringDoATK == false)
                 {
-                    //Debug.Log("Doing Action is Done");
                     duringDoATK = true;
                 }
             }
@@ -121,7 +213,6 @@ public class PlayerBehaviour : MonoBehaviour
                 }
                 if (afterHAtkTime <= 0 && afterDoATK == false)
                 {
-                    //Debug.Log("After Action is Done");
                     afterDoATK = true;
                 }
             }
@@ -131,14 +222,13 @@ public class PlayerBehaviour : MonoBehaviour
         {
             beforeHAtkTime = 0.1f;
             duringHAtkTime = 0.5f;
-            afterHAtkTime = 1.0f;
+            afterHAtkTime = 1.6f; // set cooldown time for next attack
             isOnHeavyAction = false;
             beforeDoATK = false;
             duringDoATK = false;
             afterDoATK = false;
-            GetComponent<PlayerAction>().PlayerStatus = (int)ActionType.Idle;
-            GetComponent<PlayerAction>().doOnce = false;
-            isHeavyHit = false;
+            playerActionType.PlayerStatus = (int)ActionType.Idle;
+            playerActionType.doOnce = false;
         }
     }
 
@@ -156,16 +246,33 @@ public class PlayerBehaviour : MonoBehaviour
                 //GetComponent<PlayerStats>().readyToRestoreStaminaTime = GetComponent<PlayerStats>().setReadyToRestoreStaminaTime();
                 //Debug.Log("Before Action is Done");
                 beforeDoATK = true;
+                causeDMGTime = 1.0f;
+                canCauseDmgByLightATK = true;
             }
-           
-            if (beforeDoATK == true && duringDoATK == false) // do Action
+
+            #region cause damge logic
+            if (causeDMGTime >= 0f)
             {
-                
+                causeDMGTime -= Time.deltaTime;
+            }
+            if (causeDMGTime > 0f && causeDMGTime < 1.0f)
+            {
+                //Debug.Log("is it time to cause dmg");
+            }
+            if (causeDMGTime <= 0f)
+            {
+                canCauseDmgByLightATK = false;
+            }
+            #endregion
+
+            if (beforeDoATK == true && duringDoATK == false) // do Action
+            {     
                 if (duringLAtkTime > 0 && duringDoATK == false) // doing attack action
                 {
-                    isLightHit = true;
-                    _anim.SetTrigger("Light Attack");
-
+                    if(duringLAtkTime >= 0.5f)
+                    {
+                        _anim.SetTrigger("Light Attack");
+                    }
                     duringLAtkTime -= Time.deltaTime;
                 }
                 if (duringLAtkTime <= 0 && duringDoATK == false)
@@ -191,16 +298,15 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (afterDoATK == true || isOnLightAction == false) //reset all values
         {
-            beforeLAtkTime = 0.3f;
-            duringLAtkTime = 0.001f;
-            afterLAtkTime = 1.0f;
+            beforeLAtkTime = 0.1f;
+            duringLAtkTime = 0.5f;
+            afterLAtkTime = 0.8f; // set cooldown time for next attack
             isOnLightAction = false;
             beforeDoATK = false;
             duringDoATK = false;
             afterDoATK = false;
-            GetComponent<PlayerAction>().PlayerStatus = (int)ActionType.Idle;
-            GetComponent<PlayerAction>().doOnce = false;
-            isLightHit = false;
+            playerActionType.PlayerStatus = (int)ActionType.Idle;
+            playerActionType.doOnce = false;
         }
     }
 }
