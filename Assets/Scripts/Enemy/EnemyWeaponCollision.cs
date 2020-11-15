@@ -30,7 +30,7 @@ public class EnemyWeaponCollision : MonoBehaviour
             HeavyAtkKnockBackEnemy(player);
             playNormalBlockSound();
         }
-        Debug.Log(enemyBehaviour.causeDMGTime);
+        //Debug.Log(enemyBehaviour.causeDMGTime);
     }
 
     void playNormalBlockSound()
