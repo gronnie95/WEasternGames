@@ -17,6 +17,7 @@ public class Head : MonoBehaviour
         cameraReference = gameObject.GetComponent<Camera>();
         leftEarlobe = new Earlobe();
         rightEarlobe = new Earlobe();
+        HearSound(gameObject.GetComponent<AudioSource>());
     }
 
     // Update is called once per frame
@@ -35,6 +36,9 @@ public void UpdateEarlobePositions() {
 
     leftEarlobe.SetPosition(newLeftEarPosition);
     rightEarlobe.SetPosition(newRightEarPosition);
+}
+
+public void HearSound(AudioSource src) {
 }
 
 #region getters and setters

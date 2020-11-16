@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -132,7 +132,6 @@ GameObject:
   - component: {fileID: 466799888}
   - component: {fileID: 466799887}
   - component: {fileID: 466799886}
-  - component: {fileID: 466799885}
   m_Layer: 0
   m_Name: WallFront
   m_TagString: Untagged
@@ -140,19 +139,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &466799885
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 466799884}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &466799886
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -317,10 +303,10 @@ GameObject:
   m_Component:
   - component: {fileID: 583244522}
   - component: {fileID: 583244521}
+  - component: {fileID: 583244525}
   - component: {fileID: 583244520}
   - component: {fileID: 583244523}
   - component: {fileID: 583244524}
-  - component: {fileID: 583244525}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -476,8 +462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0ccdc487dc2c941be246b10f97f7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 0.15
+  height: 0.2
 --- !u!1 &596261245
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +507,7 @@ AudioSource:
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
-  BypassReverbZones: 1
+  BypassReverbZones: 0
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -551,7 +537,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
