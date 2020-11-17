@@ -4,123 +4,113 @@ using UnityEngine;
 
 public class WeaponCollision : MonoBehaviour
 {
-    public bool isLightHit = false;
-    public bool isHeavyHit = false;
     public float enemyLightAtkKnockBackTime = 0.2f;
     public float enemyHeavyAtkKnockBackTime = 0.4f;
-    public float heavyAtkDmgCoolDown = 0f;
     private bool isOnCombat = false;
 
     public GameObject player;
+    PlayerBehaviour playerBehaviour;
+    GameObject targetEnemy;
 
     void Start()
     {
         player = GameObject.Find("Player");
+        playerBehaviour = this.player.GetComponent<PlayerBehaviour>();
     }
 
     void Update()
     {
-        if(isLightHit == true)
+        if(targetEnemy != null)
         {
-            LightKnockBackEnemy(gameObject);
+            LightAtkKnockBackEnemy(targetEnemy);
         }
-        if (isHeavyHit == true)
+        if(targetEnemy != null)
         {
-            HeavyKnockBackEnemy(gameObject);  
+            HeavyAtkKnockBackEnemy(targetEnemy);  
         }
-        if (heavyAtkDmgCoolDown > 0)
-        {
-            heavyAtkDmgCoolDown -= Time.deltaTime;
-        }
-
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        //Debug.Log("Hit Enemy");  
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if(gameObject.tag == "Enemy")
+        if(other.gameObject.tag == "Enemy")
         {
-            if (PlayerBehaviour.isLightHit == true)
+            if (playerBehaviour.causeDMGTime > 0f && playerBehaviour.causeDMGTime < 1.0f)
             {
-                isLightHit = true;
-                isOnCombat = true;
-                //gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, Quaternion.LookRotation(-other.transform.forward.normalized), 1f);
-                Debug.Log("knock back");
+                if(playerBehaviour.canCauseDmgByLightATK == true)
+                {
+                    playerBehaviour.canCauseDmgByLightATK = false;
+                    isOnCombat = true;
+                    enemyLightAtkKnockBackTime = setEnemyLightAtkKnockBackTime();
+                    targetEnemy = other.gameObject;
+                    other.GetComponent<Enemy>().HP -= 30;
+                }
             }
 
-            if (PlayerBehaviour.isHeavyHit == true)
+            if (playerBehaviour.causeDMGTime > 0f && playerBehaviour.causeDMGTime < 0.35f)
             {
-                isHeavyHit = true;
-                isOnCombat = true;
-                //gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, Quaternion.LookRotation(-other.transform.forward.normalized), 1f);
-
-                Debug.Log("knock back");
+                if(playerBehaviour.canCauseDmgByHeavyATK == true)
+                {
+                    playerBehaviour.canCauseDmgByHeavyATK = false;
+                    isOnCombat = true;
+                    enemyLightAtkKnockBackTime = setEnemyHeavyAtkKnockBackTime();
+                    targetEnemy = other.gameObject;
+                    other.GetComponent<Enemy>().HP -= 50;
+                }
             }
-
-            Debug.Log(other.ToString());
-            Debug.Log("Hit Enemy");
-            
         }
     }
 
-    void LightKnockBackEnemy(GameObject enemy)
+    void LightAtkKnockBackEnemy(GameObject enemy)
     {
-        float Velocity = 0.1f;
-        if (enemyLightAtkKnockBackTime > 0 && isLightHit == true)
+        float Velocity = 2f;
+        if (enemyLightAtkKnockBackTime > 0)
         {
             enemyLightAtkKnockBackTime -= Time.deltaTime;
-            
-            Vector3 knockBackVector = (GameObject.Find("Player").transform.forward * Velocity).normalized;
+            Vector3 knockBackVector = (GameObject.Find("Player").transform.forward * Velocity * Time.deltaTime).normalized;
             enemy.GetComponent<Enemy>().enemyController.Move(knockBackVector);
+        }
+        if(enemyLightAtkKnockBackTime <= 0)
+        {
+            targetEnemy = null;
         }
         if(isOnCombat == true)
         {
+            isOnCombat = false;
             player.GetComponent<SwordCombat>().resetOutOfCombatTime = player.GetComponent<SwordCombat>().setOutOfCombatTime();
             player.GetComponent<SwordCombat>().isOnCombat = true;
-            enemy.GetComponent<Enemy>().HP -= 30;
-            isOnCombat = false;
-        }
-
-        if(enemyLightAtkKnockBackTime <= 0)
-        {
-            enemyLightAtkKnockBackTime = 0.2f;
-            isLightHit = false;
         }
     }
 
-    void HeavyKnockBackEnemy(GameObject enemy)
+    void HeavyAtkKnockBackEnemy(GameObject enemy)
     {
-        float Velocity = 0.2f;
-        if (enemyHeavyAtkKnockBackTime > 0 && isHeavyHit == true)
+        float Velocity = 5f;
+        if (enemyHeavyAtkKnockBackTime > 0)
         {
             enemyHeavyAtkKnockBackTime -= Time.deltaTime;
-            Vector3 knockBackVector = (GameObject.Find("Player").transform.forward * Velocity).normalized;
+            Vector3 knockBackVector = (GameObject.Find("Player").transform.forward * Velocity * Time.deltaTime).normalized;
             enemy.GetComponent<Enemy>().enemyController.Move(knockBackVector);
         }
-
-        if (isOnCombat == true && heavyAtkDmgCoolDown <= 0)
+        if(enemyHeavyAtkKnockBackTime <= 0)
         {
-            heavyAtkDmgCoolDown = setHeavyAtkCoolDown();
-            player.GetComponent<SwordCombat>().resetOutOfCombatTime = player.GetComponent<SwordCombat>().setOutOfCombatTime();
-            player.GetComponent<SwordCombat>().isOnCombat = true;
-            enemy.GetComponent<Enemy>().HP -= 50;
-            isOnCombat = false; 
+            targetEnemy = null;
         }
 
-        if (enemyHeavyAtkKnockBackTime <= 0)
+        if (isOnCombat == true)
         {
-            enemyHeavyAtkKnockBackTime = 0.2f;
-            isHeavyHit = false;
+            isOnCombat = false;
+            player.GetComponent<SwordCombat>().resetOutOfCombatTime = player.GetComponent<SwordCombat>().setOutOfCombatTime();
+            player.GetComponent<SwordCombat>().isOnCombat = true;
         }
     }
 
-    float setHeavyAtkCoolDown()
+    float setEnemyHeavyAtkKnockBackTime()
     {
-        return 1.0f;
+        return 0.2f;
+    }
+
+    float setEnemyLightAtkKnockBackTime()
+    {
+        return 0.1f;
     }
 }
 

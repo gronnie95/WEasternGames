@@ -8,6 +8,8 @@ TagManager:
   - flower_plant
   - boundary
   - Enemy
+  - PlayerWeapon
+  - EnemyWeapon
   layers:
   - Default
   - TransparentFX

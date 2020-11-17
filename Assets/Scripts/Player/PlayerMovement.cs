@@ -72,7 +72,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Sprint()
     {
-        if(GetComponent<PlayerBehaviour>().isOnLightAction == false && GetComponent<PlayerBehaviour>().isOnHeavyAction == false && GetComponent<PlayerStats>().stamina > 0)
+        if(GetComponent<PlayerBehaviour>().isOnLightAction == false && GetComponent<PlayerBehaviour>().isOnHeavyAction == false && GetComponent<PlayerStats>().stamina > 0 
+                && GetComponent<PlayerBehaviour>().isInstantBlock == false && GetComponent<PlayerBehaviour>().isLongBlock == false)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
@@ -162,6 +163,7 @@ public class PlayerMovement : MonoBehaviour
         //Normalized so that if two keys are pressed the character doesn't go faster
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
+        #region change player speed when on light/heavy attack
         /*
          * change player speed when on heavy attack
          */
@@ -177,64 +179,87 @@ public class PlayerMovement : MonoBehaviour
          */
         if (GetComponent<PlayerBehaviour>().isOnLightAction == true) 
         {
-            GetComponent<PlayerStats>().speed = 1f;
+            GetComponent<PlayerStats>().speed = 0f;
             isSprinting = false;
             _sprinting = false;
         }
 
+        /*
+         * reset speed
+         */
         if(GetComponent<PlayerBehaviour>().isOnHeavyAction == false && GetComponent<PlayerBehaviour>().isOnLightAction == false)
         {
             GetComponent<PlayerStats>().speed = 4f;
         }
+        #endregion
 
-
-        if (forwardPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
+        #region change player speed when on block action
+        if (GetComponent<PlayerBehaviour>().isInstantBlock == true)
         {
-            Sprint();
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + playerCamera.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            myController.Move(moveDir.normalized * GetComponent<PlayerStats>().speed * Time.deltaTime);
-            _zVel = _sprinting ? 2 : 1;
+            GetComponent<PlayerStats>().speed = 0.5f;
+            isSprinting = false;
+            _sprinting = false;
         }
 
-        if (leftPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
+        if (GetComponent<PlayerBehaviour>().isLongBlock == true)
         {
-            Sprint();
-            Vector3 moveVector = -this.playerCamera.transform.right.normalized * GetComponent<PlayerStats>().speed;
-            myController.Move(moveVector * Time.deltaTime);
-            _xVel = _sprinting ? -2 : -1;
+            GetComponent<PlayerStats>().speed = 0.5f;
+            isSprinting = false;
+            _sprinting = false;
+        }
+        #endregion
+
+        if (GetComponent<SwordCombat>().isLostBodyBalance == false && GetComponent<SwordCombat>().isStepBack == false)
+        {
+            if (forwardPressed)
+            {
+                Sprint();
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + playerCamera.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                myController.Move(moveDir.normalized * GetComponent<PlayerStats>().speed * Time.deltaTime);
+                _zVel = _sprinting ? 2 : 1;
+            }
+
+            if (leftPressed)
+            {
+                Sprint();
+                Vector3 moveVector = -this.playerCamera.transform.right.normalized * GetComponent<PlayerStats>().speed;
+                myController.Move(moveVector * Time.deltaTime);
+                _xVel = _sprinting ? -2 : -1;
+            }
+
+            /*
+            if (backPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
+            {
+                anim.SetBool("walking", true);
+                Sprint();
+                Vector3 moveVector = new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
+                myController.Move(moveVector * Time.deltaTime);
+                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(moveVector.normalized), 0.1f);
+                //Debug.Log("pressing S");
+                //this.transform.position += new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
+            }*/
+
+            if (rightPressed)
+            {
+                Sprint();
+                Vector3 moveVector = this.playerCamera.transform.right.normalized * GetComponent<PlayerStats>().speed;
+                myController.Move(moveVector * Time.deltaTime);
+                _xVel = _sprinting ? 2 : 1;
+            }
+
+            if (!leftPressed && !rightPressed)
+            {
+                _xVel = 0.0f;
+            }
+
+            if (!forwardPressed)
+            {
+                _zVel = 0.0f;
+            }
         }
 
-        /*
-        if (backPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
-        {
-            anim.SetBool("walking", true);
-            Sprint();
-            Vector3 moveVector = new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
-            myController.Move(moveVector * Time.deltaTime);
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(moveVector.normalized), 0.1f);
-            //Debug.Log("pressing S");
-            //this.transform.position += new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
-        }*/
-
-        if (rightPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
-        {
-            Sprint();
-            Vector3 moveVector = this.playerCamera.transform.right.normalized * GetComponent<PlayerStats>().speed;
-            myController.Move(moveVector * Time.deltaTime);
-            _xVel = _sprinting ? 2 : 1;
-        }
-
-        if (!leftPressed && !rightPressed)
-        {
-            _xVel = 0.0f;
-        }
-
-        if (!forwardPressed)
-        {
-            _zVel = 0.0f;
-        }
     }
 }
