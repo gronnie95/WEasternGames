@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public Transform playerCamera;
     private Animator anim;
+    private Rigidbody rigidbody;
 
     //Animator Values
     private int _zVelHash;
@@ -49,13 +50,14 @@ public class PlayerMovement : MonoBehaviour
         myController = GetComponent<CharacterController>();
 
         anim = GetComponent<Animator>();
+        rigidbody = GetComponent<Rigidbody>();
 
         _zVelHash = Animator.StringToHash("velZ");
         _xVelHash = Animator.StringToHash("velX");
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         bool forwardPressed = Input.GetKey(KeyCode.W);
         bool rightPressed = Input.GetKey(KeyCode.D);
@@ -64,8 +66,7 @@ public class PlayerMovement : MonoBehaviour
         bool runPressed = Input.GetKey(KeyCode.LeftShift);
 
         Movement(forwardPressed, rightPressed, leftPressed, backPressed, runPressed);
-        Jump();
-
+        //Debug.Log(Time.fixedDeltaTime);
         anim.SetFloat(_xVelHash, _xVel);
         anim.SetFloat(_zVelHash, _zVel);
     }
@@ -73,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
     private void Sprint()
     {
         if(GetComponent<PlayerBehaviour>().isOnLightAction == false && GetComponent<PlayerBehaviour>().isOnHeavyAction == false && GetComponent<PlayerStats>().stamina > 0 
-                && GetComponent<PlayerBehaviour>().isInstantBlock == false && GetComponent<PlayerBehaviour>().isLongBlock == false)
+                 && GetComponent<PlayerAction>().action != ActionType.SwordBlock)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
@@ -83,14 +84,14 @@ public class PlayerMovement : MonoBehaviour
 
             if (isAcclerationCoolDownOn == true && acclerationCoolDown >= 0) // accleration cool down
             {
-                acclerationCoolDown -= Time.deltaTime;
+                acclerationCoolDown -= Time.fixedDeltaTime;
             }
 
             if (isAcclerationCoolDownOn == true && acclerationTime >= 0) // player instant accleration 
             {
                 _sprinting = true;
                 GetComponent<PlayerStats>().speed = 15f;
-                acclerationTime -= Time.deltaTime;
+                acclerationTime -= Time.fixedDeltaTime;
             }
 
             if (acclerationCoolDown <= 0)
@@ -116,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 if(consumeStaminaSpeedTime > 0 && GameObject.Find("Player").transform.hasChanged == true)
                 {
-                    consumeStaminaSpeedTime -= Time.deltaTime;
+                    consumeStaminaSpeedTime -= Time.fixedDeltaTime;
                     //Debug.Log(GetComponent<PlayerStats>().stamina);
                 }
             }
@@ -135,25 +136,6 @@ public class PlayerMovement : MonoBehaviour
     float setConsumeStaminaTime()
     {
         return 0.1f;
-    }
-
-    public void Jump()
-    {
-        if (myController.isGrounded)
-        {
-            verticalVelocity = -gravity * Time.deltaTime; //have a little pressure on player to stick to the floor
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                verticalVelocity = jumpForce;
-            }
-        }
-        else
-        {
-            verticalVelocity -= gravity * Time.deltaTime;
-        }
-
-        Vector3 jumpVector = new Vector3(0, verticalVelocity, 0);
-        myController.Move(jumpVector * Time.deltaTime);
     }
 
     public void Movement(bool forwardPressed, bool rightPressed, bool leftPressed, bool backPressed, bool runPressed)
@@ -194,14 +176,7 @@ public class PlayerMovement : MonoBehaviour
         #endregion
 
         #region change player speed when on block action
-        if (GetComponent<PlayerBehaviour>().isInstantBlock == true)
-        {
-            GetComponent<PlayerStats>().speed = 0.5f;
-            isSprinting = false;
-            _sprinting = false;
-        }
-
-        if (GetComponent<PlayerBehaviour>().isLongBlock == true)
+        if (GetComponent<PlayerAction>().action == ActionType.SwordBlock)
         {
             GetComponent<PlayerStats>().speed = 0.5f;
             isSprinting = false;
@@ -209,57 +184,55 @@ public class PlayerMovement : MonoBehaviour
         }
         #endregion
 
-        if (GetComponent<SwordCombat>().isLostBodyBalance == false && GetComponent<SwordCombat>().isStepBack == false)
+
+        if (forwardPressed)
         {
-            if (forwardPressed)
-            {
-                Sprint();
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + playerCamera.eulerAngles.y;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
-                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                myController.Move(moveDir.normalized * GetComponent<PlayerStats>().speed * Time.deltaTime);
-                _zVel = _sprinting ? 2 : 1;
-            }
-
-            if (leftPressed)
-            {
-                Sprint();
-                Vector3 moveVector = -this.playerCamera.transform.right.normalized * GetComponent<PlayerStats>().speed;
-                myController.Move(moveVector * Time.deltaTime);
-                _xVel = _sprinting ? -2 : -1;
-            }
-
-            /*
-            if (backPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
-            {
-                anim.SetBool("walking", true);
-                Sprint();
-                Vector3 moveVector = new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
-                myController.Move(moveVector * Time.deltaTime);
-                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(moveVector.normalized), 0.1f);
-                //Debug.Log("pressing S");
-                //this.transform.position += new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
-            }*/
-
-            if (rightPressed)
-            {
-                Sprint();
-                Vector3 moveVector = this.playerCamera.transform.right.normalized * GetComponent<PlayerStats>().speed;
-                myController.Move(moveVector * Time.deltaTime);
-                _xVel = _sprinting ? 2 : 1;
-            }
-
-            if (!leftPressed && !rightPressed)
-            {
-                _xVel = 0.0f;
-            }
-
-            if (!forwardPressed)
-            {
-                _zVel = 0.0f;
-            }
+            Sprint();
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + playerCamera.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            rigidbody.MovePosition(rigidbody.position + moveDir.normalized * GetComponent<PlayerStats>().speed * Time.fixedDeltaTime);
+            _zVel = _sprinting ? 2 : 1;
         }
+
+        if (leftPressed)
+        {
+            Sprint();
+            Vector3 moveVector = this.playerCamera.transform.right.normalized * GetComponent<PlayerStats>().speed;
+            _xVel = _sprinting ? -2 : -1;
+        }
+
+        /*
+        if (backPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
+        {
+            anim.SetBool("walking", true);
+            Sprint();
+            Vector3 moveVector = new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
+            myController.Move(moveVector * Time.fixedDeltaTime);
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(moveVector.normalized), 0.1f);
+            //Debug.Log("pressing S");
+            //this.transform.position += new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
+        }*/
+
+        if (rightPressed)
+        {
+            Sprint();
+            Vector3 moveVector = this.playerCamera.transform.right.normalized * GetComponent<PlayerStats>().speed;
+            //myController.Move(moveVector * Time.fixedDeltaTime);
+            _xVel = _sprinting ? 2 : 1;
+        }
+
+        if (!leftPressed && !rightPressed)
+        {
+            _xVel = 0.0f;
+        }
+
+        if (!forwardPressed)
+        {
+            _zVel = 0.0f;
+        }
+
 
     }
 }

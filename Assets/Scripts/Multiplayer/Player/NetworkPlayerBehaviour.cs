@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class NetworkPlayerBehaviour : NetworkBehaviour
 {
-    public int playerAction;
+    ActionType playerAction;
     private NetworkAnimator _anim;
     
     public GameObject weapon;
@@ -36,7 +36,7 @@ public class NetworkPlayerBehaviour : NetworkBehaviour
     void Start()
     {
         _anim = GetComponent<NetworkAnimator>();
-        playerAction = GetComponent<PlayerAction>().PlayerStatus;
+        playerAction = GetComponent<PlayerAction>().action;
     }
 
     void Update()
@@ -45,7 +45,7 @@ public class NetworkPlayerBehaviour : NetworkBehaviour
         {
             return;
         }
-        playerAction = GetComponent<PlayerAction>().PlayerStatus;
+        playerAction = GetComponent<PlayerAction>().action;
 
         #region Debug
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -54,26 +54,26 @@ public class NetworkPlayerBehaviour : NetworkBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            GetComponent<PlayerAction>().PlayerStatus = 0;
+            GetComponent<PlayerAction>().action = 0;
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            GetComponent<PlayerAction>().PlayerStatus = 2;
+            GetComponent<PlayerAction>().action = 0;
         }
         #endregion
 
         switch (playerAction)
         {
-            case (int)ActionType.Idle:
+            case ActionType.Idle:
                 //Debug.Log(playerAction);
                 break;
 
-            case (int)ActionType.LightAttack:
+            case ActionType.LightAttack:
                 isOnLightAction = true;
                 doLightAttack();
                 break;
 
-            case (int)ActionType.HeavyAttack:
+            case ActionType.HeavyAttack:
                 isOnHeavyAction = true;
                 doHeavyAttack();
                 break;
@@ -140,8 +140,7 @@ public class NetworkPlayerBehaviour : NetworkBehaviour
             beforeDoATK = false;
             duringDoATK = false;
             afterDoATK = false;
-            GetComponent<PlayerAction>().PlayerStatus = (int)ActionType.Idle;
-            GetComponent<PlayerAction>().doOnce = false;
+            GetComponent<PlayerAction>().action = ActionType.Idle;
             isHeavyHit = false;
         }
     }
@@ -202,8 +201,7 @@ public class NetworkPlayerBehaviour : NetworkBehaviour
             beforeDoATK = false;
             duringDoATK = false;
             afterDoATK = false;
-            GetComponent<PlayerAction>().PlayerStatus = (int)ActionType.Idle;
-            GetComponent<PlayerAction>().doOnce = false;
+            GetComponent<PlayerAction>().action = (int)ActionType.Idle;
             isLightHit = false;
         }
     }

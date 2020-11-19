@@ -5,22 +5,7 @@ using UnityEngine;
 public class EnemyBehaviour : MonoBehaviour
 {
     private Animator _anim;
-    private bool beforeDoATK = false;
-    private bool duringDoATK = false;
-    private bool afterDoATK = false;
 
-    public bool canCauseDmgByLightATK = false;
-    public bool canCauseDmgByHeavyATK = false;
-    public float causeDMGTime = 0;
-
-    #region Heavy Attack
-    public static bool isHeavyHit = false;
-    float beforeHAtkTime = 0.1f;
-    float duringHAtkTime = 1.0f;
-    float afterHAtkTime = 2.0f; // set cooldown time for next attack
-    #endregion
-
-    private GameObject[] player;
     private GameObject testPlayer;
     public float playerDistance;
     EnemyAction enemyAction;
@@ -28,96 +13,88 @@ public class EnemyBehaviour : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
-        player = GameObject.FindGameObjectsWithTag("Player");
         testPlayer = GameObject.Find("Player");
         enemyAction = this.GetComponent<EnemyAction>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        //Debug.Log(causeDMGTime);
-        enemyAction.action = (int)ActionType.HeavyAttack;
-        foreach (GameObject pl in player) //if multiplayer
+        playerDistance = Vector3.Distance(this.transform.position, testPlayer.transform.position);
+        if (playerDistance < 5)
         {
-            playerDistance = Vector3.Distance(this.transform.position, pl.transform.position);
-            if(playerDistance < 5 && enemyAction.action == (int)ActionType.HeavyAttack)
-            {
-                this.transform.LookAt(new Vector3(pl.transform.position.x, this.transform.position.y, pl.transform.position.z)); // only rotate y axis
-                doHeavyAttack(pl);
-            }
+            this.transform.LookAt(new Vector3(testPlayer.transform.position.x, this.transform.position.y, testPlayer.transform.position.z)); // only rotate y axis
+            
         }
-    }
+    } 
 
-    void doHeavyAttack(GameObject pl)
-    {
-        if (beforeHAtkTime > 0 && beforeDoATK == false) // before do Action
-        {
-            beforeHAtkTime -= Time.deltaTime;
-        }
-        if (beforeHAtkTime <= 0 && beforeDoATK == false) //check before do atk action is finished
-        {
-            beforeDoATK = true;
-            causeDMGTime = 2.0f;
-            testPlayer.GetComponent<SwordCombat>().danger.Play(); // play warning sound
-        }
 
-        #region cause damge logic
-        if (causeDMGTime >= 0f)
-        {
-            causeDMGTime -= Time.deltaTime;
-        }
-        if (causeDMGTime >= 0f && causeDMGTime <= 1.5f)
-        {
-            canCauseDmgByHeavyATK = true;
-            //Debug.Log("is it time to cause dmg");
-        }
-        if (causeDMGTime <= 0f)
-        {
-            canCauseDmgByHeavyATK = false;
-        }
-        #endregion
+    //void doHeavyAttack(GameObject pl)
+    //{
+    //    if (beforeHAtkTime > 0 && beforeDoATK == false) // before start doing action
+    //    {
+    //        beforeHAtkTime -= Time.fixedDeltaTime;
+    //    }
+    //    if (beforeHAtkTime <= 0 && beforeDoATK == false) //initialise attack data
+    //    {
+    //        duringHAtkTime = 2.0f;
+    //        afterHAtkTime = 2.0f; // set cooldown time for next attack
+    //        causeDMGTime = 2.0f;
 
-        if (beforeDoATK == true && duringDoATK == false) // do Action
-        {
-            if (duringHAtkTime > 0 && duringDoATK == false) // doing attack action
-            {
+    //        beforeDoATK = true;
+    //        testPlayer.GetComponent<SwordCombat>().danger.Play(); // play warning sound
+    //        _anim.SetTrigger("Heavy Attack");
 
-                if (duringHAtkTime >= 1.0f)
-                {
-                    isHeavyHit = true;
-                    _anim.SetTrigger("Heavy Attack");
-                }
+    //        canCauseDmgByHeavyATK = true;
+    //    }
 
-                duringHAtkTime -= Time.deltaTime;
-            }
-            if (duringHAtkTime <= 0 && duringDoATK == false)
-            {
-                duringDoATK = true;
-            }
-        }
+    //    #region cause damge logic
+    //    if (causeDMGTime >= 0f)
+    //    {
+    //        causeDMGTime -= Time.fixedDeltaTime;
+    //    }
+    //    if (causeDMGTime >= 0f && causeDMGTime <= 2.0f)
+    //    {
+    //        //Debug.Log("is it time to cause dmg");
+    //    }
+    //    if (causeDMGTime <= 0f || duringDoATK == true)
+    //    {
+    //        canCauseDmgByHeavyATK = false;
+    //    }
+    //    #endregion
 
-        if (duringDoATK == true && afterDoATK == false) // finished one loop of action
-        {
-            if (afterHAtkTime > 0 && afterDoATK == false)
-            {
-                afterHAtkTime -= Time.deltaTime;
-            }
-            if (afterHAtkTime <= 0 && afterDoATK == false)
-            {
-                afterDoATK = true;
-            }
-        }
+    //    if (beforeDoATK == true && duringDoATK == false) // doing the Action
+    //    {
+    //        if (duringHAtkTime > 0 && duringDoATK == false) // doing attack action
+    //        {
+    //            duringHAtkTime -= Time.fixedDeltaTime;
+    //        }
+    //        if (duringHAtkTime <= 0 && duringDoATK == false)
+    //        {
+    //            duringDoATK = true;
+    //        }
+    //    }
 
-        if (afterDoATK == true) //reset all values
-        {
-            beforeHAtkTime = 0.1f;
-            duringHAtkTime = 1.0f;
-            afterHAtkTime = 2.0f; // set cooldown time for next attack
-            beforeDoATK = false;
-            duringDoATK = false;
-            afterDoATK = false;
-            isHeavyHit = false;
-        }
-    }
+    //    if (duringDoATK == true && afterDoATK == false) // delay time for next action
+    //    {
+    //        if (afterHAtkTime > 0 && afterDoATK == false)
+    //        {
+    //            afterHAtkTime -= Time.fixedDeltaTime;
+    //        }
+    //        if (afterHAtkTime <= 0 && afterDoATK == false)
+    //        {
+    //            afterDoATK = true;
+    //        }
+    //    }
+
+    //    if (afterDoATK == true) //reset all values
+    //    {
+    //        beforeHAtkTime = 0.1f;
+    //        duringHAtkTime = 2.0f;
+    //        afterHAtkTime = 2.0f; // set cooldown time for next attack
+    //        beforeDoATK = false;
+    //        duringDoATK = false;
+    //        afterDoATK = false;
+    //    }
+    //}
  
 }
