@@ -13,12 +13,19 @@ public class PlayerStats : MonoBehaviour
     public Stamina staminaUI;
     private float maxStamina;
     private float restorePerSecond;
+    private bool isDead = false;
     #endregion
 
     #region Trigger
     public float readyToRestoreStaminaTime = 0;
     private float RestoreStaminaTime = 0;
     private bool isRestoreStamina = false;
+    #endregion
+
+    #region Events
+    public delegate void OnPlayerDeath();
+    
+    public event OnPlayerDeath death;
     #endregion
 
 
@@ -53,8 +60,12 @@ public class PlayerStats : MonoBehaviour
 
     void loseCondition()
     {
-        if (health <= 0)
+        if (!isDead && health <= 0)
         {
+            isDead = true;
+            // run death event
+            death?.Invoke();
+
             GetComponent<SwordCombat>().enabled = false;
             GetComponent<PlayerBehaviour>().enabled = false;
             GetComponent<PlayerMovement>().enabled = false;
