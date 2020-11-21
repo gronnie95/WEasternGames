@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    public int playerAction;
+    ActionType playerAction;
     private Animator _anim;
     
     public GameObject weapon;
@@ -34,128 +34,22 @@ public class PlayerBehaviour : MonoBehaviour
     public float afterHAtkTime = 1.6f;
     #endregion
 
-    #region Instant Block
-    public bool isInstantBlock = false;
-    float beforeDoBlockTime = 0.005f;
-    float DoBlockTime = 0.15f;
-    private bool beforeBlock = false;
-    private bool DuringBlock = false;
-    #endregion
-
-    #region Long Block
-    public bool isLongBlock = false;
-    #endregion
-
     PlayerAction playerActionType;
 
     void Start()
     {
         _anim = GetComponent<Animator>();
-        playerAction = GetComponent<PlayerAction>().PlayerStatus;
+        playerAction = GetComponent<PlayerAction>().action;
         playerActionType = this.GetComponent<PlayerAction>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        playerAction = playerActionType.PlayerStatus;
-        #region Debug
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Debug.Log(playerAction);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            playerActionType.PlayerStatus = 0;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            playerActionType.PlayerStatus = 2;
-        }
-        #endregion
-
-        switch (playerAction)
-        {
-            case (int)ActionType.Idle:
-                break;
-
-            case (int)ActionType.LightAttack:
-                isOnLightAction = true;
-                doLightAttack();
-                break;
-
-            case (int)ActionType.HeavyAttack:
-                isOnHeavyAction = true;
-                doHeavyAttack();
-                break;
-
-            case (int)ActionType.InstantBlock:
-                isInstantBlock = true;
-                doInstantBlock();
-                break;
-
-            case (int)ActionType.LongBlock:
-                isLongBlock = true;
-                doLongBlock();
-                break;
-        }
-    }
-
-    void doLongBlock()
-    {
-        if (isLongBlock == true && Input.GetMouseButton(1))
-        {
-            _anim.SetTrigger("Block");
-            //Debug.Log("is hold blocking button" + GetComponent<PlayerAction>().PlayerStatus);
-        }
         
-        if(isLongBlock == true && Input.GetMouseButtonUp(1))
-        {
-            GetComponent<PlayerAction>().PlayerStatus = 0;
-            isLongBlock = false;
-            GetComponent<PlayerAction>().doOnce = false;
-            //Debug.Log("release the blocking button" + GetComponent<PlayerAction>().PlayerStatus);
-        }
     }
 
-    void doInstantBlock()
-    {
-        if (isInstantBlock == true)
-        {
-            if (beforeDoBlockTime > 0 && beforeBlock == false) // before do Action
-            {
-                _anim.SetTrigger("Block");
-                beforeDoBlockTime -= Time.deltaTime;
-            }
-            if (beforeDoBlockTime <= 0 && beforeBlock == false) //check before do atk action is finished
-            {
-                //GetComponent<PlayerStats>().readyToRestoreStaminaTime = GetComponent<PlayerStats>().setReadyToRestoreStaminaTime();
-                beforeBlock = true;
-            }
-            if (beforeBlock == true && DuringBlock == false)
-            {
-                if (DoBlockTime > 0 && DuringBlock == false) 
-                {
-                    DoBlockTime -= Time.deltaTime;
-                }
-                
-                if (DoBlockTime <= 0 && DuringBlock == false)
-                {
-                    DuringBlock = true;
-                }
-            }
-        }
-        if (DuringBlock == true)
-        {
-            playerActionType.PlayerStatus = 0;
-            playerActionType.doOnce = false;
-            isInstantBlock = false;
-            beforeDoBlockTime = 0.005f;
-            DoBlockTime = 0.15f;
-            beforeBlock = false;
-            DuringBlock = false;
-            Debug.Log("release the instant blocking button" + GetComponent<PlayerAction>().PlayerStatus);
-        }
-    }
+
+
 
     private void doHeavyAttack()
     {
@@ -227,8 +121,7 @@ public class PlayerBehaviour : MonoBehaviour
             beforeDoATK = false;
             duringDoATK = false;
             afterDoATK = false;
-            playerActionType.PlayerStatus = (int)ActionType.Idle;
-            playerActionType.doOnce = false;
+            playerActionType.action = ActionType.Idle;
         }
     }
 
@@ -305,8 +198,7 @@ public class PlayerBehaviour : MonoBehaviour
             beforeDoATK = false;
             duringDoATK = false;
             afterDoATK = false;
-            playerActionType.PlayerStatus = (int)ActionType.Idle;
-            playerActionType.doOnce = false;
+            playerActionType.action = ActionType.Idle;
         }
     }
 }

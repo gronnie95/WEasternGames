@@ -48,7 +48,7 @@ public class SwordCombat : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         DetectAttack();
         ResetOutOfCombat();
@@ -66,7 +66,7 @@ public class SwordCombat : MonoBehaviour
         }
         if (resetOutOfCombatTime > 0)
         {
-            resetOutOfCombatTime -= Time.deltaTime;
+            resetOutOfCombatTime -= Time.fixedDeltaTime;
         }
         if (resetOutOfCombatTime <= 0)
         {
@@ -96,7 +96,7 @@ public class SwordCombat : MonoBehaviour
                 }
                 if (isEnemyAttack == true && enemyAttackTimer <= enemyAttackCoolDown)
                 {
-                    enemyAttackTimer += Time.deltaTime;
+                    enemyAttackTimer += Time.fixedDeltaTime;
                 }
                 if (!danger.isPlaying && isEnemyAttack == true && enemyAttackTimer >= enemyAttackCoolDown)
                 {
@@ -105,7 +105,7 @@ public class SwordCombat : MonoBehaviour
                 }
                 Attack();
                 normalBlockKnockBackFromHeavyAttack(2);
-                KnockBackPlayer();
+                //KnockBackPlayer();
             }
         }
     }
@@ -189,32 +189,32 @@ public class SwordCombat : MonoBehaviour
 
     }
 
-    void KnockBackPlayer()
-    {
-        if(player.GetComponent<PlayerMovement>().isOnKnockBack == true)
-        {
-            player.GetComponent<PlayerMovement>().isOnKnockBack = false;
-            isLostBodyBalance = true;
-            knockBackTime = setKnockBackTime();
-            resetBodyBalanceTime = setBodyBalanceTime();
-        }
-        if(knockBackTime > 0)
-        {
-            knockBackTime -= Time.deltaTime;
-            Velocity = knockBackForce;
-            Vector3 knockBackVector = -player.transform.forward * knockBackForce;
-            player.GetComponent<PlayerMovement>().myController.Move(knockBackVector);
-        }
-        if(resetBodyBalanceTime > 0)
-        {
-            resetBodyBalanceTime -= Time.deltaTime;
-        }
-        if(resetBodyBalanceTime <= 0 && isLostBodyBalance == true)
-        {
-            isLostBodyBalance = false;
-        }
-        //Debug.Log("reset body balance" + resetBodyBalanceTime);
-    }
+    //void KnockBackPlayer()
+    //{
+    //    if(player.GetComponent<PlayerMovement>().isOnKnockBack == true)
+    //    {
+    //        player.GetComponent<PlayerMovement>().isOnKnockBack = false;
+    //        isLostBodyBalance = true;
+    //        knockBackTime = setKnockBackTime();
+    //        resetBodyBalanceTime = setBodyBalanceTime();
+    //    }
+    //    if(knockBackTime > 0)
+    //    {
+    //        knockBackTime -= Time.fixedDeltaTime;
+    //        Velocity = knockBackForce;
+    //        Vector3 knockBackVector = -player.transform.forward * knockBackForce;
+    //        player.GetComponent<PlayerMovement>().myController.Move(knockBackVector);
+    //    }
+    //    if(resetBodyBalanceTime > 0)
+    //    {
+    //        resetBodyBalanceTime -= Time.fixedDeltaTime;
+    //    }
+    //    if(resetBodyBalanceTime <= 0 && isLostBodyBalance == true)
+    //    {
+    //        isLostBodyBalance = false;
+    //    }
+    //    //Debug.Log("reset body balance" + resetBodyBalanceTime);
+    //}
 
     private float setKnockBackTime()
     {
@@ -237,14 +237,14 @@ public class SwordCombat : MonoBehaviour
         }
         if (knockBackTime > 0)
         {
-             knockBackTime -= Time.deltaTime;
+             knockBackTime -= Time.fixedDeltaTime;
              Velocity = forceVelocity;
              Vector3 knockBackVector = -player.transform.forward * knockBackForce;
              player.GetComponent<PlayerMovement>().myController.Move(knockBackVector);
         }
         if (resetBodyBalanceTime > 0)
         {
-             resetBodyBalanceTime -= Time.deltaTime;
+             resetBodyBalanceTime -= Time.fixedDeltaTime;
         }
         if (resetBodyBalanceTime <= 0 && isStepBack == true)
         {

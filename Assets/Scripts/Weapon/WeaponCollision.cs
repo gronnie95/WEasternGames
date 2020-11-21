@@ -9,108 +9,104 @@ public class WeaponCollision : MonoBehaviour
     private bool isOnCombat = false;
 
     public GameObject player;
-    PlayerBehaviour playerBehaviour;
+    public PlayerAction playerAction;
     GameObject targetEnemy;
 
     void Start()
     {
         player = GameObject.Find("Player");
-        playerBehaviour = this.player.GetComponent<PlayerBehaviour>();
+        playerAction = this.player.GetComponent<PlayerAction>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if(targetEnemy != null)
-        {
-            LightAtkKnockBackEnemy(targetEnemy);
-        }
-        if(targetEnemy != null)
-        {
-            HeavyAtkKnockBackEnemy(targetEnemy);  
-        }
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if(other.gameObject.tag == "Enemy")
-        {
-            if (playerBehaviour.causeDMGTime > 0f && playerBehaviour.causeDMGTime < 1.0f)
-            {
-                if(playerBehaviour.canCauseDmgByLightATK == true)
-                {
-                    playerBehaviour.canCauseDmgByLightATK = false;
-                    isOnCombat = true;
-                    enemyLightAtkKnockBackTime = setEnemyLightAtkKnockBackTime();
-                    targetEnemy = other.gameObject;
-                    other.GetComponent<Enemy>().HP -= 30;
-                }
-            }
-
-            if (playerBehaviour.causeDMGTime > 0f && playerBehaviour.causeDMGTime < 0.35f)
-            {
-                if(playerBehaviour.canCauseDmgByHeavyATK == true)
-                {
-                    playerBehaviour.canCauseDmgByHeavyATK = false;
-                    isOnCombat = true;
-                    enemyLightAtkKnockBackTime = setEnemyHeavyAtkKnockBackTime();
-                    targetEnemy = other.gameObject;
-                    other.GetComponent<Enemy>().HP -= 50;
-                }
-            }
-        }
     }
 
-    void LightAtkKnockBackEnemy(GameObject enemy)
-    {
-        float Velocity = 2f;
-        if (enemyLightAtkKnockBackTime > 0)
-        {
-            enemyLightAtkKnockBackTime -= Time.deltaTime;
-            Vector3 knockBackVector = (GameObject.Find("Player").transform.forward * Velocity * Time.deltaTime).normalized;
-            enemy.GetComponent<Enemy>().enemyController.Move(knockBackVector);
-        }
-        if(enemyLightAtkKnockBackTime <= 0)
-        {
-            targetEnemy = null;
-        }
-        if(isOnCombat == true)
-        {
-            isOnCombat = false;
-            player.GetComponent<SwordCombat>().resetOutOfCombatTime = player.GetComponent<SwordCombat>().setOutOfCombatTime();
-            player.GetComponent<SwordCombat>().isOnCombat = true;
-        }
-    }
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if(other.gameObject.tag == "Enemy")
+    //    {
+    //        if (playerBehaviour.causeDMGTime > 0f && playerBehaviour.causeDMGTime < 1.0f)
+    //        {
+    //            if(playerBehaviour.canCauseDmgByLightATK == true)
+    //            {
+    //                playerBehaviour.canCauseDmgByLightATK = false;
+    //                isOnCombat = true;
+    //                enemyLightAtkKnockBackTime = setEnemyLightAtkKnockBackTime();
+    //                targetEnemy = other.gameObject;
+    //                other.GetComponent<Enemy>().HP -= 30;
+    //            }
+    //        }
 
-    void HeavyAtkKnockBackEnemy(GameObject enemy)
-    {
-        float Velocity = 5f;
-        if (enemyHeavyAtkKnockBackTime > 0)
-        {
-            enemyHeavyAtkKnockBackTime -= Time.deltaTime;
-            Vector3 knockBackVector = (GameObject.Find("Player").transform.forward * Velocity * Time.deltaTime).normalized;
-            enemy.GetComponent<Enemy>().enemyController.Move(knockBackVector);
-        }
-        if(enemyHeavyAtkKnockBackTime <= 0)
-        {
-            targetEnemy = null;
-        }
+    //        if (playerBehaviour.causeDMGTime > 0f && playerBehaviour.causeDMGTime < 0.35f)
+    //        {
+    //            if(playerBehaviour.canCauseDmgByHeavyATK == true)
+    //            {
+    //                playerBehaviour.canCauseDmgByHeavyATK = false;
+    //                isOnCombat = true;
+    //                enemyLightAtkKnockBackTime = setEnemyHeavyAtkKnockBackTime();
+    //                targetEnemy = other.gameObject;
+    //                other.GetComponent<Enemy>().HP -= 50;
+    //            }
+    //        }
+    //    }
+    //}
 
-        if (isOnCombat == true)
-        {
-            isOnCombat = false;
-            player.GetComponent<SwordCombat>().resetOutOfCombatTime = player.GetComponent<SwordCombat>().setOutOfCombatTime();
-            player.GetComponent<SwordCombat>().isOnCombat = true;
-        }
-    }
+    //void LightAtkKnockBackEnemy(GameObject enemy)
+    //{
+    //    float Velocity = 2f;
+    //    if (enemyLightAtkKnockBackTime > 0)
+    //    {
+    //        enemyLightAtkKnockBackTime -= Time.fixedDeltaTime;
+    //        Vector3 knockBackVector = (GameObject.Find("Player").transform.forward * Velocity * Time.fixedDeltaTime).normalized;
+    //        enemy.GetComponent<Enemy>().enemyController.Move(knockBackVector);
+    //    }
+    //    if(enemyLightAtkKnockBackTime <= 0)
+    //    {
+    //        targetEnemy = null;
+    //    }
+    //    if(isOnCombat == true)
+    //    {
+    //        isOnCombat = false;
+    //        player.GetComponent<SwordCombat>().resetOutOfCombatTime = player.GetComponent<SwordCombat>().setOutOfCombatTime();
+    //        player.GetComponent<SwordCombat>().isOnCombat = true;
+    //    }
+    //}
 
-    float setEnemyHeavyAtkKnockBackTime()
-    {
-        return 0.2f;
-    }
+    //void HeavyAtkKnockBackEnemy(GameObject enemy)
+    //{
+    //    float Velocity = 5f;
+    //    if (enemyHeavyAtkKnockBackTime > 0)
+    //    {
+    //        enemyHeavyAtkKnockBackTime -= Time.fixedDeltaTime;
+    //        Vector3 knockBackVector = (GameObject.Find("Player").transform.forward * Velocity * Time.fixedDeltaTime).normalized;
+    //        enemy.GetComponent<Enemy>().enemyController.Move(knockBackVector);
+    //    }
+    //    if(enemyHeavyAtkKnockBackTime <= 0)
+    //    {
+    //        targetEnemy = null;
+    //    }
 
-    float setEnemyLightAtkKnockBackTime()
-    {
-        return 0.1f;
-    }
+    //    if (isOnCombat == true)
+    //    {
+    //        isOnCombat = false;
+    //        player.GetComponent<SwordCombat>().resetOutOfCombatTime = player.GetComponent<SwordCombat>().setOutOfCombatTime();
+    //        player.GetComponent<SwordCombat>().isOnCombat = true;
+    //    }
+    //}
+
+    //float setEnemyHeavyAtkKnockBackTime()
+    //{
+    //    return 0.2f;
+    //}
+
+    //float setEnemyLightAtkKnockBackTime()
+    //{
+    //    return 0.1f;
+    //}
 }
 

@@ -3,101 +3,107 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum ActionType
+public enum ActionType
 {
     Idle,
+    Jump,
     LightAttack,
     HeavyAttack,
-    InstantBlock,
-    LongBlock,
+    SwordBlock,
 }
 
 public class PlayerAction : MonoBehaviour
 {
-    public int PlayerStatus;
-    private float clickStartTime;
-    public bool doOnce;
-    public Animator _anim;
+    public ActionType action;
 
-    private void Start()
+    private Animator _anim;
+    PlayerJump playerJump;
+    DoubleJump doubleJump;
+
+
+    #region Sword Block
+    public bool isPerfectBlock = false;
+    public bool isKeepBlocking = false;
+    public bool isBlockingEnd = false;
+    public bool isImpact = false;
+    #endregion
+
+    private void Awake()
     {
-        doOnce = false;
-        PlayerStatus = 0;
-        clickStartTime = 0;
+        action = ActionType.Idle;
         _anim = GetComponent<Animator>();
     }
 
     void Update()
     {
-        if (GetComponent<SwordCombat>().isLostBodyBalance == false && GetComponent<SwordCombat>().isStepBack == false)
+        switch (action)
         {
-            AttackType();
-            DefenseType();
+            case ActionType.Idle:
+                break;
+
+            case ActionType.LightAttack:
+
+                break;
+
+            case ActionType.HeavyAttack:
+
+                break;
+
+            case ActionType.SwordBlock:
+                Block();
+                action = ActionType.Idle;
+                break;
+
+            case ActionType.Jump:
+                Jump();
+                action = ActionType.Idle;
+                break;
         }
     }
 
-    void AttackType()
+    void Block()
     {
-        if (Input.GetMouseButtonDown(0)) 
-        {
-            clickStartTime = Time.time; //record the clicking time
-        }
-
-        if (Input.GetMouseButton(0) && doOnce == false) //Heavy Attack
-        {
-            float onHoldTime = Time.time - clickStartTime;
-
-            if (onHoldTime >= 0.4f)
-            {
-                PlayerStatus = (int)ActionType.HeavyAttack;
-                Debug.Log(PlayerStatus);
-                doOnce = true;
-            } 
-        }
-
-        if (Input.GetMouseButtonUp(0) && doOnce == false) // Light Attack
-        {
-            float onHoldTime = Time.time - clickStartTime;
-
-            if (onHoldTime < 0.2f)
-            {
-                PlayerStatus = (int)ActionType.LightAttack;
-                Debug.Log(PlayerStatus);
-                doOnce = true;
-                
-            }
-        }
+        isKeepBlocking = true;
+        _anim.SetTrigger("Block");
     }
 
-    void DefenseType()
+    void Jump()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            clickStartTime = Time.time; //record the clicking time
-        }
-
-        if (Input.GetMouseButton(1) && doOnce == false) //Long Block
-        {
-            float onHoldTime = Time.time - clickStartTime;
-
-            if (onHoldTime >= 0.2f)
-            {
-                PlayerStatus = (int)ActionType.LongBlock;
-                Debug.Log(PlayerStatus);
-                doOnce = true;
-            }
-        }
-
-        if (Input.GetMouseButtonUp(1) && doOnce == false) // Instant Block
-        {
-            float onHoldTime = Time.time - clickStartTime;
-
-            if (onHoldTime < 0.2f)
-            {
-                PlayerStatus = (int)ActionType.InstantBlock;
-                Debug.Log("pressed instant block button" + PlayerStatus);
-                doOnce = true;
-            }
-        }
+        _anim.SetTrigger("Jump");
     }
+
+    //void AttackType()
+    //{
+    //    if (Input.GetMouseButtonDown(0)) 
+    //    {
+    //        clickStartTime = Time.time; //record the clicking time
+    //    }
+
+    //    if (Input.GetMouseButton(0) && doOnce == false) //Heavy Attack
+    //    {
+    //        float onHoldTime = Time.time - clickStartTime;
+
+    //        if (onHoldTime >= 0.4f)
+    //        {
+    //            PlayerStatus = (int)ActionType.HeavyAttack;
+    //            Debug.Log(PlayerStatus);
+    //            doOnce = true;
+    //        } 
+    //    }
+
+    //    if (Input.GetMouseButtonUp(0) && doOnce == false) // Light Attack
+    //    {
+    //        float onHoldTime = Time.time - clickStartTime;
+
+    //        if (onHoldTime < 0.2f)
+    //        {
+    //            PlayerStatus = (int)ActionType.LightAttack;
+    //            Debug.Log(PlayerStatus);
+    //            doOnce = true;
+
+    //        }
+    //    }
+    //}
+
+
 }
