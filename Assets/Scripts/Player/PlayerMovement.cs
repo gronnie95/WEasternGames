@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
                 isSprinting = true;
                 isAcclerationCoolDownOn = true;
             }
-
+            
             if (isAcclerationCoolDownOn == true && acclerationCoolDown >= 0) // accleration cool down
             {
                 acclerationCoolDown -= Time.fixedDeltaTime;
