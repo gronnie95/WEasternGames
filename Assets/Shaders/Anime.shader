@@ -5,6 +5,11 @@ Shader "Anime/Anime"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _ShadedTex ("Shaded Texture", 2D) = "white" {}
+        _ILMTex ("ILM Texture", 2D) = "white" {}
+        _ShadingFactor ("Shading Factor", Range(0,1)) = 0
+        _Brightness ("Brightness", Range(0,1)) = 1
+        _AmbientLight ("Ambient Light", Range(0,1)) = 0
     }
     SubShader
     {
@@ -35,7 +40,39 @@ Shader "Anime/Anime"
             };
 
             sampler2D _MainTex;
+            sampler2D _ShadedTex;
+            sampler2D _ILMTex;
             float4 _MainTex_ST;
+            float _ShadingFactor;
+            float _Brightness;
+            float _AmbientLight;
+
+            float remap(float value) {
+                float range = _Brightness - _AmbientLight;
+                float newValue;
+
+                if (range < 0) {
+                    range = 0;
+                }
+
+                return _AmbientLight + value*range;
+            }
+
+            float calculateLightValue(v2f i) {
+                float3 sunlight = _WorldSpaceLightPos0.xyz;
+                float3 secondDirectionalLight = float3(0,1,0);
+
+                float dotProduct_0 = clamp(dot(normalize(i.fragmentNormal), normalize(sunlight)), 0, 1);
+                float dotProduct_1 = clamp(dot(normalize(i.fragmentNormal), normalize(secondDirectionalLight)), 0, 1);
+
+                float totalLight = dotProduct_0 + dotProduct_1;
+
+                totalLight = remap(totalLight);
+
+                totalLight += _ShadingFactor;
+
+                return totalLight;
+            }
 
             v2f vert (appdata v)
             {
@@ -48,21 +85,22 @@ Shader "Anime/Anime"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
-                float dotProduct = dot(normalize(i.fragmentNormal), normalize(_WorldSpaceLightPos0.xyz));
-                float lightValue = 1;
+                // sample the textures
+                fixed4 baseColor = tex2D(_MainTex, i.uv);
+                fixed4 shadedColor = tex2D(_ShadedTex, i.uv);
+                fixed4 ILMColor = tex2D(_ILMTex, i.uv);
+        
+                fixed4 result;
 
-                //dotProduct = pow(dotProduct, 3);
-
-                if (dotProduct < 0.2) {
-                    lightValue = 0.2;
+                float lightValue = calculateLightValue(i);
+                
+                if (lightValue < 1-ILMColor.g) {
+                    result = shadedColor;
                 } else {
-                    //lightValue = 0.2 + (pow(pow(((dotProduct-0.2)/0.8),0.1),3) * 0.8);
-                    lightValue = 0.2 + (pow(((dotProduct-0.2)/0.8),0.14) * 0.8);
+                    result = baseColor;
                 }
 
-                return col * lightValue;
+                return result;
             }
             ENDCG
         }
