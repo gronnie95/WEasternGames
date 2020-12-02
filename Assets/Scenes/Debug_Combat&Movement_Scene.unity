@@ -1747,7 +1747,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534507852}
-  m_LocalRotation: {x: -0.12797649, y: 0.000000017958556, z: 0.000000006222187, w: -0.99177724}
+  m_LocalRotation: {x: -0.12797649, y: -0.000000020199712, z: 0.000000011146036, w: -0.99177724}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1795,7 +1795,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackCD: 0
-  collider: {fileID: 0}
   player: {fileID: 0}
 --- !u!143 &540025805
 CharacterController:
@@ -1855,7 +1854,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   action: 0
-  IsEnemyAttack: 0
   isHitPlayer: 0
   isReadyNextATK: 1
   isImpact: 0
@@ -2639,8 +2637,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5400d80f2c87e45968933016e25688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLightAtkKnockBackTime: 0.2
-  enemyHeavyAtkKnockBackTime: 0.4
   player: {fileID: 1837587354}
   playerAction: {fileID: 0}
 --- !u!54 &703925072
@@ -2655,7 +2651,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
@@ -4422,7 +4418,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1702917816}
-  m_LocalRotation: {x: 0.27568254, y: -0.000000023120597, z: -0.000000011055018, w: 0.96124876}
+  m_LocalRotation: {x: 0.2756825, y: 0.0000000055268523, z: -0.000000019270999, w: 0.96124876}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4603,7 +4599,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775826178}
-  m_LocalRotation: {x: 0.1279765, y: -0.000000038158266, z: 0.0000000049238493, w: 0.99177724}
+  m_LocalRotation: {x: 0.1279765, y: 0.000000038158266, z: -0.0000000049238493, w: 0.99177724}
   m_LocalPosition: {x: 0.22, y: 2.9, z: -2.659}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4940,6 +4936,18 @@ MonoBehaviour:
   isOnKnockBack: 0
   isSprinting: 0
   player2: 0
+--- !u!114 &1837587360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837587354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 209fcf5947f9e3e49bad8cb334157dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1837587361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4977,7 +4985,8 @@ MonoBehaviour:
   isPerfectBlock: 0
   isKeepBlocking: 0
   isBlockingEnd: 0
-  isImpact: 0
+  isBlockingImpact: 0
+  isHurt: 0
 --- !u!114 &1837587363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5024,6 +5033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624964908091d5945b67373f7a3588fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _anim: {fileID: 0}
   enemy: {fileID: 0}
 --- !u!114 &1837587366
 MonoBehaviour:
@@ -5037,6 +5047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c61ec64e5a4e58946a2b4fc6be808ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOnAttackAction: 0
 --- !u!114 &1837587367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5069,6 +5080,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDoubleJump: 0
+--- !u!114 &1837587370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837587354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 209fcf5947f9e3e49bad8cb334157dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1933622809
 GameObject:
   m_ObjectHideFlags: 3
@@ -5135,7 +5158,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1933622809}
-  m_LocalRotation: {x: -0.16637518, y: 0.0000000011646588, z: -0.000000006902632,
+  m_LocalRotation: {x: -0.16637516, y: 0.0000000011646594, z: -0.000000006902632,
     w: -0.9860626}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -6202,7 +6225,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
-  isWeaponEnter: 0
 --- !u!65 &2015849725
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6214,8 +6236,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.008998076, y: 0.0063971323, z: 0.09294768}
-  m_Center: {x: -0.00084281445, y: -0.00064324646, z: 0.03515462}
+  m_Size: {x: 0.016480276, y: 0.009676047, z: 0.09294768}
+  m_Center: {x: 0.00021511326, y: -0.00016922165, z: 0.03515462}
 --- !u!1 &2037094067
 GameObject:
   m_ObjectHideFlags: 0
