@@ -100,6 +100,10 @@ Shader "Anime/Anime"
                     result = baseColor;
                 }
 
+                if (1-lightValue < ILMColor.b) {
+                    result += ILMColor.r;
+                }
+
                 return result;
             }
             ENDCG
