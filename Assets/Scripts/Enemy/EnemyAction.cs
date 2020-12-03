@@ -18,7 +18,6 @@ public class EnemyAction : MonoBehaviour
     private Animator _anim;
     EnemyBehaviour enemyBehaviour;
 
-    public bool IsEnemyAttack = false;
     public bool isHitPlayer = false;
     public bool isReadyNextATK = true;
 

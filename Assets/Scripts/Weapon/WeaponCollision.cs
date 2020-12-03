@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class WeaponCollision : MonoBehaviour
 {
-    public float enemyLightAtkKnockBackTime = 0.2f;
-    public float enemyHeavyAtkKnockBackTime = 0.4f;
-    private bool isOnCombat = false;
-
     public GameObject player;
     public PlayerAction playerAction;
     GameObject targetEnemy;
@@ -24,6 +20,7 @@ public class WeaponCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+
     }
 
     //void OnTriggerEnter(Collider other)
