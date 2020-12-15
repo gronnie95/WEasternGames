@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     PlayerAction playerAction;
-    PlayerBehaviour playerBehaviour;
     float clickStartTime;
     public bool isOnAttackAction;
 
@@ -18,6 +17,7 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         Control();
+        //Debug.Log(GamePreload.images[1].name);
     }
 
     void Control()
