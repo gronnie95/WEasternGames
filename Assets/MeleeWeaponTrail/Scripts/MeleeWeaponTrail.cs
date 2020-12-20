@@ -270,12 +270,38 @@ public class MeleeWeaponTrail : MonoBehaviour
 		List<Point> pointsToUse = _points;
 #endif
 
+
+		// find the total length of the tip and base for proper UV Mapping
+		float totalTipLength = 0;
+		float totalBaseLength = 0;
+		float[] tipLengths = new float[pointsToUse.Count];
+		float[] baseLengths = new float[pointsToUse.Count];
+
+		for(int i = 0; i < pointsToUse.Count; i++) {
+			if (i > 0) {
+				Vector3 differenceTip = pointsToUse[i].tipPosition - pointsToUse[i-1].tipPosition;
+				Vector3 differenceBase = pointsToUse[i].basePosition - pointsToUse[i-1].basePosition;
+
+				tipLengths[i] = differenceTip.magnitude;
+				baseLengths[i] = differenceBase.magnitude;
+
+				totalTipLength += differenceTip.magnitude;
+				totalBaseLength += differenceBase.magnitude;
+			} else {
+				tipLengths[i] = 0;
+				baseLengths[i] = 0;
+			}
+		}
+
 		if (pointsToUse.Count > 1)
 		{
 			Vector3[] newVertices = new Vector3[pointsToUse.Count * 2];
 			Vector2[] newUV = new Vector2[pointsToUse.Count * 2];
 			int[] newTriangles = new int[(pointsToUse.Count - 1) * 6];
 			Color[] newColors = new Color[pointsToUse.Count * 2];
+			
+			float totalTipTemp = 0;
+			float totalBaseTemp = 0;
 
 			for (int n = 0; n < pointsToUse.Count; ++n)
 			{
@@ -313,9 +339,13 @@ public class MeleeWeaponTrail : MonoBehaviour
 
 				newColors[n * 2] = newColors[(n * 2) + 1] = color;
 
-				float uvRatio = (float)n/pointsToUse.Count;
-				newUV[n * 2] = new Vector2(uvRatio, 0);
-				newUV[(n * 2) + 1] = new Vector2(uvRatio, 1);
+				totalTipTemp += tipLengths[n];
+				totalBaseTemp += baseLengths[n];
+
+				float uvRatioTip = totalTipTemp/totalTipLength; 
+				float uvRatioBase = totalBaseTemp/totalBaseLength;
+				newUV[n * 2] = new Vector2(uvRatioTip, 0);
+				newUV[(n * 2) + 1] = new Vector2(uvRatioBase, 1);
 
 				if (n > 0)
 				{

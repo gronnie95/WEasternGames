@@ -5089,7 +5089,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046848856}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -1.95}
+  m_LocalPosition: {x: 0, y: 1, z: -1.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -10264,14 +10264,14 @@ MonoBehaviour:
   _emit: 1
   _emitTime: 0
   _material: {fileID: 2100000, guid: 7d024ca6903c3044c953a3d1832b6687, type: 2}
-  _lifeTime: 0.2
+  _lifeTime: 0.1
   _colors: []
   _sizes: []
   _minVertexDistance: 0.1
-  _maxVertexDistance: 10
+  _maxVertexDistance: 1
   _maxAngle: 3
   _autoDestruct: 1
-  subdivisions: 4
+  subdivisions: 1
   _base: {fileID: 1150387384}
   _tip: {fileID: 2110906112}
 --- !u!1 &1440537217
@@ -15402,7 +15402,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2110906111}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0.079931185}
+  m_LocalPosition: {x: 0, y: -0, z: 0.0825}
   m_LocalScale: {x: 0.1519604, y: 0.15196036, z: 0.15196036}
   m_Children: []
   m_Father: {fileID: 1066025554}
