@@ -901,7 +901,7 @@ VisualEffectResource:
       /*inout */attributes.lifetime, (float)0.0799999982);\n        }\n        SetAttribute_3278B22F(
       /*inout */attributes.size, Size_b);\n        {\n            SetAttribute_48A7BD6A(
       /*inout */attributes.angleX,  /*inout */attributes.angleY,  /*inout */attributes.angleZ, 
-      /*inout */attributes.seed, float3(-360, -360, -360), float3(360, 1360, 360));\n       
+      /*inout */attributes.seed, float3(-360, -360, -360), float3(360, 360, 360));\n       
       }\n        SetAttribute_D51517D7( /*inout */attributes.scaleX,  /*inout */attributes.scaleY, 
       /*inout */attributes.scaleZ,  /*inout */attributes.seed, A_d, B_d);\n       
       SetAttribute_CAC29747( /*inout */attributes.position, Position_e);\n       
@@ -1741,7 +1741,7 @@ VisualEffectResource:
         - m_ExpressionIndex: 19
           m_Value: {x: 1, y: 1, z: 1}
         - m_ExpressionIndex: 22
-          m_Value: {x: 360, y: 1360, z: 360}
+          m_Value: {x: 360, y: 360, z: 360}
         - m_ExpressionIndex: 23
           m_Value: {x: -360, y: -360, z: -360}
       m_Vector4f:
@@ -5589,7 +5589,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661615074}
       inputSlot: {fileID: 8926484042661614946}
-    position: {x: 112, y: 316}
+    position: {x: 112, y: 518}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661615074
@@ -6735,7 +6735,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":360.0,"y":1360.0,"z":360.0}'
+      m_SerializableObject: '{"x":360.0,"y":360.0,"z":360.0}'
     m_Space: 2147483647
   m_Property:
     name: B
