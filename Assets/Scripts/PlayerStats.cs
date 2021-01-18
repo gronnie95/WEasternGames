@@ -56,7 +56,6 @@ public class PlayerStats : MonoBehaviour
         if (health <= 0)
         {
             GetComponent<SwordCombat>().enabled = false;
-            GetComponent<PlayerBehaviour>().enabled = false;
             GetComponent<PlayerMovement>().enabled = false;
             GetComponent<PlayerAction>().enabled = false;
         }
@@ -64,8 +63,7 @@ public class PlayerStats : MonoBehaviour
 
     void restoreStamina()
     {
-        if (GetComponent<PlayerBehaviour>().isOnLightAction == false && GetComponent<PlayerBehaviour>().isOnHeavyAction == false
-            && GetComponent<PlayerMovement>().isSprinting == false && GetComponent<SwordCombat>().isOnCombat == false)
+        if (GetComponent<PlayerMovement>().isSprinting == false && GetComponent<SwordCombat>().isOnCombat == false)
         {
             if(readyToRestoreStaminaTime > 0) // Time preparation before restore stamina
             {

@@ -23,8 +23,6 @@ public class PlayerMovement : MonoBehaviour
 
     //Jump Setting
     public float verticalVelocity;
-    private float gravity = 10f;
-    private float jumpForce = 5f;
 
     private Transform CameraPivot; //empty point on player
     public CharacterController myController;
@@ -50,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
         myController = GetComponent<CharacterController>();
 
         anim = GetComponent<Animator>();
+        anim.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("AnimationController/PlayerAnimator");
         rigidbody = GetComponent<Rigidbody>();
 
         _zVelHash = Animator.StringToHash("velZ");
@@ -73,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Sprint()
     {
-        if(GetComponent<PlayerBehaviour>().isOnLightAction == false && GetComponent<PlayerBehaviour>().isOnHeavyAction == false && GetComponent<PlayerStats>().stamina > 0 
+        if( GetComponent<PlayerStats>().stamina > 0 
                  && GetComponent<PlayerAction>().action != ActionType.SwordBlock)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -145,35 +144,6 @@ public class PlayerMovement : MonoBehaviour
         //Normalized so that if two keys are pressed the character doesn't go faster
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        #region change player speed when on light/heavy attack
-        /*
-         * change player speed when on heavy attack
-         */
-        if (GetComponent<PlayerBehaviour>().isOnHeavyAction == true) 
-        {
-            GetComponent<PlayerStats>().speed = 0;
-            isSprinting = false;
-            _sprinting = false;
-        }
-
-        /*
-         * change player speed when on light attack
-         */
-        if (GetComponent<PlayerBehaviour>().isOnLightAction == true) 
-        {
-            GetComponent<PlayerStats>().speed = 0f;
-            isSprinting = false;
-            _sprinting = false;
-        }
-
-        /*
-         * reset speed
-         */
-        if(GetComponent<PlayerBehaviour>().isOnHeavyAction == false && GetComponent<PlayerBehaviour>().isOnLightAction == false)
-        {
-            GetComponent<PlayerStats>().speed = 4f;
-        }
-        #endregion
 
         #region change player speed when on block action
         if (GetComponent<PlayerAction>().action == ActionType.SwordBlock)

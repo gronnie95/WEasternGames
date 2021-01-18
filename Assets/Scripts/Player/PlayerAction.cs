@@ -25,15 +25,15 @@ public class PlayerAction : MonoBehaviour
     public bool isPerfectBlock = false;
     public bool isKeepBlocking = false;
     public bool isBlockingEnd = false;
-    public bool isBlockingImpact = false;
     #endregion
-
+    
     public bool isHurt = false;
 
     private void Awake()
     {
         action = ActionType.Idle;
         _anim = GetComponent<Animator>();
+        _anim.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("AnimationController/PlayerAnimator"); //Load controller at runtime https://answers.unity.com/questions/1243273/runtimeanimatorcontroller-not-loading-from-script.html
     }
 
     void Update()
