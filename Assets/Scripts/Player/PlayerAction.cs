@@ -25,13 +25,15 @@ public class PlayerAction : MonoBehaviour
     public bool isPerfectBlock = false;
     public bool isKeepBlocking = false;
     public bool isBlockingEnd = false;
-    public bool isImpact = false;
     #endregion
+    
+    public bool isHurt = false;
 
     private void Awake()
     {
         action = ActionType.Idle;
         _anim = GetComponent<Animator>();
+        _anim.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("AnimationController/PlayerAnimator"); //Load controller at runtime https://answers.unity.com/questions/1243273/runtimeanimatorcontroller-not-loading-from-script.html
     }
 
     void Update()
@@ -42,11 +44,13 @@ public class PlayerAction : MonoBehaviour
                 break;
 
             case ActionType.LightAttack:
-
+                LightAttack();
+                action = ActionType.Idle;
                 break;
 
             case ActionType.HeavyAttack:
-
+                HeavyAttack();
+                action = ActionType.Idle;
                 break;
 
             case ActionType.SwordBlock:
@@ -61,6 +65,16 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
+    void LightAttack()
+    {
+        _anim.SetTrigger("isPlayerLightAttack");
+    }
+
+    void HeavyAttack()
+    {
+        _anim.SetTrigger("isPlayerHeavyAttack");
+    }
+
     void Block()
     {
         isKeepBlocking = true;
@@ -71,39 +85,4 @@ public class PlayerAction : MonoBehaviour
     {
         _anim.SetTrigger("Jump");
     }
-
-    //void AttackType()
-    //{
-    //    if (Input.GetMouseButtonDown(0)) 
-    //    {
-    //        clickStartTime = Time.time; //record the clicking time
-    //    }
-
-    //    if (Input.GetMouseButton(0) && doOnce == false) //Heavy Attack
-    //    {
-    //        float onHoldTime = Time.time - clickStartTime;
-
-    //        if (onHoldTime >= 0.4f)
-    //        {
-    //            PlayerStatus = (int)ActionType.HeavyAttack;
-    //            Debug.Log(PlayerStatus);
-    //            doOnce = true;
-    //        } 
-    //    }
-
-    //    if (Input.GetMouseButtonUp(0) && doOnce == false) // Light Attack
-    //    {
-    //        float onHoldTime = Time.time - clickStartTime;
-
-    //        if (onHoldTime < 0.2f)
-    //        {
-    //            PlayerStatus = (int)ActionType.LightAttack;
-    //            Debug.Log(PlayerStatus);
-    //            doOnce = true;
-
-    //        }
-    //    }
-    //}
-
-
 }
