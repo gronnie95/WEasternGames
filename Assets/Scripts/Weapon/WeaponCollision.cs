@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class WeaponCollision : MonoBehaviour
 {
-    public float enemyLightAtkKnockBackTime = 0.2f;
-    public float enemyHeavyAtkKnockBackTime = 0.4f;
-    private bool isOnCombat = false;
-
     public GameObject player;
     public PlayerAction playerAction;
     GameObject targetEnemy;
 
     void Start()
     {
-        player = GameObject.Find("Player");
+        player = this.transform.root.Find("Player").gameObject;
         playerAction = this.player.GetComponent<PlayerAction>();
+        this.GetComponent<Collider>().isTrigger = true;
     }
 
     void FixedUpdate()
@@ -24,6 +21,32 @@ public class WeaponCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            // player is in perfect block Transistion but not in perfect block timing
+            if (this.GetComponent<Collider>().isTrigger == false && collision.gameObject.GetComponent<EnemyAction>().isPerfectBlock == false && collision.gameObject.GetComponent<EnemyAction>().isKeepBlocking == false)
+            {
+                collision.gameObject.GetComponent<EnemyAnimation>()._anim.SetTrigger("isInjured");
+            }
+
+            // player is blocking and get hit by enemy
+            else if (this.GetComponent<Collider>().isTrigger == false && collision.gameObject.GetComponent<EnemyAction>().isPerfectBlock == false && collision.gameObject.GetComponent<EnemyAction>().isKeepBlocking == true )
+            {
+                collision.gameObject.GetComponent<EnemyAnimation>()._anim.SetTrigger("isGetBlockingImpact");
+
+            }
+            else if (this.GetComponent<Collider>().isTrigger == false && collision.gameObject.GetComponent<EnemyAction>().isPerfectBlock == true)
+            {
+                player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isInjured");
+
+            }
+            if ((collision.gameObject.GetComponent<EnemyAnimation>()._anim.GetCurrentAnimatorStateInfo(0).IsTag("PB") ||
+                    collision.gameObject.GetComponent<EnemyAnimation>()._anim.GetCurrentAnimatorStateInfo(0).IsTag("A")) && collision.gameObject.GetComponent<EnemyAction>().isPerfectBlock == false)
+            {
+                collision.gameObject.GetComponent<EnemyAnimation>()._anim.SetTrigger("isInjured");
+            }
+            this.GetComponent<Collider>().isTrigger = true;
+        }
     }
 
     //void OnTriggerEnter(Collider other)

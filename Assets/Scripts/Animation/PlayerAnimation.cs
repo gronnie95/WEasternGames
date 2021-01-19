@@ -1,51 +1,55 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    private Animator _anim;
+    public Animator _anim;
     private PlayerAction playerAction;
-    private PlayerBehaviour playerBehaviour;
+    private PlayerControl playerControl;
     private PlayerJump playerJump;
     private DoubleJump doubleJump;
-    public GameObject enemy;
-    private EnemyAction enemyAction;
-
+    private AnimatorClipInfo[] clipInfo;
+    private Collider collider;
 
     void Start()
     {
         _anim = GetComponent<Animator>();
+        _anim.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("AnimationController/PlayerAnimator"); //Load controller at runtime https://answers.unity.com/questions/1243273/runtimeanimatorcontroller-not-loading-from-script.html
         playerAction = GetComponent<PlayerAction>();
-        playerBehaviour = GetComponent<PlayerBehaviour>();
+        playerControl = GetComponent<PlayerControl>();
         playerJump = GetComponent<PlayerJump>();
         doubleJump = GetComponent<DoubleJump>();
-        enemy = GameObject.Find("Enemy");
-        enemyAction = this.enemy.GetComponent<EnemyAction>();
-
+        clipInfo = _anim.GetCurrentAnimatorClipInfo(0); // get name of current animation state   https://stackoverflow.com/questions/34846287/get-name-of-current-animation-state
+        collider = this.transform.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm/mixamorig:RightHand/" +
+            "katana").gameObject.GetComponent<BoxCollider>(); // to find a child game object by name   //https://docs.unity3d.com/ScriptReference/Transform.Find.html
     }
 
     void FixedUpdate()
     {
         initialiseAnimatorBool();
+        //Debug.Log(clipInfo[0].clip.name);
     }
 
     void initialiseAnimatorBool()
     {
+        #region Player Block
         _anim.SetBool("isKeepBlocking", playerAction.isKeepBlocking);
         _anim.SetBool("isPerfectBlock", playerAction.isPerfectBlock);
-        _anim.SetBool("isBlockingEnd", playerAction.isBlockingEnd);
+        _anim.SetBool("isAttacking", collider.isTrigger);
+        #endregion
+        #region Jump
         _anim.SetBool("isFirstJump", playerJump.isJump);
         _anim.SetBool("isSecondJump", doubleJump.isDoubleJump);
         _anim.SetBool("isFalling", playerJump.isFalling);
         _anim.SetBool("isGrounded", playerJump.isGrounded);
         _anim.SetBool("FallingToGround", playerJump.fallingToGround);
-        _anim.SetBool("isImpact", playerAction.isImpact);
-        _anim.SetBool("isHitPlayer", enemyAction.isHitPlayer);
-        _anim.SetBool("IsEnemyAttack", enemyAction.IsEnemyAttack);
+        #endregion
     }
 
+    #region Player Block Logic
     public void OnAnimation_isPerfectBlock()
     {
         playerAction.isPerfectBlock = true;
@@ -55,17 +59,39 @@ public class PlayerAnimation : MonoBehaviour
     {
         playerAction.isPerfectBlock = false;
     }
+    #endregion
 
-    public void OnAnimation_isImpact()
+    #region Player Attack Logic 
+    public void OnAnimation_IsHeavyAttackActive()
     {
-        playerAction.isImpact = true;
-        enemyAction.IsEnemyAttack = false;
+        collider.isTrigger = false;
     }
 
-    public void OnAnimation_isImpactEnd()
+    public void OnAnimation_IsHeavyAttackDeactive()
     {
-        playerAction.isImpact = false;
+        collider.isTrigger = true;
+        playerControl.isOnAttackAction = false;
     }
+
+    public void OnAnimation_IsLightAttackActive()
+    {
+        collider.isTrigger = false;
+    }
+
+    public void OnAnimation_IsLightAttackDeactive()
+    {
+        collider.isTrigger = true;
+        playerControl.isOnAttackAction = false;
+    }
+    #endregion
+
+    #region Player Get Hurt Logic
+    public void OnAnimation_isGetCriticalHit()
+    {
+        playerControl.isOnAttackAction = false;
+    }
+    #endregion
+
 
 
 }
