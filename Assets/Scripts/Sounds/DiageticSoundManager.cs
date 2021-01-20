@@ -34,7 +34,7 @@ public class DiageticSoundManager : MonoBehaviour
         }
     }
 
-    public void Add3DSound(AudioClip audioClip, Vector3 position) {
+    public void Add3DSound(AudioClip audioClip) {
         GameObject newSoundObject = new GameObject(); // create a game object, cant directly create a sound source
 
         newSoundObject.AddComponent<AudioSource>(); // add a sound source component to object
@@ -42,8 +42,6 @@ public class DiageticSoundManager : MonoBehaviour
         audioSourceList.AddLast(newSoundObject); // put into the queue
 
         AudioSource newSource = newSoundObject.GetComponent<AudioSource>(); // get audio source component from created object
-
-        newSource.transform.position = position; // set position of sound
 
         newSource.spatialBlend = 1.0f; // set 3D Sound
 
