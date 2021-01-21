@@ -421,7 +421,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 41134852}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -7.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1837587355}
@@ -858,6 +858,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1924743166}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &263401701 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3135921509060577837, guid: 044c326a2424d984e8e45eb9604c5393,
+    type: 3}
+  m_PrefabInstance: {fileID: 1990790944}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &377523556
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,6 +935,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 377523556}
   m_CullTransparentMesh: 0
+--- !u!1 &415609582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 415609583}
+  m_Layer: 0
+  m_Name: SwordImpactPositionAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &415609583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415609582}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.337, z: 0.422}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1837587355}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &447408947
 GameObject:
   m_ObjectHideFlags: 0
@@ -1279,7 +1315,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534507852}
-  m_LocalRotation: {x: -0.12797649, y: 0.000000017958556, z: 0.000000006222187, w: -0.99177724}
+  m_LocalRotation: {x: -0.12797648, y: -0.000000018185474, z: 0.000000010886125, w: -0.99177724}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2707,6 +2743,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 2
+--- !u!114 &761137018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761137008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 105aab541289f5e4cb942029f7815766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatSoundsLibrary: {fileID: 1741400450}
+  diageticSoundManagerGameObject: {fileID: 561728796}
+  feetPosition: {fileID: 761137008}
+  mouthPosition: {fileID: 761137008}
+  swordImpactPosition: {fileID: 761137008}
 --- !u!1 &771485632
 GameObject:
   m_ObjectHideFlags: 3
@@ -2969,6 +3022,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 2
+--- !u!1 &861063591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 861063592}
+  m_Layer: 0
+  m_Name: MouthPositionAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &861063592
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861063591}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.618, z: 0.063}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1837587355}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &866674948
 GameObject:
   m_ObjectHideFlags: 0
@@ -3992,6 +4075,51 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 868005096}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &923785763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 923785765}
+  - component: {fileID: 923785764}
+  m_Layer: 0
+  m_Name: PlayerCharacterSoundLibrary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &923785764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923785763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19df0198a50318647897a2a3c3af5dc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtSounds:
+  - {fileID: 8300000, guid: 1d412d9f1c136494494357284e62f57b, type: 3}
+--- !u!4 &923785765
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923785763}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.6264205, y: -12.143117, z: -26.662191}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1067546366
 GameObject:
   m_ObjectHideFlags: 0
@@ -5735,22 +5863,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105aab541289f5e4cb942029f7815766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightAttackSwingSounds:
-  - {fileID: 8300000, guid: 05db1457dde3b714baa6e3d70ac37f0e, type: 3}
-  - {fileID: 8300000, guid: 03292f6f30805504db796f6cd4d1825b, type: 3}
-  swordBlockSounds:
-  - {fileID: 8300000, guid: 6eb23adb7d9b44d489b39e13d8b7976d, type: 3}
-  - {fileID: 8300000, guid: a9e8fb718389d4f4f89f999864b1bfac, type: 3}
-  - {fileID: 8300000, guid: 266bd7d563904b94daf22a443aff6d4a, type: 3}
-  - {fileID: 8300000, guid: e55e45610fc310742a777bf465254047, type: 3}
-  perfectBlockSounds:
-  - {fileID: 8300000, guid: 867ce0b9c7f9196469a0070cfbd87fec, type: 3}
-  - {fileID: 8300000, guid: 8ccf14f3f138dff44bd51c2dc52122e9, type: 3}
-  heavyAttackSwingSounds:
-  - {fileID: 8300000, guid: 03292f6f30805504db796f6cd4d1825b, type: 3}
-  swordBodySlashSounds:
-  - {fileID: 8300000, guid: 26f6316d17986ca4fa3684d25a27b7be, type: 3}
+  combatSoundsLibrary: {fileID: 1741400450}
   diageticSoundManagerGameObject: {fileID: 561728796}
+  feetPosition: {fileID: 1210315665}
+  mouthPosition: {fileID: 1210315665}
+  swordImpactPosition: {fileID: 1210315665}
 --- !u!1 &1224407500 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b208391e92cb3d64499a9e9e4ce32441,
@@ -7772,6 +7889,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 2
+--- !u!1 &1622748182
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1622748183}
+  m_Layer: 0
+  m_Name: FeetPositionAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1622748183
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622748182}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1837587355}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1684154280
 GameObject:
   m_ObjectHideFlags: 0
@@ -7980,7 +8127,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1702917816}
-  m_LocalRotation: {x: 0.27568254, y: -0.000000023120597, z: -0.000000011055018, w: 0.96124876}
+  m_LocalRotation: {x: 0.27568248, y: 0.0000000055268683, z: -0.000000019271056, w: 0.96124876}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -8018,6 +8165,78 @@ Transform:
   - {fileID: 2075462330}
   m_Father: {fileID: 630120006}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1741400449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1741400451}
+  - component: {fileID: 1741400450}
+  m_Layer: 0
+  m_Name: PlayerCombatSoundLibrary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1741400450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741400449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1376dd8dc7100214fa4c4fda5ff8a5ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightAttackSwingSounds:
+  - {fileID: 8300000, guid: 05db1457dde3b714baa6e3d70ac37f0e, type: 3}
+  - {fileID: 8300000, guid: 03292f6f30805504db796f6cd4d1825b, type: 3}
+  swordBlockSounds:
+  - {fileID: 8300000, guid: 6eb23adb7d9b44d489b39e13d8b7976d, type: 3}
+  - {fileID: 8300000, guid: a9e8fb718389d4f4f89f999864b1bfac, type: 3}
+  - {fileID: 8300000, guid: 266bd7d563904b94daf22a443aff6d4a, type: 3}
+  - {fileID: 8300000, guid: e55e45610fc310742a777bf465254047, type: 3}
+  perfectBlockSounds:
+  - {fileID: 8300000, guid: 867ce0b9c7f9196469a0070cfbd87fec, type: 3}
+  - {fileID: 8300000, guid: 8ccf14f3f138dff44bd51c2dc52122e9, type: 3}
+  heavyAttackSwingSounds:
+  - {fileID: 8300000, guid: 03292f6f30805504db796f6cd4d1825b, type: 3}
+  swordBodySlashSounds:
+  - {fileID: 8300000, guid: 26f6316d17986ca4fa3684d25a27b7be, type: 3}
+  footScrapeSounds:
+  - {fileID: 8300000, guid: 4885d97b4fef64c49b5f2926571d4250, type: 3}
+  walkFootstepSounds:
+  - {fileID: 8300000, guid: 1f9f322bf4d328b4dac6a15bf73d5fb0, type: 3}
+  - {fileID: 8300000, guid: 2b9f63ae6db9f3b4fafd74df2f6c1d9f, type: 3}
+  - {fileID: 8300000, guid: 543129e4a6daf34458730fbdba2a5744, type: 3}
+  runFootstepSounds:
+  - {fileID: 8300000, guid: c97cd1ba580095048a63836eea7f1d86, type: 3}
+  - {fileID: 8300000, guid: b656fcbee7b74a743a24bc5631af0a4a, type: 3}
+  - {fileID: 8300000, guid: 50addce010888a840b724d71f5d38a84, type: 3}
+  - {fileID: 8300000, guid: 3029192d3d60b8e42acb1315ef315fae, type: 3}
+  - {fileID: 8300000, guid: a3e45f99181c7a54fa814bf2031a10fe, type: 3}
+  swordHoldBlockSounds:
+  - {fileID: 8300000, guid: ed828be4f9032764084184495d5be616, type: 3}
+--- !u!4 &1741400451
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741400449}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 17.752226, y: -11.685689, z: -17.366154}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1775826178
 GameObject:
@@ -8161,8 +8380,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775826178}
-  m_LocalRotation: {x: 0.1279765, y: -0.000000038158266, z: 0.0000000049238493, w: 0.99177724}
-  m_LocalPosition: {x: 0.22, y: 2.9, z: -2.659}
+  m_LocalRotation: {x: 0.12797649, y: 0.000000034129798, z: -0.0000000044040247, w: 0.99177724}
+  m_LocalPosition: {x: 0.22, y: 2.9, z: -9.749001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8367,7 +8586,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798144897}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.22, y: 2.9, z: -2.659}
+  m_LocalPosition: {x: 0.22, y: 2.9, z: -9.749001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1702917818}
@@ -8720,22 +8939,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105aab541289f5e4cb942029f7815766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightAttackSwingSounds:
-  - {fileID: 8300000, guid: 05db1457dde3b714baa6e3d70ac37f0e, type: 3}
-  - {fileID: 8300000, guid: 03292f6f30805504db796f6cd4d1825b, type: 3}
-  swordBlockSounds:
-  - {fileID: 8300000, guid: 6eb23adb7d9b44d489b39e13d8b7976d, type: 3}
-  - {fileID: 8300000, guid: a9e8fb718389d4f4f89f999864b1bfac, type: 3}
-  - {fileID: 8300000, guid: 266bd7d563904b94daf22a443aff6d4a, type: 3}
-  - {fileID: 8300000, guid: e55e45610fc310742a777bf465254047, type: 3}
-  perfectBlockSounds:
-  - {fileID: 8300000, guid: 867ce0b9c7f9196469a0070cfbd87fec, type: 3}
-  - {fileID: 8300000, guid: 8ccf14f3f138dff44bd51c2dc52122e9, type: 3}
-  heavyAttackSwingSounds:
-  - {fileID: 8300000, guid: 03292f6f30805504db796f6cd4d1825b, type: 3}
-  swordBodySlashSounds:
-  - {fileID: 8300000, guid: 26f6316d17986ca4fa3684d25a27b7be, type: 3}
+  combatSoundsLibrary: {fileID: 1741400450}
   diageticSoundManagerGameObject: {fileID: 561728796}
+  feetPosition: {fileID: 1622748182}
+  mouthPosition: {fileID: 861063591}
+  swordImpactPosition: {fileID: 415609582}
 --- !u!114 &1837587370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8748,6 +8956,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209fcf5947f9e3e49bad8cb334157dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1837587371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837587354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9768624fbbb4fa741b043579e1d663bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterSoundsLibrary: {fileID: 923785764}
+  head: {fileID: 263401701}
 --- !u!1001 &1924743166
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9698,7 +9920,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1933622809}
-  m_LocalRotation: {x: -0.16637518, y: 0.0000000011646588, z: -0.000000006902632,
+  m_LocalRotation: {x: -0.16637515, y: 0.0000000011646589, z: -0.000000006902631,
     w: -0.9860626}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -9979,6 +10201,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 2
+--- !u!114 &1973117165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973117155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 105aab541289f5e4cb942029f7815766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatSoundsLibrary: {fileID: 1741400450}
+  diageticSoundManagerGameObject: {fileID: 561728796}
+  feetPosition: {fileID: 1973117155}
+  mouthPosition: {fileID: 1973117155}
+  swordImpactPosition: {fileID: 1973117155}
 --- !u!1001 &1990790944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11258,22 +11497,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105aab541289f5e4cb942029f7815766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightAttackSwingSounds:
-  - {fileID: 8300000, guid: 05db1457dde3b714baa6e3d70ac37f0e, type: 3}
-  - {fileID: 8300000, guid: 03292f6f30805504db796f6cd4d1825b, type: 3}
-  swordBlockSounds:
-  - {fileID: 8300000, guid: 6eb23adb7d9b44d489b39e13d8b7976d, type: 3}
-  - {fileID: 8300000, guid: a9e8fb718389d4f4f89f999864b1bfac, type: 3}
-  - {fileID: 8300000, guid: 266bd7d563904b94daf22a443aff6d4a, type: 3}
-  - {fileID: 8300000, guid: e55e45610fc310742a777bf465254047, type: 3}
-  perfectBlockSounds:
-  - {fileID: 8300000, guid: 867ce0b9c7f9196469a0070cfbd87fec, type: 3}
-  - {fileID: 8300000, guid: 8ccf14f3f138dff44bd51c2dc52122e9, type: 3}
-  heavyAttackSwingSounds:
-  - {fileID: 8300000, guid: 03292f6f30805504db796f6cd4d1825b, type: 3}
-  swordBodySlashSounds:
-  - {fileID: 8300000, guid: 26f6316d17986ca4fa3684d25a27b7be, type: 3}
+  combatSoundsLibrary: {fileID: 1741400450}
   diageticSoundManagerGameObject: {fileID: 561728796}
+  feetPosition: {fileID: 2056913115}
+  mouthPosition: {fileID: 2056913115}
+  swordImpactPosition: {fileID: 2056913115}
 --- !u!114 &2056913118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12833,6 +13061,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 2
+--- !u!114 &2130066471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130066461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 105aab541289f5e4cb942029f7815766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatSoundsLibrary: {fileID: 1741400450}
+  diageticSoundManagerGameObject: {fileID: 561728796}
+  feetPosition: {fileID: 2130066461}
+  mouthPosition: {fileID: 2130066461}
+  swordImpactPosition: {fileID: 2130066461}
 --- !u!4 &2136877787 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 044c326a2424d984e8e45eb9604c5393,

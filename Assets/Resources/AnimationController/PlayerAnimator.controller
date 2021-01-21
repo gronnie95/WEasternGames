@@ -1151,7 +1151,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.20887876
   m_TransitionOffset: 0.01394799
   m_ExitTime: 0.98918015
-  m_HasExitTime: 0
+  m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -1580,8 +1580,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 9db3a86b7887fd440bb3d2f4c587ad92,
-      type: 3}
+    m_Motion: {fileID: 7400000, guid: 4241391a1ce77af46a78ece82edbc947, type: 2}
     m_Threshold: 0.6666667
     m_Position: {x: 0, y: 2}
     m_TimeScale: 1
@@ -1589,8 +1588,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: fbb3b99b9cc08a24dbd374ffaf93a6ab,
-      type: 3}
+    m_Motion: {fileID: 7400000, guid: 0b1283cf5229ff142ab59d98119f9ef8, type: 2}
     m_Threshold: 0.8333333
     m_Position: {x: 0, y: 1}
     m_TimeScale: 1

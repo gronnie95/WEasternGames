@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatSounds : MonoBehaviour
+public class CombatSounds : SoundSystem
 {
-    public AudioClip[] lightAttackSwingSounds;
-    public AudioClip[] swordBlockSounds;
-    public AudioClip[] perfectBlockSounds;
-    public AudioClip[] heavyAttackSwingSounds;
-    public AudioClip[] swordBodySlashSounds;
+    public CombatSoundsLibrary combatSoundsLibrary;
     public GameObject diageticSoundManagerGameObject;
+    public GameObject feetPosition;
+    public GameObject mouthPosition;
+    public GameObject swordImpactPosition;
     private DiageticSoundManager diageticSoundManager;
     // Start is called before the first frame update
     void Start()
@@ -26,9 +25,9 @@ public class CombatSounds : MonoBehaviour
     public void OnAnimation_IsLightAttackActive()
     {
         // pick a random sound from the array
-        AudioClip randomSwingSound = RandomClip(lightAttackSwingSounds);
+        AudioClip randomSwingSound = RandomClip(combatSoundsLibrary.lightAttackSwingSounds);
 
-        diageticSoundManager.Add3DSound(randomSwingSound); 
+        diageticSoundManager.Add3DSound(randomSwingSound, swordImpactPosition, 1.0f); 
 
         //Debug.Log("Light Attack Sound");
     }
@@ -36,9 +35,9 @@ public class CombatSounds : MonoBehaviour
     public void OnAnimation_isGetCriticalHit()
     {
         // pick a random sound from the array
-        AudioClip randomSwingSound = RandomClip(swordBodySlashSounds);
+        AudioClip randomSwingSound = RandomClip(combatSoundsLibrary.swordBodySlashSounds);
 
-        diageticSoundManager.Add3DSound(randomSwingSound); 
+        diageticSoundManager.Add3DSound(randomSwingSound, swordImpactPosition, 0.5f); 
 
         //Debug.Log("Light Attack Sound");
     }
@@ -46,38 +45,57 @@ public class CombatSounds : MonoBehaviour
     public void OnAnimation_IsHeavyAttackActive()
     {
         // pick a random sound from the array
-        AudioClip randomSwingSound = RandomClip(heavyAttackSwingSounds);
+        AudioClip randomSwingSound = RandomClip(combatSoundsLibrary.heavyAttackSwingSounds);
 
-        diageticSoundManager.Add3DSound(randomSwingSound); 
+        diageticSoundManager.Add3DSound(randomSwingSound, swordImpactPosition, 1.0f); 
     }
 
     public void OnAnimation_BlockingImpact() {
         // pick a random sound from the array
-        AudioClip randomSwingSound = RandomClip(swordBlockSounds);
+        AudioClip randomSound = RandomClip(combatSoundsLibrary.swordBlockSounds);
 
-        diageticSoundManager.Add3DSound(randomSwingSound); 
+        diageticSoundManager.Add3DSound(randomSound, swordImpactPosition.transform.position, 0.3f); 
     }
 
     // impact from perfect block animation start event
-     public void OnAnimation_StopAttackCollision() {
+    public void OnAnimation_StopAttackCollision() {
         // pick a random sound from the array
-        AudioClip randomSwingSound = RandomClip(perfectBlockSounds);
+        AudioClip randomSound = RandomClip(combatSoundsLibrary.perfectBlockSounds);
 
-        diageticSoundManager.Add3DSound(randomSwingSound); 
+        diageticSoundManager.Add3DSound(randomSound, swordImpactPosition.transform.position, 0.3f); 
     }
 
-    // helper method to choose a random clip from an array
-    private AudioClip RandomClip(AudioClip[] clips) {
-        System.Random random = new System.Random();
+    public void OnAnimation_HeavyLeftFootScrape() {
+        // pick a random sound from the array
+        AudioClip randomSound = RandomClip(combatSoundsLibrary.footScrapeSounds);
 
-        int randomIndex;
+        diageticSoundManager.Add3DSound(randomSound, feetPosition, 0.1f); 
+    }
+    public void OnAnimation_HeavyRightFootPullBack() {
+        // pick a random sound from the array
+        AudioClip randomSound = RandomClip(combatSoundsLibrary.walkFootstepSounds);
 
-        if (clips.Length > 1) {
-            randomIndex = random.Next(0, clips.Length);
-        } else {
-            randomIndex = 0;
-        }
-        
-        return clips[randomIndex];
+        diageticSoundManager.Add3DSound(randomSound, feetPosition, 0.3f); 
+    }
+
+    public void OnAnimation_SwordHoldFirm() {
+        // pick a random sound from the array
+        AudioClip randomSound = RandomClip(combatSoundsLibrary.swordHoldBlockSounds);
+
+        diageticSoundManager.Add3DSound(randomSound, swordImpactPosition, 0.3f); 
+    }
+    
+    public void OnAnimation_WalkFootstep() {
+        // pick a random sound from the array
+        AudioClip randomSound = RandomClip(combatSoundsLibrary.walkFootstepSounds);
+
+        diageticSoundManager.Add3DSound(randomSound, swordImpactPosition, 0.3f); 
+    }
+
+    public void OnAnimation_RunFootstep() {
+        // pick a random sound from the array
+        AudioClip randomSound = RandomClip(combatSoundsLibrary.runFootstepSounds);
+
+        diageticSoundManager.Add3DSound(randomSound, swordImpactPosition, 0.3f); 
     }
 }

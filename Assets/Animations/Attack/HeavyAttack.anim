@@ -58967,6 +58967,13 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: OnAnimation_HeavyLeftFootScrape
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.6666667
     functionName: OnAnimation_IsHeavyAttackActive
     data: 
@@ -58976,6 +58983,13 @@ AnimationClip:
     messageOptions: 0
   - time: 1.0333333
     functionName: OnAnimation_IsHeavyAttackDeactive
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.5333333
+    functionName: OnAnimation_HeavyRightFootPullBack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
