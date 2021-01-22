@@ -66,9 +66,35 @@ public class DiageticSoundManager : MonoBehaviour
         newSource.Play(); // immediately start playing sound
     }
 
+    public void AddDelayed3DSoundInRandomPositionAroundPlayer(AudioClip audioClip, GameObject playerObject, float volume, float delay) {
+        GameObject newSoundObject = new GameObject(); // create a game object, cant directly create a sound source
+
+        // generate a random direction on the X and Z, can be much better than this
+        Vector2 random2D = Random.insideUnitCircle.normalized;
+        Vector3 randomDirection = new Vector3(
+            random2D.x,
+            0,
+            random2D.y
+        );
+        // multiply along the direction depending on inner and outer radius
+        Vector3 randomPosition = Random.Range(10.0f, 15.0f) * randomDirection.normalized;
+
+        AttachedToPlayer attachedToPlayerComponent = newSoundObject.AddComponent<AttachedToPlayer>(); // add the component that will keep the position relative to the player
+        AudioSource newSource = newSoundObject.AddComponent<AudioSource>(); // add a sound source component to object
+
+        attachedToPlayerComponent.playerObject = playerObject;
+        attachedToPlayerComponent.initialWorldPosition = randomPosition;
+
+        audioSourceList.AddLast(newSoundObject); // put into the queue
+
+        SetAudioSourceParameters(newSource, audioClip, volume, 1.0f); // set parameters of sound source
+
+        newSource.PlayDelayed(delay); // immediately start playing sound
+    }
+
     public void SetAudioSourceParameters(AudioSource source, AudioClip clip, float volume, float spatialBlend) {
         source.volume = volume; // adjust volume
-        source.spatialBlend = 1.0f; // set 3D Sound
+        source.spatialBlend = spatialBlend; // set 3D Sound
         source.clip = clip; // assign audio clip
         source.dopplerLevel = 0; // always turn off doppler?
     }
