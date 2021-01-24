@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EnemyAttack
+  m_Name: HeavyAttack
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -58967,36 +58967,29 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: OnAnimation_isHeavyAttacking
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.6666667
-    functionName: OnAnimation_IsEnemyAttack
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.7
-    functionName: OnAnimation_PerfectBlockTiming
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.8
-    functionName: OnAnimation_PerfectBlockTimingEnd
+    functionName: OnAnimation_IsHeavyAttackActive
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 1.0333333
-    functionName: OnAnimation_IsEnemyAttackEnd
+    functionName: OnAnimation_IsHeavyAttackDeactive
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 2.2
-    functionName: OnAnimation_NextAttackCD
+  - time: 2.2666667
+    functionName: OnAnimation_isHeavyAttackingEnd
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
