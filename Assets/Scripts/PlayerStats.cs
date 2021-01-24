@@ -13,6 +13,11 @@ public class PlayerStats : MonoBehaviour
     public Stamina staminaUI;
     private float maxStamina;
     private float restorePerSecond;
+    public float hitStunValue;
+    public float hitStunRestoreSecond;
+    public bool isHitStun;
+    public bool isStunRestoreTimeFinished = true;
+    public bool isBlockStun;
     #endregion
 
     #region Trigger
@@ -21,24 +26,58 @@ public class PlayerStats : MonoBehaviour
     private bool isRestoreStamina = false;
     #endregion
 
-
     void Start()
     {
         health = 200;
-        stamina = 200;
+        stamina = 100;
         speed = 4;
+        hitStunValue = 100;
+        hitStunRestoreSecond = 0f;
         maxStamina = stamina;
         restorePerSecond = maxStamina * 1 / 50;
+        isHitStun = false;
+
+        #region UI
         hpUI.SetMaxHP(health);
         staminaUI.SetMaxStaminaSlider(stamina);
+        #endregion
     }
 
     void Update()
     {
         restoreStamina();
         loseCondition();
+        Stun();
         setHealthUI();
         setStaminaUI();
+    }
+
+    private void Stun()
+    {
+        GettingStun();
+        RestoreStunValueAfterTime();
+    }
+
+    private void GettingStun()
+    {
+        if(hitStunValue <= 0)
+        {
+            hitStunValue = 100;
+        }
+    }
+
+    private void RestoreStunValueAfterTime()
+    {
+        if (hitStunRestoreSecond > 0)
+        {
+            hitStunRestoreSecond -= Time.deltaTime;
+            isStunRestoreTimeFinished = false;
+        }
+        if (hitStunRestoreSecond <= 0 && !isStunRestoreTimeFinished)
+        {
+            hitStunValue = 100;
+            isStunRestoreTimeFinished = true;
+        }
     }
 
     void setStaminaUI()
@@ -63,7 +102,7 @@ public class PlayerStats : MonoBehaviour
 
     void restoreStamina()
     {
-        if (GetComponent<PlayerMovement>().isSprinting == false && GetComponent<SwordCombat>().isOnCombat == false)
+        if (GetComponent<PlayerMovement>().isSprinting == false)
         {
             if(readyToRestoreStaminaTime > 0) // Time preparation before restore stamina
             {
@@ -74,7 +113,8 @@ public class PlayerStats : MonoBehaviour
             {
                 isRestoreStamina = true;
             }
-            if (isRestoreStamina == true)
+
+            if (isRestoreStamina)
             {
                 if (RestoreStaminaTime > 0)
                 {
@@ -87,11 +127,7 @@ public class PlayerStats : MonoBehaviour
                     {
                         stamina = maxStamina;
                     }
-                    if(stamina > 0)
-                    {
-                        GetComponent<PlayerMovement>().isOnKnockBack = false;
-                    }
-                    RestoreStaminaTime = setRestoreStaminaTime();
+                    RestoreStaminaTime = setRestoreStaminaTime(0.1f );
                 }
             }      
         }
@@ -106,12 +142,12 @@ public class PlayerStats : MonoBehaviour
         //Debug.Log(readyToRestoreStaminaTime);
     }
 
-    public float setReadyToRestoreStaminaTime()
+    public float setReadyToRestoreStaminaTime(float num)
     {
-        return 2.5f;
+        return num;
     }
-    private float setRestoreStaminaTime()
+    private float setRestoreStaminaTime(float num)
     {
-        return 0.2f;
+        return num;
     }
 }

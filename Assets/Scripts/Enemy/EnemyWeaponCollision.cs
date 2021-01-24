@@ -5,19 +5,18 @@ using UnityEngine;
 public class EnemyWeaponCollision : MonoBehaviour
 {
     public GameObject enemy;
-    private GameObject player;
-    private EnemyAction enemyAction;
-    private GameObject testPlayer;
+    public EnemyAction.EnemyActionType enemyActionType;
+    EnemyAction enemyAction;
 
     void Start()
     {
-        enemy = this.transform.root.Find("EnemyHolder/Enemy").gameObject;
-        testPlayer = GameObject.Find("Player");
-        enemyAction = this.enemy.GetComponent<EnemyAction>();
+        enemyAction = enemy.GetComponent<EnemyAction>();
+        //enemy = this.transform.root.Find("EnemyHolder/Enemy").gameObject;
     }
 
     void FixedUpdate()
     {
+        enemyActionType = enemyAction.action;
     }
 
     private void OnCollisionEnter(Collision collision)

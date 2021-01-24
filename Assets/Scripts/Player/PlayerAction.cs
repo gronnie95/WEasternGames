@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public enum ActionType
     LightAttack,
     HeavyAttack,
     SwordBlock,
+    Dodge,
 }
 
 public class PlayerAction : MonoBehaviour
@@ -20,13 +22,16 @@ public class PlayerAction : MonoBehaviour
     PlayerJump playerJump;
     DoubleJump doubleJump;
 
-
     #region Sword Block
     public bool isPerfectBlock = false;
     public bool isKeepBlocking = false;
     public bool isBlockingEnd = false;
     #endregion
-    
+
+    #region Sword Attack
+    public bool isPlayerAttacking = false;
+    #endregion
+
     public bool isHurt = false;
 
     private void Awake()
@@ -62,16 +67,27 @@ public class PlayerAction : MonoBehaviour
                 Jump();
                 action = ActionType.Idle;
                 break;
+            case ActionType.Dodge:
+                Dodge();
+                action = ActionType.Idle;
+                break;
         }
+    }
+
+    private void Dodge()
+    {
+        _anim.SetTrigger("Dodge");
     }
 
     void LightAttack()
     {
+        isPlayerAttacking = true;
         _anim.SetTrigger("isPlayerLightAttack");
     }
 
     void HeavyAttack()
     {
+        isPlayerAttacking = true;
         _anim.SetTrigger("isPlayerHeavyAttack");
     }
 

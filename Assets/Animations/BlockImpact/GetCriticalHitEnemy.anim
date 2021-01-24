@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GetCriticalHit
+  m_Name: GetCriticalHitEnemy
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -40213,13 +40213,6 @@ AnimationClip:
   m_Events:
   - time: 0
     functionName: OnAnimation_isGetCriticalHit
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.73333335
-    functionName: OnAnimation_isStunFinished
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

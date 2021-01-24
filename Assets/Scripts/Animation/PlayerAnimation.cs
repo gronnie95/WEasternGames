@@ -11,6 +11,8 @@ public class PlayerAnimation : MonoBehaviour
     private PlayerControl playerControl;
     private PlayerJump playerJump;
     private DoubleJump doubleJump;
+    private PlayerMovement playerMovement;
+    private PlayerStats playerStats;
     private AnimatorClipInfo[] clipInfo;
     private Collider collider;
 
@@ -22,6 +24,8 @@ public class PlayerAnimation : MonoBehaviour
         playerControl = GetComponent<PlayerControl>();
         playerJump = GetComponent<PlayerJump>();
         doubleJump = GetComponent<DoubleJump>();
+        playerMovement = GetComponent<PlayerMovement>();
+        playerStats = GetComponent<PlayerStats>();
         clipInfo = _anim.GetCurrentAnimatorClipInfo(0); // get name of current animation state   https://stackoverflow.com/questions/34846287/get-name-of-current-animation-state
         collider = this.transform.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm/mixamorig:RightHand/" +
             "katana").gameObject.GetComponent<BoxCollider>(); // to find a child game object by name   //https://docs.unity3d.com/ScriptReference/Transform.Find.html
@@ -30,7 +34,17 @@ public class PlayerAnimation : MonoBehaviour
     void FixedUpdate()
     {
         initialiseAnimatorBool();
+        stopDodging();
         //Debug.Log(clipInfo[0].clip.name);
+    }
+
+
+    private void stopDodging()
+    {
+        if(_anim.GetCurrentAnimatorStateInfo(0).IsTag("GH") || _anim.GetCurrentAnimatorStateInfo(0).IsTag("GEPB") || _anim.GetCurrentAnimatorStateInfo(0).IsTag("BI"))
+        {
+            playerMovement.isDodging = false;
+        }
     }
 
     void initialiseAnimatorBool()
@@ -38,7 +52,7 @@ public class PlayerAnimation : MonoBehaviour
         #region Player Block
         _anim.SetBool("isKeepBlocking", playerAction.isKeepBlocking);
         _anim.SetBool("isPerfectBlock", playerAction.isPerfectBlock);
-        _anim.SetBool("isAttacking", collider.isTrigger);
+        _anim.SetBool("isAttackTriggered", collider.isTrigger);
         #endregion
         #region Jump
         _anim.SetBool("isFirstJump", playerJump.isJump);
@@ -46,6 +60,12 @@ public class PlayerAnimation : MonoBehaviour
         _anim.SetBool("isFalling", playerJump.isFalling);
         _anim.SetBool("isGrounded", playerJump.isGrounded);
         _anim.SetBool("FallingToGround", playerJump.fallingToGround);
+        #endregion
+        #region Sprint
+        _anim.SetBool("isSprinting", playerMovement.isSprinting);
+        _anim.SetBool("isDodging", playerMovement.isDodging);
+        _anim.SetBool("isHitStun", playerStats.isHitStun);
+        _anim.SetBool("isBlockStun", playerStats.isBlockStun);
         #endregion
     }
 
@@ -70,7 +90,16 @@ public class PlayerAnimation : MonoBehaviour
     public void OnAnimation_IsHeavyAttackDeactive()
     {
         collider.isTrigger = true;
-        playerControl.isOnAttackAction = false;
+    }
+
+    public void OnAnimation_isHeavyAttacking()
+    {
+
+    }
+
+    public void OnAnimation_isHeavyAttackingEnd()
+    {
+        playerAction.isPlayerAttacking = false;
     }
 
     public void OnAnimation_IsLightAttackActive()
@@ -81,17 +110,51 @@ public class PlayerAnimation : MonoBehaviour
     public void OnAnimation_IsLightAttackDeactive()
     {
         collider.isTrigger = true;
-        playerControl.isOnAttackAction = false;
+    }
+
+    public void OnAnimation_isLightAttacking()
+    {
+
+    }
+
+    public void OnAnimation_isLightAttackingEnd()
+    {
+        playerAction.isPlayerAttacking = false;
     }
     #endregion
 
     #region Player Get Hurt Logic
     public void OnAnimation_isGetCriticalHit()
     {
-        playerControl.isOnAttackAction = false;
+        playerStats.isHitStun = true;
+        playerMovement.isDodging = false;
     }
+
+    public void OnAnimation_isStunFinished()
+    {
+        playerStats.isHitStun = false;
+    }
+
+    public void OnAnimation_isBlockStun()
+    {
+        // playerStats.isBlockStun = true;
+        playerMovement.GetComponent<PlayerMovement>().isDodging = false;
+    }
+
+    public void OnAnimation_isBlockStunFinished()
+    {
+       // playerStats.isBlockStun = false;
+    }
+
+
     #endregion
 
+    #region Player Dodge
+    public void OnAnimation_isDodging()
+    {
+        playerMovement.isDodging = false;
+    }
+    #endregion
 
 
 }

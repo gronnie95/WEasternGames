@@ -6,12 +6,19 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     PlayerAction playerAction;
+    PlayerJump playerJump;
+    PlayerMovement playerMovement;
+    PlayerStats playerStats;
+    PlayerAnimation playerAnimation;
     float clickStartTime;
-    public bool isOnAttackAction;
 
     void Awake()
     {
         playerAction = GetComponent<PlayerAction>();
+        playerJump = GetComponent<PlayerJump>();
+        playerMovement = GetComponent<PlayerMovement>();
+        playerStats = GetComponent<PlayerStats>();
+        playerAnimation = GetComponent<PlayerAnimation>();
     }
 
     void Update()
@@ -22,13 +29,38 @@ public class PlayerControl : MonoBehaviour
 
     void Control()
     {
-        AttackType();
-        Block();
+        if(!playerStats.isBlockStun && !playerStats.isHitStun && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("BI"))
+        {
+            AttackType();
+            Block();
+            Sprint();
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            playerAction.isKeepBlocking = false;
+        }
+    }
+
+    void Sprint()
+    {
+        if(playerJump.isJump == false && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("LT") && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("HT") && playerAction.isKeepBlocking == false && playerStats.stamina > 0)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                playerMovement.isSprinting = true;
+                playerMovement.isDodging = true;
+                playerAction.action = ActionType.Dodge;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                playerMovement.isSprinting = false;
+            }
+        }
     }
 
     void AttackType()
     {
-        if(isOnAttackAction == false) //if the player didnt do any attack action
+        if(!playerAction.isPlayerAttacking && !playerStats.isHitStun) //if the player didnt do any attack action
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -41,7 +73,6 @@ public class PlayerControl : MonoBehaviour
 
                 if (onHoldTime >= 0.4f)
                 {
-                    isOnAttackAction = true;
                     playerAction.action = ActionType.HeavyAttack;
                 }
             }
@@ -52,9 +83,7 @@ public class PlayerControl : MonoBehaviour
 
                 if (onHoldTime < 0.25f)
                 {
-                    isOnAttackAction = true;
                     playerAction.action = ActionType.LightAttack;
-
                 }
             }
         }
@@ -69,10 +98,6 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             playerAction.isKeepBlocking = true;
-        }
-        if (Input.GetMouseButtonUp(1))
-        {
-            playerAction.isKeepBlocking = false;
         }
     }
 }

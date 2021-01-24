@@ -62,7 +62,7 @@ public class SwordCombat : MonoBehaviour
             resetOutOfCombatTime = setOutOfCombatTime();
             isEncounter = false;
             isOnCombat = true;
-            GetComponent<PlayerStats>().readyToRestoreStaminaTime = GetComponent<PlayerStats>().setReadyToRestoreStaminaTime();
+            GetComponent<PlayerStats>().readyToRestoreStaminaTime = GetComponent<PlayerStats>().setReadyToRestoreStaminaTime(3.0f);
         }
         if (resetOutOfCombatTime > 0)
         {
