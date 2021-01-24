@@ -1315,7 +1315,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534507852}
-  m_LocalRotation: {x: -0.12797648, y: 0.000000015944321, z: 0.0000000064821006, w: -0.99177724}
+  m_LocalRotation: {x: -0.12797648, y: -0.000000018185474, z: 0.000000010886125, w: -0.99177724}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1323,6 +1323,12 @@ Transform:
   m_Father: {fileID: 1798144899}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &546722380 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1082271958561512970, guid: 044c326a2424d984e8e45eb9604c5393,
+    type: 3}
+  m_PrefabInstance: {fileID: 1924743166}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &559223641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,6 +1509,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 570702663}
   m_CullTransparentMesh: 0
+--- !u!1 &586596448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 586596450}
+  - component: {fileID: 586596449}
+  m_Layer: 0
+  m_Name: RebelCharacterSoundLibrary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &586596449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586596448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19df0198a50318647897a2a3c3af5dc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtSounds:
+  - {fileID: 8300000, guid: ca13bff450f62fc4da77669be1144f02, type: 3}
+  - {fileID: 8300000, guid: c1ff69f87b06153418d2826110b14abf, type: 3}
+  - {fileID: 8300000, guid: fb2fe3f2ce026094f981b8eb92803eda, type: 3}
+--- !u!4 &586596450
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586596448}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.6264205, y: -12.143117, z: -26.662191}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 23
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &588730077
 GameObject:
   m_ObjectHideFlags: 0
@@ -1935,6 +1988,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &634995572 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1082271958561512970, guid: 044c326a2424d984e8e45eb9604c5393,
+    type: 3}
+  m_PrefabInstance: {fileID: 1210315662}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &635228486
 GameObject:
   m_ObjectHideFlags: 3
@@ -2760,6 +2819,20 @@ MonoBehaviour:
   feetPosition: {fileID: 761137008}
   mouthPosition: {fileID: 761137008}
   swordImpactPosition: {fileID: 761137008}
+--- !u!114 &761137019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761137008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9768624fbbb4fa741b043579e1d663bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterSoundsLibrary: {fileID: 586596449}
+  head: {fileID: 1120588249}
 --- !u!1 &771485632
 GameObject:
   m_ObjectHideFlags: 3
@@ -4105,7 +4178,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hurtSounds:
-  - {fileID: 8300000, guid: 1d412d9f1c136494494357284e62f57b, type: 3}
+  - {fileID: 8300000, guid: 44850c5cd48e1f44ea80e587ad76cba5, type: 3}
+  - {fileID: 8300000, guid: 851b2a1dadde33141bd07c5494fb7776, type: 3}
+  - {fileID: 8300000, guid: 21168da4011c873458dd7cdf1e827be8, type: 3}
 --- !u!4 &923785765
 Transform:
   m_ObjectHideFlags: 0
@@ -4441,6 +4516,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1120588249 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1082271958561512970, guid: 044c326a2424d984e8e45eb9604c5393,
+    type: 3}
+  m_PrefabInstance: {fileID: 2104141517}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1136378455
 GameObject:
   m_ObjectHideFlags: 0
@@ -4515,6 +4596,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1136378455}
   m_CullTransparentMesh: 0
+--- !u!1 &1163757714 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1082271958561512970, guid: 044c326a2424d984e8e45eb9604c5393,
+    type: 3}
+  m_PrefabInstance: {fileID: 868005096}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1182156813
 GameObject:
   m_ObjectHideFlags: 0
@@ -5851,6 +5938,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 2
+--- !u!114 &1210315674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210315665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9768624fbbb4fa741b043579e1d663bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterSoundsLibrary: {fileID: 586596449}
+  head: {fileID: 634995572}
 --- !u!114 &1210315675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8127,7 +8228,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1702917816}
-  m_LocalRotation: {x: 0.27568248, y: 0.0000000055268714, z: -0.000000019271058, w: 0.96124876}
+  m_LocalRotation: {x: 0.27568248, y: 0.0000000055268683, z: -0.000000019271056, w: 0.96124876}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -8382,7 +8483,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775826178}
-  m_LocalRotation: {x: 0.12797649, y: -0.000000034129798, z: 0.0000000044040247, w: 0.99177724}
+  m_LocalRotation: {x: 0.12797649, y: 0.000000034129798, z: -0.0000000044040247, w: 0.99177724}
   m_LocalPosition: {x: 0.22, y: 2.9, z: -9.749001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -10385,6 +10486,20 @@ MonoBehaviour:
   feetPosition: {fileID: 1973117155}
   mouthPosition: {fileID: 1973117155}
   swordImpactPosition: {fileID: 1973117155}
+--- !u!114 &1973117166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973117155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9768624fbbb4fa741b043579e1d663bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterSoundsLibrary: {fileID: 586596449}
+  head: {fileID: 1997428286}
 --- !u!1001 &1990790944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11353,6 +11468,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b208391e92cb3d64499a9e9e4ce32441, type: 3}
+--- !u!1 &1997428286 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1082271958561512970, guid: 044c326a2424d984e8e45eb9604c5393,
+    type: 3}
+  m_PrefabInstance: {fileID: 1585495381}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1997457008
 GameObject:
   m_ObjectHideFlags: 0
@@ -11787,6 +11908,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 2
+--- !u!114 &2056913126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056913115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9768624fbbb4fa741b043579e1d663bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterSoundsLibrary: {fileID: 586596449}
+  head: {fileID: 1163757714}
 --- !u!1 &2075462326
 GameObject:
   m_ObjectHideFlags: 0
@@ -13245,6 +13380,20 @@ MonoBehaviour:
   feetPosition: {fileID: 2130066461}
   mouthPosition: {fileID: 2130066461}
   swordImpactPosition: {fileID: 2130066461}
+--- !u!114 &2130066472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130066461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9768624fbbb4fa741b043579e1d663bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterSoundsLibrary: {fileID: 586596449}
+  head: {fileID: 546722380}
 --- !u!4 &2136877787 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 044c326a2424d984e8e45eb9604c5393,
