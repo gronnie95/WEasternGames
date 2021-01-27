@@ -49,6 +49,9 @@ public class PlayerCollision : MonoBehaviour
                     if (player.GetComponent<PlayerStats>().hitStunValue > 0)
                     {
                         player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isGetBlockingImpact");
+
+                        // spawn sword clash effect
+                        player.GetComponent<SwordEffectSpawner>().SpawnSwordClash();
                     }
 
                     else if (player.GetComponent<PlayerStats>().hitStunValue <= 0)
@@ -74,6 +77,9 @@ public class PlayerCollision : MonoBehaviour
 
                 player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isGetBlockingImpact");
                 player.GetComponent<PlayerAction>().isPlayerAttacking = false;
+
+                // spawn sword clash effect
+                player.GetComponent<SwordEffectSpawner>().SpawnSwordClash();
             }
 
             // player is in idle action and get hit by enemy

@@ -57,6 +57,13 @@ public class CombatSounds : SoundSystem
         diageticSoundManager.Add3DSound(randomSound, swordImpactPosition.transform.position, 0.3f); 
     }
 
+    public void OnAnimation_isBlockStun() {
+        // pick a random sound from the array
+        AudioClip randomSound = RandomClip(combatSoundsLibrary.swordBlockSounds);
+
+        diageticSoundManager.Add3DSound(randomSound, swordImpactPosition.transform.position, 0.3f); 
+    }
+
     // impact from perfect block animation start event
     public void OnAnimation_StopAttackCollision() {
         // pick a random sound from the array

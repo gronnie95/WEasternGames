@@ -17,16 +17,15 @@ public class CharacterSounds : SoundSystem
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void OnAnimation_isGetCriticalHit() {
         // play hurt sounds
         AudioClip randomClip = RandomClip(characterSoundsLibrary.hurtSounds);
-
         PlayNewCharacterSound(randomClip);
     }
-
+    
     private void PlayNewCharacterSound(AudioClip clip) {
         // immediately change clip regardless
         this.audioSource.clip = clip;
