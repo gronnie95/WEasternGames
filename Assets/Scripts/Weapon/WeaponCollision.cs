@@ -34,12 +34,16 @@ public class WeaponCollision : MonoBehaviour
             {
                 collision.gameObject.GetComponent<EnemyAnimation>()._anim.SetTrigger("isGetBlockingImpact");
 
+                // spawn sword clash effect
+                collision.gameObject.GetComponentInParent<SwordEffectSpawner>().SpawnSwordClash();
             }
             // enemy is in perfect block
             else if (this.GetComponent<Collider>().isTrigger == false && collision.gameObject.GetComponent<EnemyAction>().isPerfectBlock == true)
             {
                 player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isGetEnemyPerfectBlock");
 
+                // spawn sword clash effect
+                collision.gameObject.GetComponentInParent<SwordEffectSpawner>().SpawnBigSwordClash();
             }
             
             //enemy is not in perfect block
