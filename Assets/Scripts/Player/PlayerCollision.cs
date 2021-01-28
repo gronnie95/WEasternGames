@@ -31,6 +31,7 @@ public class PlayerCollision : MonoBehaviour
                     {
                         player.GetComponent<PlayerStats>().health -= 40;
                         player.GetComponent<PlayerStats>().stamina -= 40;
+                        player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isInjured");
                         player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isInjured");
                     }
                 }
@@ -48,6 +49,7 @@ public class PlayerCollision : MonoBehaviour
 
                     if (player.GetComponent<PlayerStats>().hitStunValue > 0)
                     {
+                        player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isGetBlockingImpact");
                         player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isGetBlockingImpact");
 
                         // spawn sword clash effect
@@ -58,6 +60,7 @@ public class PlayerCollision : MonoBehaviour
                     {
                         player.GetComponent<PlayerStats>().health -= 40;
                         player.GetComponent<PlayerStats>().stamina -= 40;
+                        player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isInjured");
                         player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isInjured");
                     }
                 }
@@ -75,7 +78,8 @@ public class PlayerCollision : MonoBehaviour
                 player.GetComponent<PlayerStats>().hitStunValue -= 20;
                 Debug.Log("in BI");
 
-                player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isGetBlockingImpact");
+                player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isGetBlockingImpact");
+                player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isGetBlwockingImpact");
                 player.GetComponent<PlayerAction>().isPlayerAttacking = false;
 
                 // spawn sword clash effect
@@ -85,6 +89,7 @@ public class PlayerCollision : MonoBehaviour
             // player is in idle action and get hit by enemy
             else if (player.GetComponent<PlayerAction>().isKeepBlocking == false)
             {
+                player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isInjured");
                 player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isInjured");
                 player.GetComponent<PlayerAction>().isPlayerAttacking = false;
                 //Debug.Log("player injured");
@@ -96,6 +101,7 @@ public class PlayerCollision : MonoBehaviour
                 player.GetComponent<PlayerAnimation>()._anim.GetCurrentAnimatorStateInfo(0).IsTag("A")) && 
                 player.GetComponent<PlayerAction>().isPerfectBlock == false)
             {
+                player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isInjured");
                 player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isInjured");
                 player.GetComponent<PlayerAction>().isPlayerAttacking = false;
             }
