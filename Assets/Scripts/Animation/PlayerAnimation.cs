@@ -126,7 +126,7 @@ public class PlayerAnimation : MonoBehaviour
     #region Player Get Hurt Logic
     public void OnAnimation_isGetCriticalHit()
     {
-        playerStats.isHitStun = true;
+        
         playerMovement.isDodging = false;
     }
 

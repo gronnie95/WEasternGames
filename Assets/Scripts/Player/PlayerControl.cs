@@ -10,7 +10,7 @@ public class PlayerControl : MonoBehaviour
     PlayerMovement playerMovement;
     PlayerStats playerStats;
     PlayerAnimation playerAnimation;
-    float clickStartTime;
+    public float onHoldTime = 0;
 
     void Awake()
     {
@@ -34,10 +34,37 @@ public class PlayerControl : MonoBehaviour
             AttackType();
             Block();
             Sprint();
+            changeAction();
         }
         if (Input.GetMouseButtonUp(1))
         {
             playerAction.isKeepBlocking = false;
+        }
+    }
+
+    void changeAction()
+    {
+        if(playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("GH") && !playerStats.isHitStun)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                playerAnimation._anim.SetTrigger("changeToDodge");
+            }
+
+            if(Input.GetKey(KeyCode.LeftShift))
+            {
+                playerAnimation._anim.SetTrigger("changeToSprint");
+            }
+
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            {
+                playerAnimation._anim.SetTrigger("changeToDefault");
+            }
+
+            //if (Input.GetKey(KeyCode.Space))
+            //{
+            //    playerAnimation._anim.SetTrigger("changeToJump");
+            //}
         }
     }
 
@@ -64,27 +91,26 @@ public class PlayerControl : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                clickStartTime = Time.time; //record the clicking time
+                onHoldTime += Time.deltaTime;
             }
 
-            if (Input.GetMouseButton(0)) //Heavy Attack
+            if (Input.GetMouseButton(0))
             {
-                float onHoldTime = Time.time - clickStartTime;
-
+                onHoldTime += Time.deltaTime;
                 if (onHoldTime >= 0.4f)
                 {
                     playerAction.action = ActionType.HeavyAttack;
+                    onHoldTime = 0;
                 }
             }
 
-            if (Input.GetMouseButtonUp(0)) // Light Attack
+            if (Input.GetMouseButtonUp(0))
             {
-                float onHoldTime = Time.time - clickStartTime;
-
                 if (onHoldTime < 0.25f)
                 {
                     playerAction.action = ActionType.LightAttack;
                 }
+                onHoldTime = 0;
             }
         }
     }

@@ -70,8 +70,7 @@ public class PlayerMovement : MonoBehaviour
         bool runPressed = Input.GetKey(KeyCode.LeftShift);
 
         if(!playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("BI") && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("PB")
-            && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("LT") && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("HT") && !playerStats.isHitStun &&
-            !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("GEPB") && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("GH"))
+            && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("LT") && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("HT") && !playerStats.isHitStun)
         {
             Movement(forwardPressed, rightPressed, leftPressed, backPressed, runPressed);
         }
@@ -138,12 +137,7 @@ public class PlayerMovement : MonoBehaviour
         if (DodgeTime > 0)
         {
             DodgeTime -= Time.deltaTime;
-            //float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + playerCamera.eulerAngles.y;
-            //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
-            //transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            //Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            //rigidbody.MovePosition(rigidbody.position + 0.5f * moveDir.normalized * playerStats.speed * Time.fixedDeltaTime);
-            rigidbody.AddRelativeForce(Vector3.forward * 15);
+            rigidbody.AddRelativeForce(Vector3.forward * 20);
 
         }
         if (DodgeTime <= 0)
