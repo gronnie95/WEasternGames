@@ -6,12 +6,14 @@ public class WeaponCollision : MonoBehaviour
 {
     public GameObject player;
     public PlayerAction playerAction;
+    PlayerStats playerStats;
     GameObject targetEnemy;
 
     void Start()
     {
         player = this.transform.root.Find("Player").gameObject;
         playerAction = this.player.GetComponent<PlayerAction>();
+        playerStats = this.player.GetComponent<PlayerStats>();
         this.GetComponent<Collider>().isTrigger = true;
     }
 
@@ -26,12 +28,14 @@ public class WeaponCollision : MonoBehaviour
             // player is in perfect block Transistion but not in perfect block timing
             if (this.GetComponent<Collider>().isTrigger == false && collision.gameObject.GetComponent<EnemyAction>().isPerfectBlock == false && collision.gameObject.GetComponent<EnemyAction>().isKeepBlocking == false)
             {
+                collision.gameObject.GetComponent<EnemyAnimation>()._anim.ResetTrigger("isInjured");
                 collision.gameObject.GetComponent<EnemyAnimation>()._anim.SetTrigger("isInjured");
             }
 
             // player is blocking and get hit by enemy
             else if (this.GetComponent<Collider>().isTrigger == false && collision.gameObject.GetComponent<EnemyAction>().isPerfectBlock == false && collision.gameObject.GetComponent<EnemyAction>().isKeepBlocking == true )
             {
+                collision.gameObject.GetComponent<EnemyAnimation>()._anim.ResetTrigger("isGetBlockingImpact");
                 collision.gameObject.GetComponent<EnemyAnimation>()._anim.SetTrigger("isGetBlockingImpact");
 
                 // spawn sword clash effect
@@ -40,7 +44,10 @@ public class WeaponCollision : MonoBehaviour
             // enemy is in perfect block
             else if (this.GetComponent<Collider>().isTrigger == false && collision.gameObject.GetComponent<EnemyAction>().isPerfectBlock == true)
             {
+                player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isGetEnemyPerfectBlock");
                 player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isGetEnemyPerfectBlock");
+                playerAction.isPlayerAttacking = false;
+                playerStats.isHitStun = true;
 
                 // spawn sword clash effect
                 collision.gameObject.GetComponentInParent<SwordEffectSpawner>().SpawnBigSwordClash();
@@ -50,94 +57,14 @@ public class WeaponCollision : MonoBehaviour
             if (this.GetComponent<Collider>().isTrigger == false && (collision.gameObject.GetComponent<EnemyAnimation>()._anim.GetCurrentAnimatorStateInfo(0).IsTag("PB") ||
                     collision.gameObject.GetComponent<EnemyAnimation>()._anim.GetCurrentAnimatorStateInfo(0).IsTag("A")) && collision.gameObject.GetComponent<EnemyAction>().isPerfectBlock == false)
             {
+                collision.gameObject.GetComponent<EnemyAnimation>()._anim.ResetTrigger("isInjured");
                 collision.gameObject.GetComponent<EnemyAnimation>()._anim.SetTrigger("isInjured");
                 collision.gameObject.GetComponent<Enemy>().HP -= 20;
+                collision.gameObject.GetComponent<Enemy>().stamina -= 20;
+                collision.gameObject.GetComponent<Enemy>().readyToRestoreStaminaTime = 5.0f;
             }
             this.GetComponent<Collider>().isTrigger = true;
         }
     }
-
-    //void OnTriggerEnter(Collider other)
-    //{
-    //    if(other.gameObject.tag == "Enemy")
-    //    {
-    //        if (playerBehaviour.causeDMGTime > 0f && playerBehaviour.causeDMGTime < 1.0f)
-    //        {
-    //            if(playerBehaviour.canCauseDmgByLightATK == true)
-    //            {
-    //                playerBehaviour.canCauseDmgByLightATK = false;
-    //                isOnCombat = true;
-    //                enemyLightAtkKnockBackTime = setEnemyLightAtkKnockBackTime();
-    //                targetEnemy = other.gameObject;
-    //                other.GetComponent<Enemy>().HP -= 30;
-    //            }
-    //        }
-
-    //        if (playerBehaviour.causeDMGTime > 0f && playerBehaviour.causeDMGTime < 0.35f)
-    //        {
-    //            if(playerBehaviour.canCauseDmgByHeavyATK == true)
-    //            {
-    //                playerBehaviour.canCauseDmgByHeavyATK = false;
-    //                isOnCombat = true;
-    //                enemyLightAtkKnockBackTime = setEnemyHeavyAtkKnockBackTime();
-    //                targetEnemy = other.gameObject;
-    //                other.GetComponent<Enemy>().HP -= 50;
-    //            }
-    //        }
-    //    }
-    //}
-
-    //void LightAtkKnockBackEnemy(GameObject enemy)
-    //{
-    //    float Velocity = 2f;
-    //    if (enemyLightAtkKnockBackTime > 0)
-    //    {
-    //        enemyLightAtkKnockBackTime -= Time.fixedDeltaTime;
-    //        Vector3 knockBackVector = (GameObject.Find("Player").transform.forward * Velocity * Time.fixedDeltaTime).normalized;
-    //        enemy.GetComponent<Enemy>().enemyController.Move(knockBackVector);
-    //    }
-    //    if(enemyLightAtkKnockBackTime <= 0)
-    //    {
-    //        targetEnemy = null;
-    //    }
-    //    if(isOnCombat == true)
-    //    {
-    //        isOnCombat = false;
-    //        player.GetComponent<SwordCombat>().resetOutOfCombatTime = player.GetComponent<SwordCombat>().setOutOfCombatTime();
-    //        player.GetComponent<SwordCombat>().isOnCombat = true;
-    //    }
-    //}
-
-    //void HeavyAtkKnockBackEnemy(GameObject enemy)
-    //{
-    //    float Velocity = 5f;
-    //    if (enemyHeavyAtkKnockBackTime > 0)
-    //    {
-    //        enemyHeavyAtkKnockBackTime -= Time.fixedDeltaTime;
-    //        Vector3 knockBackVector = (GameObject.Find("Player").transform.forward * Velocity * Time.fixedDeltaTime).normalized;
-    //        enemy.GetComponent<Enemy>().enemyController.Move(knockBackVector);
-    //    }
-    //    if(enemyHeavyAtkKnockBackTime <= 0)
-    //    {
-    //        targetEnemy = null;
-    //    }
-
-    //    if (isOnCombat == true)
-    //    {
-    //        isOnCombat = false;
-    //        player.GetComponent<SwordCombat>().resetOutOfCombatTime = player.GetComponent<SwordCombat>().setOutOfCombatTime();
-    //        player.GetComponent<SwordCombat>().isOnCombat = true;
-    //    }
-    //}
-
-    //float setEnemyHeavyAtkKnockBackTime()
-    //{
-    //    return 0.2f;
-    //}
-
-    //float setEnemyLightAtkKnockBackTime()
-    //{
-    //    return 0.1f;
-    //}
 }
 

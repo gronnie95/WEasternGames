@@ -5,10 +5,16 @@ using UnityEngine;
 public class PlayerCollision : MonoBehaviour
 {
     private GameObject player;
+    PlayerAnimation playerAnimation;
+    PlayerStats playerStats;
+    PlayerMovement playerMovement;
 
     private void Start()
     {
         player = gameObject;
+        playerAnimation = player.GetComponent<PlayerAnimation>();
+        playerStats = player.GetComponent<PlayerStats>();
+        playerMovement = player.GetComponent<PlayerMovement>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -16,52 +22,54 @@ public class PlayerCollision : MonoBehaviour
         #region Player Get Enemy Hit
         if (collision.gameObject.tag == "EnemyWeapon")
         {
+            #region Player Blocking Collision Logic
             // player is blocking and get hit by enemy
             if (collision.gameObject.GetComponent<Collider>().isTrigger == false && 
                 player.GetComponent<PlayerAction>().isKeepBlocking == true &&
                 player.GetComponent<PlayerAction>().isPerfectBlock == false && 
-                player.GetComponent<PlayerAnimation>()._anim.GetCurrentAnimatorStateInfo(0).IsTag("B"))
+                playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("B"))
             {
                 #region get enemy heavy attack
-                if (player.GetComponent<PlayerStats>().hitStunValue > 0 && 
+                if (playerStats.hitStunValue > 0 && 
                     collision.gameObject.GetComponent<EnemyWeaponCollision>().enemyActionType == EnemyAction.EnemyActionType.HeavyAttack)
                 {
-                    player.GetComponent<PlayerStats>().hitStunValue -= 100;
-                    if (player.GetComponent<PlayerStats>().hitStunValue <= 0)
+                    playerStats.hitStunValue -= 100;
+                    if (playerStats.hitStunValue <= 0)
                     {
-                        player.GetComponent<PlayerStats>().health -= 40;
-                        player.GetComponent<PlayerStats>().stamina -= 40;
-                        player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isInjured");
-                        player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isInjured");
+                        playerStats.DecreaseHPStamina(20, 20);
+                        playerStats.readyToRestoreStaminaTime = 5.0f;
+                        playerAnimation._anim.ResetTrigger("isInjured");
+                        playerAnimation._anim.SetTrigger("isInjured");
+                        playerStats.isHitStun = true;
                     }
                 }
                 #endregion
 
                 #region get enemy light attack
                 //get enemy light attack
-                if (player.GetComponent<PlayerStats>().hitStunValue > 0 && 
+                if (playerStats.hitStunValue > 0 && 
                     collision.gameObject.GetComponent<EnemyWeaponCollision>().enemyActionType == EnemyAction.EnemyActionType.LightAttack)
                 {
-                    // player.GetComponent<PlayerStats>().health -= 20;
-                    player.GetComponent<PlayerStats>().stamina -= 10;
-                    player.GetComponent<PlayerStats>().hitStunValue -= 20;
-                    player.GetComponent<PlayerStats>().hitStunRestoreSecond = 5.0f;
+                    playerStats.DecreaseHPStamina(1.25f, 1.25f);
+                    playerStats.hitStunValue -= 10;
+                    playerStats.hitStunRestoreSecond = 5.0f;
+                    playerStats.readyToRestoreStaminaTime = 5.0f;
 
-                    if (player.GetComponent<PlayerStats>().hitStunValue > 0)
+                    if (playerStats.hitStunValue > 0)
                     {
-                        player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isGetBlockingImpact");
-                        player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isGetBlockingImpact");
+                        playerAnimation._anim.ResetTrigger("isGetBlockingImpact");
+                        playerAnimation._anim.SetTrigger("isGetBlockingImpact");
 
                         // spawn sword clash effect
                         player.GetComponent<SwordEffectSpawner>().SpawnSwordClash();
                     }
 
-                    else if (player.GetComponent<PlayerStats>().hitStunValue <= 0)
+                    else if (playerStats.hitStunValue <= 0)
                     {
-                        player.GetComponent<PlayerStats>().health -= 40;
-                        player.GetComponent<PlayerStats>().stamina -= 40;
-                        player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isInjured");
-                        player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isInjured");
+                        playerStats.DecreaseHPStamina(5, 5);
+                        playerStats.readyToRestoreStaminaTime = 5.0f;
+                        playerAnimation._anim.ResetTrigger("isInjured");
+                        playerAnimation._anim.SetTrigger("isInjured");
                     }
                 }
                 #endregion
@@ -69,53 +77,120 @@ public class PlayerCollision : MonoBehaviour
                 player.GetComponent<PlayerAction>().isPlayerAttacking = false;
             }
 
-            // player is blocking and get hit by enemy
-            else if (collision.gameObject.GetComponent<Collider>().isTrigger = false && 
-                player.GetComponent<PlayerAction>().isKeepBlocking == true && 
-                player.GetComponent<PlayerAction>().isPerfectBlock == false && 
-                player.GetComponent<PlayerAnimation>()._anim.GetCurrentAnimatorStateInfo(0).IsTag("BI"))
+            // player is in blocking impact status and get hit
+            if (collision.gameObject.GetComponent<Collider>().isTrigger = false &&
+                player.GetComponent<PlayerAction>().isKeepBlocking == true &&
+                player.GetComponent<PlayerAction>().isPerfectBlock == false &&
+                playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("BI"))
             {
-                player.GetComponent<PlayerStats>().hitStunValue -= 20;
-                Debug.Log("in BI");
-
-                player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isGetBlockingImpact");
-                player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isGetBlwockingImpact");
+                playerStats.hitStunValue -= 20;
+                playerAnimation._anim.ResetTrigger("isGetBlockingImpact");
+                playerAnimation._anim.SetTrigger("isGetBlockingImpact");
                 player.GetComponent<PlayerAction>().isPlayerAttacking = false;
+                collision.gameObject.GetComponent<Collider>().isTrigger = true;
 
                 // spawn sword clash effect
                 player.GetComponent<SwordEffectSpawner>().SpawnSwordClash();
             }
+            #endregion
 
-            // player is in idle action and get hit by enemy
-            else if (player.GetComponent<PlayerAction>().isKeepBlocking == false)
+            // player is not in block action and get hit by enemy (Heavy attack)
+            if (collision.gameObject.GetComponent<EnemyWeaponCollision>().enemyActionType == EnemyAction.EnemyActionType.HeavyAttack &&
+               collision.gameObject.GetComponent<Collider>().isTrigger == false &&
+               player.GetComponent<PlayerAction>().isKeepBlocking == false &&
+               !playerMovement.isDodging)
             {
-                player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isInjured");
-                player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isInjured");
+                collision.gameObject.GetComponent<Collider>().isTrigger = true;
+                playerStats.DecreaseHPStamina(10, 10);   //  actual is 20
+                playerStats.readyToRestoreStaminaTime = 5.0f;
+                playerMovement.isSprinting = false;
+                playerAnimation._anim.ResetTrigger("isInjured");
+                playerAnimation._anim.SetTrigger("isInjured");
+                playerStats.isHitStun = true;
+                player.GetComponent<PlayerAction>().isPlayerAttacking = false;
+                Debug.Log("player injured");
+            }
+
+            // player is not in block action and get hit by enemy  (light attack)
+            else if (collision.gameObject.GetComponent<EnemyWeaponCollision>().enemyActionType == EnemyAction.EnemyActionType.LightAttack &&
+                     collision.gameObject.GetComponent<Collider>().isTrigger == false &&
+                     player.GetComponent<PlayerAction>().isKeepBlocking == false &&
+                     !playerMovement.isDodging)
+            {
+                collision.gameObject.GetComponent<Collider>().isTrigger = true;
+                playerStats.DecreaseHPStamina(5, 5);  //  actual is 10
+                playerStats.readyToRestoreStaminaTime = 5.0f;
+                playerAnimation._anim.ResetTrigger("isInjured");
+                playerAnimation._anim.SetTrigger("isInjured");
+                
                 player.GetComponent<PlayerAction>().isPlayerAttacking = false;
                 //Debug.Log("player injured");
             }
 
-            // player is in perfect block Transistion but not in perfect block timing
+            // player is in perfect block Transistion but not in perfect block timing (Heavy attack)
             // (GetCurrentAnimatorStateInfo(0).IsTag("PB")) get current animator state by tag https://forum.unity.com/threads/current-animator-state-name.331803/
-            if ((player.GetComponent<PlayerAnimation>()._anim.GetCurrentAnimatorStateInfo(0).IsTag("PB") ||
-                player.GetComponent<PlayerAnimation>()._anim.GetCurrentAnimatorStateInfo(0).IsTag("A")) && 
-                player.GetComponent<PlayerAction>().isPerfectBlock == false)
+            else if ((playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("PB") ||
+                playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("A")) && 
+                player.GetComponent<PlayerAction>().isPerfectBlock == false &&
+                !playerMovement.isDodging &&
+                collision.gameObject.GetComponent<EnemyWeaponCollision>().enemyActionType == EnemyAction.EnemyActionType.HeavyAttack)
             {
-                player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isInjured");
-                player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isInjured");
+                playerStats.DecreaseHPStamina(10, 10);  //  actual is 20
+                playerStats.readyToRestoreStaminaTime = 5.0f;
+                playerAnimation._anim.ResetTrigger("isInjured");
+                playerAnimation._anim.SetTrigger("isInjured");
+                playerStats.isHitStun = true;
+                playerMovement.isSprinting = false;
+                player.GetComponent<PlayerAction>().isPlayerAttacking = false;
+                collision.gameObject.GetComponent<Collider>().isTrigger = true;
+            }
+
+            // player is in perfect block Transistion but not in perfect block timing (light attack)
+            else if ((playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("PB") ||
+                 playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("A")) &&
+                player.GetComponent<PlayerAction>().isPerfectBlock == false &&
+                player.GetComponent<PlayerAction>().isKeepBlocking == true &&
+                !playerMovement.isDodging &&
+                collision.gameObject.GetComponent<EnemyWeaponCollision>().enemyActionType == EnemyAction.EnemyActionType.LightAttack)
+            {
+                playerStats.DecreaseHPStamina(5, 5);   //  actual is 10
+                playerStats.hitStunValue -= 5;
+                playerAnimation._anim.ResetTrigger("isGetBlockingImpact");
+                playerAnimation._anim.SetTrigger("isGetBlockingImpact");
+                playerStats.readyToRestoreStaminaTime = 5.0f;
+                playerMovement.isSprinting = false;
+                player.GetComponent<PlayerAction>().isPlayerAttacking = false;
+                collision.gameObject.GetComponent<Collider>().isTrigger = true;
+                player.GetComponent<SwordEffectSpawner>().SpawnSwordClash();
+            }
+
+            else if ((playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("HT") || 
+                 playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("LT")))
+            {
                 player.GetComponent<PlayerAction>().isPlayerAttacking = false;
             }
 
-            if ((player.GetComponent<PlayerAnimation>()._anim.GetCurrentAnimatorStateInfo(0).IsTag("HT") || 
-                player.GetComponent<PlayerAnimation>()._anim.GetCurrentAnimatorStateInfo(0).IsTag("LT")))
+            else if(playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("GH"))
             {
+                if(collision.gameObject.GetComponent<EnemyWeaponCollision>().enemyActionType == EnemyAction.EnemyActionType.LightAttack)
+                {
+                    playerStats.DecreaseHPStamina(5, 5);   //  actual is 10
+                }
+                else if (collision.gameObject.GetComponent<EnemyWeaponCollision>().enemyActionType == EnemyAction.EnemyActionType.HeavyAttack)
+                {
+                    playerStats.DecreaseHPStamina(10, 10);   //  actual is 20
+                    playerStats.isHitStun = true;
+                }
+                playerAnimation._anim.ResetTrigger("isInjured");
+                playerAnimation._anim.SetTrigger("isInjured");
+                playerStats.readyToRestoreStaminaTime = 5.0f;
                 player.GetComponent<PlayerAction>().isPlayerAttacking = false;
             }
 
-            player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isPlayerLightAttack");
-            player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isPlayerHeavyAttack");
-            player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("Dodge");
-            #endregion
+            playerAnimation._anim.ResetTrigger("isPlayerLightAttack");
+            playerAnimation._anim.ResetTrigger("isPlayerHeavyAttack");
+            playerAnimation._anim.ResetTrigger("Dodge");
+#endregion
         }
     }
 

@@ -58974,7 +58974,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.0333333
+  - time: 0.96666664
     functionName: OnAnimation_IsHeavyAttackDeactive
     data: 
     objectReferenceParameter: {fileID: 0}
