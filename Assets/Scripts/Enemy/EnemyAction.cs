@@ -9,26 +9,22 @@ public class EnemyAction : MonoBehaviour
         Idle,
         LightAttack,
         HeavyAttack,
-        InstantBlock,
-        LongBlock,
+        Block,
+        PerfectBlockOnly,
     }
 
     public EnemyActionType action;
 
     private Animator _anim;
     EnemyBehaviour enemyBehaviour;
-
-    public bool IsEnemyAttack = false;
-    public bool isHitPlayer = false;
-    public bool isReadyNextATK = true;
-
-    public bool isImpact = false;
-    public bool isPerfectBlockTiming = false;
+    public bool isPerfectBlock = false;
+    public bool isKeepBlocking = false;
+    public bool isInPerfectBlockOnly = false;
 
     private void Start()
     {
-        action = EnemyActionType.HeavyAttack;
         _anim = GetComponent<Animator>();
+        _anim.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("AnimationController/EnemyAnimator"); //Load controller at runtime https://answers.unity.com/questions/1243273/runtimeanimatorcontroller-not-loading-from-script.html
     }
 
     private void Awake()
@@ -38,29 +34,49 @@ public class EnemyAction : MonoBehaviour
 
     void Update()
     {
-        if(isReadyNextATK == true)
+
+        switch (action)
         {
-            switch (action)
-            {
-                case EnemyActionType.Idle:
-                    break;
+            case EnemyActionType.Idle:
+                isInPerfectBlockOnly = false;
+                break;
 
-                case EnemyActionType.LightAttack:
+            case EnemyActionType.LightAttack:
+                LightAttack();
+                break;
 
-                    break;
-
-                case EnemyActionType.HeavyAttack:
-                    HeavyAttack();
-                    action = EnemyActionType.Idle;
-                    break;
-            }
+            case EnemyActionType.HeavyAttack:
+                HeavyAttack();
+                break;
+            case EnemyActionType.Block:
+                Block();
+                break;
+            case EnemyActionType.PerfectBlockOnly:
+                PBlockOnly();
+                break;
         }
-
     }
 
     void HeavyAttack()
     {
-        isReadyNextATK = false;
         _anim.SetTrigger("HeavyAttack");
+        isInPerfectBlockOnly = false;
+    }
+
+    void LightAttack()
+    {
+        _anim.SetTrigger("LightAttack");
+        isInPerfectBlockOnly = false;
+    }
+
+    void Block()
+    {
+        _anim.SetTrigger("Block");
+        isInPerfectBlockOnly = false;
+    }
+    void PBlockOnly()
+    {
+        _anim.SetTrigger("PerfectBlockOnly");
+        isInPerfectBlockOnly = true;
     }
 }

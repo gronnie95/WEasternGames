@@ -22,10 +22,9 @@ public class PlayerJump : MonoBehaviour
         playerAction = GetComponent<PlayerAction>();
     }
 
-
     void FixedUpdate()
     {
-        Jump();
+        //Jump();
     }   
 
     public void Jump()

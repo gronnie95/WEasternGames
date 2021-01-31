@@ -11,8 +11,6 @@ TagManager:
   - PlayerWeapon
   - EnemyWeapon
   - Ground
-  - Environment
-  - PlayerHolder
   layers:
   - Default
   - TransparentFX
@@ -22,7 +20,8 @@ TagManager:
   - UI
   - 
   - 
-  - Weapon
+  - PostProcessing
+  - Outlined
   - 
   - 
   - 

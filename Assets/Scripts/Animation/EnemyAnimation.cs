@@ -5,98 +5,91 @@ using UnityEngine;
 
 public class EnemyAnimation : MonoBehaviour
 {
-    private Animator _anim;
+    public Animator _anim;
     private EnemyAction enemyAction;
-    
-    public float AttackCD;
-    private bool isCDOn = false;
-
-    public Collider collider;
-
-    private PlayerAction playerAction;
     public GameObject player;
+    public GameObject enemy;
+    private Collider collider;
 
     void Start()
     {
         _anim = GetComponent<Animator>();
+        _anim.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("AnimationController/EnemyAnimator"); //Load controller at runtime https://answers.unity.com/questions/1243273/runtimeanimatorcontroller-not-loading-from-script.html
         enemyAction = GetComponent<EnemyAction>();
-        collider = GameObject.FindGameObjectWithTag("EnemyWeapon").GetComponent<BoxCollider>();
-        player = GameObject.Find("Player");
-        playerAction = this.player.GetComponent<PlayerAction>();
+        collider = this.enemy.transform.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm/mixamorig:RightHand/" +
+            "katana").gameObject.GetComponent<BoxCollider>(); // to find a child game object by name   //https://docs.unity3d.com/ScriptReference/Transform.Find.html
     }
 
     void FixedUpdate()
     {
         initialiseAnimatorBool();
-        resetAttackCD();
-    }
-
-    void resetAttackCD()
-    {
-        Debug.Log("Reset Attack CD Getting Called");
-        if(AttackCD > 0 && isCDOn == true)
-        {
-            AttackCD -= Time.fixedDeltaTime;
-        }
-        if(AttackCD <= 0 && isCDOn == true)
-        {
-            isCDOn = false;
-            enemyAction.isReadyNextATK = true;
-            enemyAction.action = EnemyAction.EnemyActionType.HeavyAttack;
-        }
     }
 
     void initialiseAnimatorBool()
     {
-        _anim.SetBool("isReadyNextHeavyATK", enemyAction.isReadyNextATK);
-        _anim.SetBool("IsEnemyAttack", enemyAction.IsEnemyAttack);
-        _anim.SetBool("isPlayerPerfectBlock", playerAction.isPerfectBlock);
-        _anim.SetBool("isImpact", enemyAction.isImpact);
-        _anim.SetBool("PerfectBlockTiming", enemyAction.isPerfectBlockTiming);
-    }
-    
-    public void OnAnimation_NextAttackCD()
-    {
-        AttackCD = 2.0f;
-        isCDOn = true;
+        _anim.SetBool("isAttacking", collider.isTrigger);
+        _anim.SetBool("isPerfectBlock", enemyAction.isPerfectBlock);
+        _anim.SetBool("isKeepBlocking", enemyAction.isKeepBlocking);
+        _anim.SetBool("isInPerfectBlockOnly", enemyAction.isInPerfectBlockOnly);
     }
 
-    public void OnAnimation_IsEnemyAttack()
+    #region Enemy Attack Logic
+    public void OnAnimation_IsHeavyAttackActive()
     {
-        enemyAction.IsEnemyAttack = true;
         collider.isTrigger = false;
     }
 
-    public void OnAnimation_IsEnemyAttackEnd()
+    public void OnAnimation_IsHeavyAttackDeactive()
     {
-        enemyAction.IsEnemyAttack = false;
-        enemyAction.isHitPlayer = false;
         collider.isTrigger = true;
     }
 
-    public void OnAnimation_StopHeavyAttack()
+    public void OnAnimation_IsLightAttackActive()
     {
-        enemyAction.IsEnemyAttack = false;
-        enemyAction.isHitPlayer = false;
+        collider.isTrigger = false;
+    }
+
+    public void OnAnimation_IsLightAttackDeactive()
+    {
         collider.isTrigger = true;
-        AttackCD = 2.0f;
-        isCDOn = true;
-        enemyAction.isImpact = true;
     }
 
-    public void OnAnimation_StopHeavyAttackEnd()
+    public void OnAnimation_StopAttackCollision()
     {
-        enemyAction.isImpact = false;
+        collider.isTrigger = true;
     }
+    #endregion
 
-    public void OnAnimation_PerfectBlockTiming()
+    #region Enemy Block Logic
+    public void OnAnimation_BlockStart()
     {
-        enemyAction.isPerfectBlockTiming = true;
+        enemyAction.isKeepBlocking = true;
     }
 
-    public void OnAnimation_PerfectBlockTimingEnd()
+    public void OnAnimation_isPerfectBlock()
     {
-        enemyAction.isPerfectBlockTiming = false;
+        enemyAction.isPerfectBlock = true;
     }
 
+    public void OnAnimation_isPerfectBlockEnd()
+    {
+        enemyAction.isPerfectBlock = false;
+    }
+    #endregion
+
+    #region Enemy Get Hurt Logic
+    public void OnAnimation_isGetCriticalHit()
+    {
+    }
+    #endregion
+
+    public void OnAnimation_isBlockStun()
+    {
+
+    }
+
+    public void OnAnimation_isBlockStunFinished()
+    {
+
+    }
 }
