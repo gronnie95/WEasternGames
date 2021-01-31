@@ -140,6 +140,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Movement(bool forwardPressed, bool rightPressed, bool leftPressed, bool backPressed, bool runPressed)
     {
+      
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         //Normalized so that if two keys are pressed the character doesn't go faster

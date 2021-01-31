@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using AI;
 using New_folder.Scripts.AIStateMachine;
 using UnityEngine;
 using UnityTemplateProjects.AI;
 
-public class AIController : MonoBehaviour
+public class DemoAIController : MonoBehaviour
 {
     private StateMachine _sm;
     private CatchParticipant catchParticipant;

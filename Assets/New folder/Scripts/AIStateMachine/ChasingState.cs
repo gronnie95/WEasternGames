@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using AI;
+using UnityEngine;
 using UnityTemplateProjects.AI;
 
 namespace New_folder.Scripts.AIStateMachine

@@ -33,6 +33,7 @@ public class EnemyAnimation : MonoBehaviour
 
     void resetAttackCD()
     {
+        Debug.Log("Reset Attack CD Getting Called");
         if(AttackCD > 0 && isCDOn == true)
         {
             AttackCD -= Time.fixedDeltaTime;

@@ -1,4 +1,5 @@
 ﻿using System;
+using AI;
 using UnityEngine;
 
 namespace UnityTemplateProjects.AI

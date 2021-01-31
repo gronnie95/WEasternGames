@@ -1,4 +1,6 @@
-﻿namespace UnityTemplateProjects.AI
+﻿//Using the state pattern from: https://www.udemy.com/course/ai-in-unity
+//All subsequent states will follow this design pattern however their implementation will be unique  
+namespace AI
 {
     public class StateMachine
     {
