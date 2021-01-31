@@ -19,6 +19,7 @@ public class EnemyAction : MonoBehaviour
     EnemyBehaviour enemyBehaviour;
     public bool isPerfectBlock = false;
     public bool isKeepBlocking = false;
+    public bool isInPerfectBlockOnly = false;
 
     private void Start()
     {
@@ -37,6 +38,7 @@ public class EnemyAction : MonoBehaviour
         switch (action)
         {
             case EnemyActionType.Idle:
+                isInPerfectBlockOnly = false;
                 break;
 
             case EnemyActionType.LightAttack:
@@ -58,19 +60,23 @@ public class EnemyAction : MonoBehaviour
     void HeavyAttack()
     {
         _anim.SetTrigger("HeavyAttack");
+        isInPerfectBlockOnly = false;
     }
 
     void LightAttack()
     {
         _anim.SetTrigger("LightAttack");
+        isInPerfectBlockOnly = false;
     }
 
     void Block()
     {
         _anim.SetTrigger("Block");
+        isInPerfectBlockOnly = false;
     }
     void PBlockOnly()
     {
         _anim.SetTrigger("PerfectBlockOnly");
+        isInPerfectBlockOnly = true;
     }
 }
