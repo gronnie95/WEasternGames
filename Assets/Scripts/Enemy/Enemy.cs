@@ -13,6 +13,9 @@ public class Enemy : MonoBehaviour
     private float maxStamina;
     private float restorePerSecond;
     public float speed;
+    public float hitStunValue;
+    public float hitStunRestoreSecond;
+    public bool isStunRestoreTimeFinished = true;
 
     #region Trigger
     public float readyToRestoreStaminaTime = 0;
@@ -29,6 +32,8 @@ public class Enemy : MonoBehaviour
         hpUI.SetMaxHP(HP);
         staminaUI.SetMaxStaminaSlider(stamina);
         speed = 4;
+        hitStunValue = 100;
+        hitStunRestoreSecond = 0f;
     }
 
     void Update()
@@ -37,7 +42,35 @@ public class Enemy : MonoBehaviour
         setEnemyHP();
         restoreStamina();
         setStaminaUI();
+        Stun();
+    }
 
+    private void Stun()
+    {
+        GettingStun();
+        RestoreStunValueAfterTime();
+    }
+
+    private void GettingStun()
+    {
+        if (hitStunValue <= 0)
+        {
+            hitStunValue = 100;
+        }
+    }
+
+    private void RestoreStunValueAfterTime()
+    {
+        if (hitStunRestoreSecond > 0)
+        {
+            hitStunRestoreSecond -= Time.deltaTime;
+            isStunRestoreTimeFinished = false;
+        }
+        if (hitStunRestoreSecond <= 0 && !isStunRestoreTimeFinished)
+        {
+            hitStunValue = 100;
+            isStunRestoreTimeFinished = true;
+        }
     }
 
     private void setEnemyHP()

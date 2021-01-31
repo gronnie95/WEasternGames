@@ -11,6 +11,8 @@ public class PlayerControl : MonoBehaviour
     PlayerStats playerStats;
     PlayerAnimation playerAnimation;
     public float onHoldTime = 0;
+    public float sprintCD = 0;
+    public bool sprintTrigger;
 
     void Awake()
     {
@@ -19,6 +21,7 @@ public class PlayerControl : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         playerStats = GetComponent<PlayerStats>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        sprintTrigger = false;
     }
 
     void Update()
@@ -70,18 +73,30 @@ public class PlayerControl : MonoBehaviour
 
     void Sprint()
     {
-        if(playerJump.isJump == false && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("LT") && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("HT") && playerAction.isKeepBlocking == false && playerStats.stamina > 0)
+        if(playerJump.isJump == false && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("LT") && 
+            !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("HT") && 
+            playerAction.isKeepBlocking == false && playerStats.stamina > 0 && !sprintTrigger)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
+                sprintCD = 1.0f;
+                sprintTrigger = true;
                 playerMovement.isSprinting = true;
                 playerMovement.isDodging = true;
                 playerAction.action = ActionType.Dodge;
             }
-            if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                playerMovement.isSprinting = false;
-            }
+        }
+        if(sprintCD > 0)
+        {
+            sprintCD -= Time.deltaTime;
+        }
+        if(sprintCD <= 0)
+        {
+            sprintTrigger = false;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            playerMovement.isSprinting = false;
         }
     }
 
