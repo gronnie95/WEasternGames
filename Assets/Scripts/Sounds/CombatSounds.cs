@@ -96,13 +96,13 @@ public class CombatSounds : SoundSystem
         // pick a random sound from the array
         AudioClip randomSound = RandomClip(combatSoundsLibrary.walkFootstepSounds);
 
-        diageticSoundManager.Add3DSound(randomSound, feetPosition, 0.3f); 
+        diageticSoundManager.Add3DSound(randomSound, feetPosition, 0.5f); 
     }
 
     public void OnAnimation_RunFootstep() {
         // pick a random sound from the array
         AudioClip randomSound = RandomClip(combatSoundsLibrary.runFootstepSounds);
 
-        diageticSoundManager.Add3DSound(randomSound, feetPosition, 0.3f); 
+        diageticSoundManager.Add3DSound(randomSound, feetPosition, 0.5f); 
     }
 }
