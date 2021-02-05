@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     float turnSmoothVelocity;
     public float horizontalVelocity;
     public bool _sprinting;
+    public bool moveKeyPressed = false;
 
     //Jump Setting
     public float verticalVelocity;
@@ -69,10 +70,18 @@ public class PlayerMovement : MonoBehaviour
         bool backPressed = Input.GetKey(KeyCode.S);
         bool runPressed = Input.GetKey(KeyCode.LeftShift);
 
-        if(!playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("BI") && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("PB")
+        if (!playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("BI") && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("PB")
             && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("LT") && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("HT") && !playerStats.isHitStun)
         {
             Movement(forwardPressed, rightPressed, leftPressed, backPressed, runPressed);
+            if(forwardPressed || rightPressed || leftPressed || backPressed)
+            {
+                moveKeyPressed = true;
+            }
+            else if(!forwardPressed || !rightPressed || !leftPressed ||! backPressed)
+            {
+                moveKeyPressed = false;
+            }
         }
 
         anim.SetFloat(_xVelHash, _xVel);
@@ -81,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Sprint()
     {
-        if(isSprinting)
+        if(isSprinting && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("A"))
         { 
             if (playerStats.stamina > 0)
             {
@@ -118,7 +127,6 @@ public class PlayerMovement : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         //Normalized so that if two keys are pressed the character doesn't go faster
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
 
         #region change player speed when on block action
         if (playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("B"))
