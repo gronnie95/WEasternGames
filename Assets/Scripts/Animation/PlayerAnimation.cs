@@ -30,7 +30,7 @@ public class PlayerAnimation : MonoBehaviour
         collider = this.transform.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm/mixamorig:RightHand/" +
             "katana").gameObject.GetComponent<BoxCollider>(); // to find a child game object by name   //https://docs.unity3d.com/ScriptReference/Transform.Find.html
     }
-
+               //"metarig/spine/spine.007/spine.001/spine.002/spine.003/shoulder.R/upper_arm.R/forearm.R/hand.R/"
     void FixedUpdate()
     {
         initialiseAnimatorBool();

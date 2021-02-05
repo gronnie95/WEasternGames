@@ -24,7 +24,7 @@ public class PlayerJump : MonoBehaviour
 
     void FixedUpdate()
     {
-        //Jump();
+        Jump();
     }   
 
     public void Jump()
