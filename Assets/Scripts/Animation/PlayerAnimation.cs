@@ -66,6 +66,7 @@ public class PlayerAnimation : MonoBehaviour
         _anim.SetBool("isDodging", playerMovement.isDodging);
         _anim.SetBool("isHitStun", playerStats.isHitStun);
         _anim.SetBool("isBlockStun", playerStats.isBlockStun);
+        _anim.SetBool("moveKeyPressed", playerMovement.moveKeyPressed);
         #endregion
     }
 

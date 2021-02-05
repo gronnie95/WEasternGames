@@ -51,7 +51,7 @@ public class PlayerCollision : MonoBehaviour
                     collision.gameObject.GetComponent<EnemyWeaponCollision>().enemyActionType == EnemyAction.EnemyActionType.LightAttack)
                 {
                     playerStats.DecreaseHPStamina(1.25f, 1.25f);
-                    playerStats.hitStunValue -= 10;
+                    playerStats.hitStunValue -= 20;
                     playerStats.hitStunRestoreSecond = 5.0f;
                     playerStats.readyToRestoreStaminaTime = 5.0f;
 
@@ -154,7 +154,7 @@ public class PlayerCollision : MonoBehaviour
                 collision.gameObject.GetComponent<EnemyWeaponCollision>().enemyActionType == EnemyAction.EnemyActionType.LightAttack)
             {
                 playerStats.DecreaseHPStamina(5, 5);   //  actual is 10
-                playerStats.hitStunValue -= 5;
+                playerStats.hitStunValue -= 10;
                 playerAnimation._anim.ResetTrigger("isGetBlockingImpact");
                 playerAnimation._anim.SetTrigger("isGetBlockingImpact");
                 playerStats.readyToRestoreStaminaTime = 5.0f;
