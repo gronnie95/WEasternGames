@@ -16,6 +16,7 @@ namespace AI.States
         private Animator _anim;
         private EnemyAction _enemyAction;
         private FieldOfView _fieldOfView;
+        private State _previous;
         
         private const float AttackCDVal = 2f; 
         private bool isReadyNextATK = true;
@@ -29,8 +30,9 @@ namespace AI.States
         private static readonly int HeavyAttack1 = Animator.StringToHash("HeavyAttack");
         #endregion
         
-        public CombatState(GameObject go, StateMachine sm) : base(go, sm)
+        public CombatState(GameObject go, StateMachine sm, State previous) : base(go, sm)
         {
+            _previous = previous;
         }
 
         public override void Enter()

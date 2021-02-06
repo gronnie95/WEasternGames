@@ -157,7 +157,7 @@ AnimatorStateMachine:
     m_Position: {x: 90, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5714595120651140637}
-    m_Position: {x: 360, y: 40, z: 0}
+    m_Position: {x: 340, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4126200432915854969}
     m_Position: {x: 600, y: -80, z: 0}
@@ -549,6 +549,18 @@ AnimatorController:
     m_Controller: {fileID: 0}
   - m_Name: isInPerfectBlockOnly
     m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: enemyVelZ
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: enemyVelX
+    m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -969,8 +981,8 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
-  m_BlendParameter: velX
-  m_BlendParameterY: velZ
+  m_BlendParameter: enemyVelX
+  m_BlendParameterY: enemyVelZ
   m_MinThreshold: 0
   m_MaxThreshold: 1
   m_UseAutomaticThresholds: 1

@@ -13,7 +13,7 @@ public class AIController : MonoBehaviour
     private void Awake()
     {
         _sm = new StateMachine();
-        _sm._CurState = new IdleState(gameObject, _sm);
+        _sm._CurState = new EvasiveState(gameObject, _sm);
     }
 
     // Update is called once per frame

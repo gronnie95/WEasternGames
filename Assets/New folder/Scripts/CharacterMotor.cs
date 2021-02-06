@@ -9,7 +9,7 @@ public class CharacterMotor : MonoBehaviour
 
     private bool _isStunned;
     private float _stunnedUntil;
-    private Rigidbody _rb;
+    public Rigidbody _rb;
 
     private void Awake()
     {

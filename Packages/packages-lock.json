@@ -48,7 +48,7 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
-      "url": "https://packages.unity.cn"
+      "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
       "version": "7.3.1",

@@ -5,11 +5,19 @@ namespace AI.States
     public class FollowState : State
     {
         private FieldOfView _fieldOfView;
-        private Rigidbody _rigidbody;
         private Animator _animator;
-        private float moveSpeed = 8f;
+        private float _moveSpeed;
+
+        #region Animation Triggers
+        
         private static readonly int IsWalking = Animator.StringToHash("isWalking");
         private static readonly int IsRunning = Animator.StringToHash("isRunning");
+
+        private float _zVel;
+        private int _zVelHash;
+
+        #endregion
+
 
         public FollowState(GameObject go, StateMachine sm) : base(go, sm)
         {
@@ -19,10 +27,11 @@ namespace AI.States
         {
             base.Enter();
             _fieldOfView = _go.GetComponent<FieldOfView>();
-            _rigidbody = _go.GetComponent<Rigidbody>();
-            _animator = _go.GetComponent<Animator>();
+           _animator = _go.GetComponent<Animator>();
             if(!_animator.GetBool(IsRunning))
                 _animator.SetBool(IsRunning, true);
+            _moveSpeed = 8f;
+            _zVelHash = Animator.StringToHash("enemyVelZ");
         }
 
         public override void FixedUpdate()
@@ -35,17 +44,19 @@ namespace AI.States
                
            
            if (_fieldOfView.Player != null && distanceToPlayer >= 1.5)
-           { 
-               //_go.transform.forward = Vector3.RotateTowards(_go.transform.forward,_fieldOfView.Player.transform.position, moveSpeed* Time.deltaTime, 0.0f);
+           {
+               _zVel = 2;
                _go.transform.LookAt(_fieldOfView.Player.transform.position);
-               _go.transform.position += _go.transform.forward * moveSpeed * Time.deltaTime;
+               _go.transform.position += _go.transform.forward * _moveSpeed * Time.deltaTime;
+               _animator.SetFloat(_zVelHash, _zVel);
            }
 
            if (distanceToPlayer < 1.5)
            {
+               _zVel = 0;
+               _animator.SetFloat(_zVelHash, _zVel);
                _animator.SetBool(IsRunning, false);
-               _rigidbody.velocity = Vector3.zero;
-               _sm._CurState = new CombatState(_go, _sm);
+               _sm._CurState = new AttackingState(_go, _sm);
            }
         }
         

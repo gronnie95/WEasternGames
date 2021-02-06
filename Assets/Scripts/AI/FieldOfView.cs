@@ -92,7 +92,7 @@ namespace AI
                                 //Debug.Log(hit.collider.tag);
                                 if (hit.collider.CompareTag("Player"))
                                 {
-                                    //Debug.Log("Player Hit With Ray Cast");
+                                    Debug.Log("Player Hit With Ray Cast");
                                     PlayerSpotted = true;
                                 }
                             }
