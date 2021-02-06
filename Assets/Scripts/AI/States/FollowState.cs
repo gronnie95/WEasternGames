@@ -28,8 +28,6 @@ namespace AI.States
             base.Enter();
             _fieldOfView = _go.GetComponent<FieldOfView>();
            _animator = _go.GetComponent<Animator>();
-            if(!_animator.GetBool(IsRunning))
-                _animator.SetBool(IsRunning, true);
             _moveSpeed = 8f;
             _zVelHash = Animator.StringToHash("enemyVelZ");
         }
@@ -40,8 +38,6 @@ namespace AI.States
 
            float distanceToPlayer = Vector3.Distance(_go.transform.position, _fieldOfView.Player.transform.position);
           
-           Vector3 moveDirection = (_fieldOfView.Player.transform.position - _go.transform.position).normalized;
-               
            
            if (_fieldOfView.Player != null && distanceToPlayer >= 1.5)
            {
@@ -55,14 +51,8 @@ namespace AI.States
            {
                _zVel = 0;
                _animator.SetFloat(_zVelHash, _zVel);
-               _animator.SetBool(IsRunning, false);
                _sm._CurState = new AttackingState(_go, _sm);
            }
-        }
-        
-        public override void Exit()
-        {
-            base.Exit();
         }
     }
 }
