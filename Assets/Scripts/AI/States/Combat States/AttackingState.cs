@@ -71,7 +71,7 @@ public class AttackingState : State
         
         if (_attackStateCountDown <= 0)
         {
-            _sm._CurState = new CombatFollow(_go, _sm, false);
+            _sm._CurState = new CombatWalk(_go, _sm, false);
         }
     }
 

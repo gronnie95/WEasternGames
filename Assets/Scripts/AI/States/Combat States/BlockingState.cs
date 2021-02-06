@@ -39,7 +39,7 @@ public class BlockingState : State
         {
             _anim.SetBool("isKeepBlocking", false);
             _anim.ResetTrigger(Block);
-            _sm._CurState = new CombatFollow(_go, _sm, true);
+            _sm._CurState = new CombatWalk(_go, _sm, true);
         }
 
     }

@@ -4,7 +4,7 @@ using AI;
 using AI.States;
 using UnityEngine;
 
-public class CombatFollow : State
+public class CombatWalk : State
 {
     private Animator _anim;
     private Transform _player;
@@ -19,7 +19,7 @@ public class CombatFollow : State
     #endregion
     
 
-    public CombatFollow(GameObject go, StateMachine sm, bool forward) : base(go, sm)
+    public CombatWalk(GameObject go, StateMachine sm, bool forward) : base(go, sm)
     {
         _forward = forward;
     }

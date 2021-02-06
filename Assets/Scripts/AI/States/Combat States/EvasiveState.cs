@@ -59,7 +59,7 @@ public class EvasiveState : State
             //Return to a follow state to get back to the player's position to start combat again
             _xVel = 0;
             _anim.SetFloat(_xVelHash, _xVel);
-            _sm._CurState = new CombatFollow(_go, _sm, true);
+            _sm._CurState = new CombatWalk(_go, _sm, true);
         }
     }
 }
