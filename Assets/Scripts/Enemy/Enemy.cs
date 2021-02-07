@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
         hpUI.SetMaxHP(HP);
         //staminaUI.SetMaxStaminaSlider(stamina);
         speed = 4;
-        hitStunValue = 100;
+        hitStunValue = 0;
         hitStunRestoreSecond = 0f;
     }
 

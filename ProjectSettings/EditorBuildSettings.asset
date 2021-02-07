@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/DemoMulti.unity
     guid: 0e9304be4da3c714a897a13027be6193
   - enabled: 1
-    path: Assets/Scenes/Debug_Combat&Movement_Scene.unity
+    path: Assets/Scenes/Debug_CombatMovement_Scene.unity
     guid: 91cec428d8697954b97054aafd9f9297
   m_configObjects: {}

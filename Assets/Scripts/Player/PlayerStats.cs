@@ -28,8 +28,8 @@ public class PlayerStats : MonoBehaviour
 
     void Start()
     {
-        health = 1000;
-        stamina = 1000;
+        health = 100;
+        stamina = 100;
         speed = 4;
         hitStunValue = 100;
         hitStunRestoreSecond = 0f;

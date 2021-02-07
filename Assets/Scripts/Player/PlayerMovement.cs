@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     float turnSmoothVelocity;
     public float horizontalVelocity;
     public bool _sprinting;
+    public bool moveKeyPressed = false;
 
     //Jump Setting
     public float verticalVelocity;
@@ -45,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         //this.CameraPivot = this.playerCamera.transform.parent;
         myController = GetComponent<CharacterController>();
 
@@ -69,10 +71,18 @@ public class PlayerMovement : MonoBehaviour
         bool backPressed = Input.GetKey(KeyCode.S);
         bool runPressed = Input.GetKey(KeyCode.LeftShift);
 
-        if(!playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("BI") && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("PB")
+        if (!playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("BI") && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("PB")
             && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("LT") && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("HT") && !playerStats.isHitStun)
         {
             Movement(forwardPressed, rightPressed, leftPressed, backPressed, runPressed);
+            if(forwardPressed || rightPressed || leftPressed || backPressed)
+            {
+                moveKeyPressed = true;
+            }
+            else if(!forwardPressed || !rightPressed || !leftPressed ||! backPressed)
+            {
+                moveKeyPressed = false;
+            }
         }
 
         anim.SetFloat(_xVelHash, _xVel);
@@ -81,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Sprint()
     {
-        if(isSprinting)
+        if(isSprinting && !playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("A"))
         { 
             if (playerStats.stamina > 0)
             {
@@ -118,7 +128,6 @@ public class PlayerMovement : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         //Normalized so that if two keys are pressed the character doesn't go faster
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
 
         #region change player speed when on block action
         if (playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("B"))
@@ -168,17 +177,18 @@ public class PlayerMovement : MonoBehaviour
            _xVel = _sprinting ? -2 : -1;
         }
 
-        /*
-        if (backPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
-        {
-            anim.SetBool("walking", true);
-            Sprint();
-            Vector3 moveVector = new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
-            myController.Move(moveVector * Time.fixedDeltaTime);
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(moveVector.normalized), 0.1f);
-            //Debug.Log("pressing S");
-            //this.transform.position += new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
-        }*/
+        
+        //if (backPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
+        //{
+        //    anim.SetBool("walking", true);
+        //    Sprint();
+        //    Vector3 moveVector = new Vector3(-camDirection.x * playerStats.speed, 0, -camDirection.z * playerStats.speed);
+        //    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(moveVector.normalized), 0.1f);
+        //    ////Debug.Log("pressing S");
+        //    this.transform.position += new Vector3(-camDirection.x * playerStats.speed, 0, -camDirection.z * playerStats.speed);
+        //
+        //   
+        //}
 
         if (rightPressed)
         {

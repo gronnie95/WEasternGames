@@ -59,10 +59,10 @@ public class PlayerControl : MonoBehaviour
                 playerAnimation._anim.SetTrigger("changeToSprint");
             }
 
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-            {
-                playerAnimation._anim.SetTrigger("changeToDefault");
-            }
+            //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            //{
+            //    playerAnimation._anim.SetTrigger("changeToDefault");
+            //}
 
             //if (Input.GetKey(KeyCode.Space))
             //{
