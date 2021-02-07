@@ -15,12 +15,14 @@ public class AttackingState : State
     private Animator _anim;
     private List<int> _attackPatterns;
     private Random _rnd;
+    private CombatActionType _actionType;
+    private EnemyAction _enemyAction;
 
     private const float AttackCDVal = 2f; 
     private bool isReadyNextATK = true;
     private float AttackCD;
     private bool isCDOn = false;
-    private CombatActionType _actionType;
+    
     
     //This is how long the AI will remain in this state during combat
     private float _attackStateCountDown;
@@ -39,9 +41,11 @@ public class AttackingState : State
     public override void Enter()
     {
         base.Enter();
+        Debug.Log("Entering Attacking State");
         _anim = _go.GetComponent<Animator>();
+        _enemyAction = _go.GetComponent<EnemyAction>();
         _rnd = new Random();
-        _attackStateCountDown = 10f;
+        _attackStateCountDown = 3f;
     }
 
     public override void FixedUpdate()
@@ -51,7 +55,6 @@ public class AttackingState : State
         if (isReadyNextATK)
         {
             int action = Random.Range(0,2);
-            Debug.Log(action);
             _actionType = (CombatActionType) action;
 
             switch (_actionType)
@@ -69,9 +72,14 @@ public class AttackingState : State
 
         _attackStateCountDown -= Time.fixedDeltaTime;
         
-        if (_attackStateCountDown <= 0)
+        if (_attackStateCountDown <= 0 && isReadyNextATK)
         {
-            _sm._CurState = new CombatWalk(_go, _sm, false);
+            int action = Random.Range(0,2);
+
+            if (action == 0)
+                _sm._CurState = new CombatWalk(_go, _sm, false);
+            else
+                _sm._CurState = new BlockingState(_go, _sm);
         }
     }
 
@@ -81,6 +89,7 @@ public class AttackingState : State
         isCDOn = true;
         AttackCD = AttackCDVal;
         _anim.SetTrigger(LightAttack);
+        _enemyAction.action = EnemyAction.EnemyActionType.HeavyAttack;
     }
 
     private void DoHeavyAttack()
@@ -89,6 +98,7 @@ public class AttackingState : State
         isCDOn = true;
         AttackCD = AttackCDVal;
         _anim.SetTrigger(HeavyAttack);
+        _enemyAction.action = EnemyAction.EnemyActionType.HeavyAttack;
     }
     
     private void ResetAttackCD()

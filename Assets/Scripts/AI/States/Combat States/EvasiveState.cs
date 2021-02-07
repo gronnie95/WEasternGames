@@ -27,6 +27,7 @@ public class EvasiveState : State
     public override void Enter()
     {
         base.Enter();
+        Debug.Log("Entering Evasive State");
         _anim = _go.GetComponent<Animator>();
         _player = GameObject.FindGameObjectWithTag("Player").transform;
         _radius = 5f;

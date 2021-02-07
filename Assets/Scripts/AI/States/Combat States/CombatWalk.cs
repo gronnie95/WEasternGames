@@ -27,6 +27,7 @@ public class CombatWalk : State
     public override void Enter()
     {
         base.Enter();
+        Debug.Log("Entering Combat Walk State");
         _anim = _go.GetComponent<Animator>();
         _player = GameObject.FindGameObjectWithTag("Player").transform;
         _moveSpeed = 2f;
@@ -39,20 +40,26 @@ public class CombatWalk : State
 
         float distanceToPlayer = Vector3.Distance(_go.transform.position, _player.position);
 
-        _zVel = 1;
-        _go.transform.LookAt(_player.position);
-        
-        if(_forward)
-            _go.transform.position += _go.transform.forward * _moveSpeed * Time.fixedDeltaTime;
+
+        if (_forward)
+        {
+            _zVel = 1;
+            _go.transform.LookAt(_player.position);
+            
+            _go.transform.position += _go.transform.forward * (_moveSpeed * Time.fixedDeltaTime);
+        }
         else
-            _go.transform.position -= _go.transform.forward * _moveSpeed * Time.fixedDeltaTime;
-        
-        
+        {
+            _zVel = -1;
+            _go.transform.LookAt(_player.position);
+            _go.transform.position -= _go.transform.forward * (_moveSpeed * Time.fixedDeltaTime);
+        }
+
         _anim.SetFloat(_zVelHash, _zVel);
 
         //The AI is walking toward the player so it will then enter combat again this will also trigger if the player
         //runs after the AI and catches up to them
-        if (distanceToPlayer < 1.5)
+        if (distanceToPlayer < 1.5 && _forward)
         {
             _zVel = 0;
             _anim.SetFloat(_zVelHash, _zVel);
@@ -60,7 +67,7 @@ public class CombatWalk : State
         }
 
         //The AI is walking away from the player to enter an evasive state
-        if (distanceToPlayer >= 5.0f)
+        if (distanceToPlayer >= 5.0f && !_forward)
         {
             _zVel = 0;
             _anim.SetFloat(_zVelHash, _zVel);

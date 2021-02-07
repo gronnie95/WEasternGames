@@ -26,6 +26,7 @@ namespace AI.States
         public override void Enter()
         {
             base.Enter();
+            Debug.Log("Entering Follow State");
             _fieldOfView = _go.GetComponent<FieldOfView>();
            _animator = _go.GetComponent<Animator>();
             _moveSpeed = 8f;

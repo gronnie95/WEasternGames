@@ -26,8 +26,9 @@ public class EnemyWeaponCollision : MonoBehaviour
         {
             if (collision.transform.root.Find("Player").gameObject.GetComponent<PlayerAction>().isPerfectBlock == true && this.GetComponent<Collider>().isTrigger == false) //get player perfect block
             {
+                Debug.Log("First IF");
                 enemy.GetComponent<EnemyAnimation>()._anim.SetTrigger("getPlayerPerfectBlockImpact");
-
+                
                 // spawn sword clash effect
                 collision.gameObject.GetComponentInParent<SwordEffectSpawner>().SpawnBigSwordClash();
             }

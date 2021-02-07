@@ -11,7 +11,8 @@ public class BlockingState : State
     private bool _alreadBlocking;
     
     private static readonly int Block = Animator.StringToHash("Block");
-    
+    private static readonly int IsKeepBlocking = Animator.StringToHash("isKeepBlocking");
+
     public BlockingState(GameObject go, StateMachine sm) : base(go, sm)
     {
     }
@@ -19,6 +20,7 @@ public class BlockingState : State
     public override void Enter()
     {
         base.Enter();
+        Debug.Log("Entering Blocking State");
         _anim = _go.GetComponent<Animator>();
         _alreadBlocking = false;
         _blockingCountDown = 4f;
@@ -31,15 +33,16 @@ public class BlockingState : State
         if (!_alreadBlocking)
         {
             DoBlock();
+            _alreadBlocking = true;
         }
 
         _blockingCountDown -= Time.fixedDeltaTime;
 
         if (_blockingCountDown <= 0)
         {
-            _anim.SetBool("isKeepBlocking", false);
+            _anim.SetBool(IsKeepBlocking, false);
             _anim.ResetTrigger(Block);
-            _sm._CurState = new CombatWalk(_go, _sm, true);
+            _sm._CurState = new AttackingState(_go, _sm);
         }
 
     }

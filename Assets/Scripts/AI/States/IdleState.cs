@@ -32,7 +32,6 @@ namespace AI.States
             }
             else
             {
-                Debug.Log("Printed from Idle State Player Spotted");
                 _animator.SetBool(Idle, false);
                 _sm._CurState = new FollowState(_go, _sm);
             }
