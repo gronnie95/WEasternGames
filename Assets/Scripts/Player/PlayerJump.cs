@@ -31,7 +31,7 @@ public class PlayerJump : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && isJump == false)
         {
-            nextJumpTime = 0.2f;
+            nextJumpTime = 0.1f;
             _rigidbody.velocity = (Vector3.up * jumpForce);
             isJump = true;
             jumpTimes++;

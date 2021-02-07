@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         //this.CameraPivot = this.playerCamera.transform.parent;
         myController = GetComponent<CharacterController>();
 
