@@ -12,7 +12,7 @@ public class WeaponCollision : MonoBehaviour
 
     void Start()
     {
-        player = this.transform.root.Find("Player").gameObject;
+        player = GameObject.FindGameObjectWithTag("Player");
         playerAction = this.player.GetComponent<PlayerAction>();
         playerStats = this.player.GetComponent<PlayerStats>();
         playerAnimation = this.player.GetComponent<PlayerAnimation>();

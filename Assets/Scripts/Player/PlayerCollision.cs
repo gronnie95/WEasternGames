@@ -108,7 +108,6 @@ public class PlayerCollision : MonoBehaviour
                 playerAnimation._anim.SetTrigger("isInjured");
                 playerStats.isHitStun = true;
                 player.GetComponent<PlayerAction>().isPlayerAttacking = false;
-                Debug.Log("player injured");
             }
 
             // player is not in block action and get hit by enemy  (light attack)
@@ -124,7 +123,6 @@ public class PlayerCollision : MonoBehaviour
                 playerAnimation._anim.SetTrigger("isInjured");
                 
                 player.GetComponent<PlayerAction>().isPlayerAttacking = false;
-                //Debug.Log("player injured");
             }
 
             // player is in perfect block Transistion but not in perfect block timing (Heavy attack)

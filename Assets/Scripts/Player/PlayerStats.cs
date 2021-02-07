@@ -38,8 +38,8 @@ public class PlayerStats : MonoBehaviour
         isHitStun = false;
 
         #region UI
-        hpUI.SetMaxHP(health);
-        staminaUI.SetMaxStaminaSlider(stamina);
+        //hpUI.SetMaxHP(health);
+        //staminaUI.SetMaxStaminaSlider(stamina);
         #endregion
     }
 
@@ -82,12 +82,12 @@ public class PlayerStats : MonoBehaviour
 
     void setStaminaUI()
     {
-        staminaUI.setStaminaSlider(stamina);
+        //staminaUI.setStaminaSlider(stamina);
     }
 
     void setHealthUI()
     {
-        hpUI.setHealth(health);
+        //hpUI.setHealth(health);
     }
 
     void loseCondition()

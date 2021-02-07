@@ -98,7 +98,7 @@ public class SwordCombat : MonoBehaviour
                 {
                     enemyAttackTimer += Time.fixedDeltaTime;
                 }
-                if (!danger.isPlaying && isEnemyAttack == true && enemyAttackTimer >= enemyAttackCoolDown)
+                if ( isEnemyAttack == true && enemyAttackTimer >= enemyAttackCoolDown)
                 {
                     enemyAttackTimer = 0;
                     isEnemyAttack = false;
