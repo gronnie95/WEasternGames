@@ -40,12 +40,12 @@ public class AttackingState : State
 
     public override void Enter()
     {
+        Debug.Log("Entering the Attack State");
         base.Enter();
-        Debug.Log("Entering Attacking State");
         _anim = _go.GetComponent<Animator>();
         _enemyAction = _go.GetComponent<EnemyAction>();
         _rnd = new Random();
-        _attackStateCountDown = 3f;
+        _attackStateCountDown = 10f;
     }
 
     public override void FixedUpdate()
@@ -72,7 +72,7 @@ public class AttackingState : State
 
         _attackStateCountDown -= Time.fixedDeltaTime;
         
-        if (_attackStateCountDown <= 0 && isReadyNextATK)
+        if (_attackStateCountDown <= 0)
         {
             int action = Random.Range(0,2);
 
@@ -89,7 +89,7 @@ public class AttackingState : State
         isCDOn = true;
         AttackCD = AttackCDVal;
         _anim.SetTrigger(LightAttack);
-        _enemyAction.action = EnemyAction.EnemyActionType.HeavyAttack;
+        _enemyAction.action = EnemyAction.EnemyActionType.LightAttack;
     }
 
     private void DoHeavyAttack()
