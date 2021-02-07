@@ -19,7 +19,7 @@ public class PlayerAnimation : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
-        _anim.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("AnimationController/PlayerAnimator"); //Load controller at runtime https://answers.unity.com/questions/1243273/runtimeanimatorcontroller-not-loading-from-script.html
+        _anim.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("AnimationController/SachiAnimator"); //Load controller at runtime https://answers.unity.com/questions/1243273/runtimeanimatorcontroller-not-loading-from-script.html
         playerAction = GetComponent<PlayerAction>();
         playerControl = GetComponent<PlayerControl>();
         playerJump = GetComponent<PlayerJump>();
@@ -35,7 +35,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         initialiseAnimatorBool();
         stopDodging();
-        //Debug.Log(clipInfo[0].clip.name);
     }
 
 
