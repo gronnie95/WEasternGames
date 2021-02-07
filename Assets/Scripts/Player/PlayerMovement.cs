@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         //this.CameraPivot = this.playerCamera.transform.parent;
         myController = GetComponent<CharacterController>();
 
@@ -176,17 +177,18 @@ public class PlayerMovement : MonoBehaviour
            _xVel = _sprinting ? -2 : -1;
         }
 
-        /*
-        if (backPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
-        {
-            anim.SetBool("walking", true);
-            Sprint();
-            Vector3 moveVector = new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
-            myController.Move(moveVector * Time.fixedDeltaTime);
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(moveVector.normalized), 0.1f);
-            //Debug.Log("pressing S");
-            //this.transform.position += new Vector3(-camDirection.x * moveSpeed, 0, -camDirection.z * moveSpeed);
-        }*/
+        
+        //if (backPressed && GetComponent<SwordCombat>().isLostBodyBalance == false)
+        //{
+        //    anim.SetBool("walking", true);
+        //    Sprint();
+        //    Vector3 moveVector = new Vector3(-camDirection.x * playerStats.speed, 0, -camDirection.z * playerStats.speed);
+        //    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(moveVector.normalized), 0.1f);
+        //    ////Debug.Log("pressing S");
+        //    this.transform.position += new Vector3(-camDirection.x * playerStats.speed, 0, -camDirection.z * playerStats.speed);
+        //
+        //   
+        //}
 
         if (rightPressed)
         {

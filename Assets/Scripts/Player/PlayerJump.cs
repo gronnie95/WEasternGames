@@ -24,14 +24,14 @@ public class PlayerJump : MonoBehaviour
 
     void FixedUpdate()
     {
-        //Jump();
+        Jump();
     }   
 
     public void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && isJump == false)
         {
-            nextJumpTime = 0.2f;
+            nextJumpTime = 0.1f;
             _rigidbody.velocity = (Vector3.up * jumpForce);
             isJump = true;
             jumpTimes++;
