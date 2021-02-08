@@ -27,7 +27,6 @@ public class CombatWalk : State
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("Entering Combat Walk State");
         _anim = _go.GetComponent<Animator>();
         _player = GameObject.FindGameObjectWithTag("Player").transform;
         _moveSpeed = 2f;

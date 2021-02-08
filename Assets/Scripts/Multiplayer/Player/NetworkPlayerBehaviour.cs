@@ -50,7 +50,7 @@ public class NetworkPlayerBehaviour : NetworkBehaviour
         #region Debug
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Debug.Log(playerAction);
+            //Debug.Log(playerAction);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {

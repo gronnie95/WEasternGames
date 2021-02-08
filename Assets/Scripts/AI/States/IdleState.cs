@@ -10,7 +10,6 @@ namespace AI.States
 
         public IdleState(GameObject go, StateMachine sm) : base(go, sm)
         {
-            Debug.Log("Entering Idle State");
             _fieldOfView = _go.GetComponent<FieldOfView>();
             _animator = _go.GetComponent<Animator>();
 
