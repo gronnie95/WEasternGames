@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using AI;
+using AI.States;
 using UnityEngine;
 
 
@@ -17,6 +18,7 @@ public class AttackingState : State
     private Random _rnd;
     private CombatActionType _actionType;
     private EnemyAction _enemyAction;
+    private Transform _playerTransform;
 
     private const float AttackCDVal = 2f; 
     private bool isReadyNextATK = true;
@@ -40,10 +42,10 @@ public class AttackingState : State
 
     public override void Enter()
     {
-        Debug.Log("Entering the Attack State");
         base.Enter();
         _anim = _go.GetComponent<Animator>();
         _enemyAction = _go.GetComponent<EnemyAction>();
+        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         _rnd = new Random();
         _attackStateCountDown = 10f;
     }
@@ -81,6 +83,12 @@ public class AttackingState : State
             else
                 _sm._CurState = new BlockingState(_go, _sm);
         }
+
+        if (Vector3.Distance(_playerTransform.position, _go.transform.position) > 3f)
+        {
+            _sm._CurState = new FollowState(_go, _sm);
+        }
+
     }
 
     private void DoLightAttack()

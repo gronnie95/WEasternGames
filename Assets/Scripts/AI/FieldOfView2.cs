@@ -55,8 +55,7 @@ namespace AI
                 {
                    if (overlaps[i] == target)
                     {
-                        Debug.Log("Target Found");
-                        Vector3 direction = (target.position - checkingObject.position).normalized;
+                       Vector3 direction = (target.position - checkingObject.position).normalized;
                         direction.y *= 0;
 
                         float angle = Vector3.Angle(checkingObject.forward, direction);
@@ -71,7 +70,6 @@ namespace AI
                             {
                                 if (hit.transform == target)
                                 {
-                                    Debug.Log("Player Spotted");
                                 }
                             }
                         }
@@ -87,13 +85,11 @@ namespace AI
 
             if (angle <= fieldOfViewAngle)
             {
-                Debug.Log("Player in angle");
             }
         }
         private void Update()
         {
             //InView(transform, _player, fieldOfViewAngle, lookRadius);
-            Debug.Log("Player In angle");
         }
     }
 }

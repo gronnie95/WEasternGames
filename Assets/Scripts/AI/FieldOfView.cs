@@ -9,8 +9,9 @@ namespace AI
         
         public float fieldOfViewAngle;
         public float lookRadius;
-        [SerializeField] private GameObject _player;
-
+        private GameObject _player;
+        [SerializeField] private Transform _rayCastOrigin;
+        
         public bool PlayerSpotted { get; set; }
 
         public GameObject Player => _player;
@@ -18,7 +19,7 @@ namespace AI
         public float DistanceToPlayer => Vector3.Distance(_player.transform.position, transform.position);
         
         //To be deleted once debugging is no longer needed, that is the only purpose of this function
-        private void OnDrawGizmos()
+        /*private void OnDrawGizmos()
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, lookRadius);
@@ -31,18 +32,18 @@ namespace AI
             Gizmos.DrawRay(transform.position, fovLine2);
             
             Gizmos.color = Color.red;
-            Gizmos.DrawRay(transform.position, (_player.transform.position - transform.position).normalized * lookRadius);
+            Gizmos.DrawRay(_rayCastOrigin.position, (_player.transform.position - transform.position).normalized * lookRadius);
             
             Gizmos.color = Color.black;
-            Gizmos.DrawRay(transform.position, transform.forward * lookRadius);
-        }
+            Gizmos.DrawRay(_rayCastOrigin.position, transform.forward * lookRadius);
+        }*/
 
        private void Detection()
         {
             Collider[] overlaps = new Collider[10];
             int count = Physics.OverlapSphereNonAlloc(transform.position, lookRadius, overlaps);
 
-            for (int i = 0; i < count + 1; i++)
+            for (int i = 0; i < count; i++)
             {
                 if(overlaps[i] != null)
                 {
@@ -56,7 +57,7 @@ namespace AI
                         if (angle <= fieldOfViewAngle)
                         {
                             RaycastHit hit;
-                            if (Physics.Raycast(transform.position, (_player.transform.position - transform.position).normalized, out hit))
+                            if (Physics.Raycast(_rayCastOrigin.position, (_player.transform.position - transform.position).normalized, out hit))
                             {
                                 if (hit.collider.CompareTag("Player"))
                                 {
@@ -68,8 +69,13 @@ namespace AI
                 };
             }
         }
-
-        private void Update()
+       
+       private void Awake()
+       {
+           _player = GameObject.FindWithTag("Player");
+       }
+       
+       private void Update()
         {
             Detection();
         }

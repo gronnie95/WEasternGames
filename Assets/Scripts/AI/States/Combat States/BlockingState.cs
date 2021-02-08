@@ -22,7 +22,6 @@ public class BlockingState : State
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("Entering Blocking State");
         _anim = _go.GetComponent<Animator>();
         _enemyAction = _go.GetComponent<EnemyAction>();
         _alreadBlocking = false;

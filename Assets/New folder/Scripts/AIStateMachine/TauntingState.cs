@@ -26,7 +26,6 @@ namespace New_folder.Scripts.AIStateMachine
             Vector3 targetPos = CatchParticipant._catcher.transform.position + fleeVec * 5;
             //They are faster than you because they are not normalized 
             _characterMotor._moveDir = (targetPos - _go.transform.position);
-            Debug.Log(_characterMotor._rb.velocity);
             
             if(_catchParticipant._catchRole == CatchParticipant.CatchRole.Catcher)
                 _sm._CurState = new ChasingState(_go, _sm);
