@@ -47,7 +47,7 @@ namespace AI.States
                _animator.SetFloat(_zVelHash, _zVel);
            }
 
-           if (distanceToPlayer < 1.5)
+           if (distanceToPlayer < 2.5)
            {
                _zVel = 0;
                _animator.SetFloat(_zVelHash, _zVel);

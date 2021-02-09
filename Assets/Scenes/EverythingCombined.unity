@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1228,6 +1228,7 @@ MonoBehaviour:
   turnSmooth: 0.1
   horizontalVelocity: 0
   _sprinting: 0
+  moveKeyPressed: 0
   verticalVelocity: 0
   myController: {fileID: 0}
   isOnKnockBack: 0
@@ -4103,6 +4104,7 @@ MonoBehaviour:
   action: 4
   isPerfectBlock: 0
   isKeepBlocking: 0
+  isInPerfectBlockOnly: 0
 --- !u!114 &169012390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4775,7 +4777,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 390776686}
-  m_LocalRotation: {x: 0.27568248, y: 0.000000005526856, z: -0.000000019271013, w: 0.96124876}
+  m_LocalRotation: {x: 0.2756825, y: -0.000000023120593, z: -0.000000011055033, w: 0.96124876}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6181,6 +6183,7 @@ MonoBehaviour:
   action: 3
   isPerfectBlock: 0
   isKeepBlocking: 0
+  isInPerfectBlockOnly: 0
 --- !u!114 &614810905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7460,6 +7463,7 @@ MonoBehaviour:
   action: 1
   isPerfectBlock: 0
   isKeepBlocking: 0
+  isInPerfectBlockOnly: 0
 --- !u!114 &702004489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8439,6 +8443,7 @@ MonoBehaviour:
   action: 2
   isPerfectBlock: 0
   isKeepBlocking: 0
+  isInPerfectBlockOnly: 0
 --- !u!114 &906048059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8464,8 +8469,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6544da85556d20642b8fa18c7c067371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _anim: {fileID: 0}
-  player: {fileID: 0}
+  _anim: {fileID: 1712813916}
+  player: {fileID: 8198683}
   enemy: {fileID: 906048053}
 --- !u!114 &906048061
 MonoBehaviour:
@@ -9690,7 +9695,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1156372508}
-  m_LocalRotation: {x: 0.12797649, y: 0.000000034129798, z: -0.0000000044040247, w: 0.99177724}
+  m_LocalRotation: {x: 0.12797649, y: -0.000000034129798, z: 0.0000000044040247, w: 0.99177724}
   m_LocalPosition: {x: 5.35, y: 2.9, z: -8.149}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -13914,6 +13919,7 @@ MonoBehaviour:
   turnSmooth: 0.1
   horizontalVelocity: 0
   _sprinting: 0
+  moveKeyPressed: 0
   verticalVelocity: 0
   myController: {fileID: 1555731409}
   isOnKnockBack: 0
@@ -15697,6 +15703,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 044c326a2424d984e8e45eb9604c5393, type: 3}
+--- !u!95 &1712813916 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 044c326a2424d984e8e45eb9604c5393,
+    type: 3}
+  m_PrefabInstance: {fileID: 1712813915}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1713975144
 GameObject:
   m_ObjectHideFlags: 0
@@ -16230,6 +16242,7 @@ MonoBehaviour:
   turnSmooth: 0.1
   horizontalVelocity: 0
   _sprinting: 0
+  moveKeyPressed: 0
   verticalVelocity: 0
   myController: {fileID: 1813837194}
   isOnKnockBack: 0
@@ -17125,6 +17138,7 @@ MonoBehaviour:
   action: 0
   isPerfectBlock: 0
   isKeepBlocking: 0
+  isInPerfectBlockOnly: 0
 --- !u!114 &1894425113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17277,7 +17291,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1898463622}
-  m_LocalRotation: {x: -0.12797648, y: -0.000000018185474, z: 0.000000010886118, w: -0.99177724}
+  m_LocalRotation: {x: -0.12797648, y: 0.000000015944321, z: 0.0000000064820935, w: -0.99177724}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -18558,6 +18572,7 @@ MonoBehaviour:
   action: 1
   isPerfectBlock: 0
   isKeepBlocking: 0
+  isInPerfectBlockOnly: 0
 --- !u!114 &1987218364
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -51,7 +51,6 @@ public class PlayerMovement : MonoBehaviour
         myController = GetComponent<CharacterController>();
 
         anim = GetComponent<Animator>();
-        anim.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("AnimationController/PlayerAnimator");
         rigidbody = GetComponent<Rigidbody>();
 
         _zVelHash = Animator.StringToHash("velZ");

@@ -48,6 +48,7 @@ public class AttackingState : State
         _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         _rnd = new Random();
         _attackStateCountDown = 10f;
+        Debug.Log("Entering Attacking state");
     }
 
     public override void FixedUpdate()
@@ -62,7 +63,8 @@ public class AttackingState : State
             switch (_actionType)
             {
                 case CombatActionType.HeavyAttack:
-                    DoHeavyAttack();
+                    // DoHeavyAttack();
+                    DoLightAttack();
                     break;
                 case CombatActionType.LightAttack:
                     DoLightAttack();
