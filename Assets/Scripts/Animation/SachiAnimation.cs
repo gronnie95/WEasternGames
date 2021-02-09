@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
 
-public class PlayerAnimation : MonoBehaviour
+public class SachiAnimation : MonoBehaviour
 {
     public Animator _anim;
-    public RuntimeAnimatorController animatorController;
+    public RuntimeAnimatorController runtimeAnimatorController;
+    public GameObject katanaObject;
     private PlayerAction playerAction;
     private PlayerControl playerControl;
     private PlayerJump playerJump;
@@ -20,21 +21,16 @@ public class PlayerAnimation : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
-        // _anim.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("AnimationController/PlayerAnimator"); //Load controller at runtime https://answers.unity.com/questions/1243273/runtimeanimatorcontroller-not-loading-from-script.html
-        _anim.runtimeAnimatorController = animatorController; //Load controller at runtime https://answers.unity.com/questions/1243273/runtimeanimatorcontroller-not-loading-from-script.html
+        _anim.runtimeAnimatorController = runtimeAnimatorController; //Load controller at runtime https://answers.unity.com/questions/1243273/runtimeanimatorcontroller-not-loading-from-script.html
         playerAction = GetComponent<PlayerAction>();
         playerControl = GetComponent<PlayerControl>();
         playerJump = GetComponent<PlayerJump>();
         doubleJump = GetComponent<DoubleJump>();
         playerMovement = GetComponent<PlayerMovement>();
         playerStats = GetComponent<PlayerStats>();
-        //clipInfo = _anim.GetCurrentAnimatorClipInfo(0); // get name of current animation state   https://stackoverflow.com/questions/34846287/get-name-of-current-animation-state
+        clipInfo = _anim.GetCurrentAnimatorClipInfo(0); // get name of current animation state   https://stackoverflow.com/questions/34846287/get-name-of-current-animation-state
 
-        // collider = this.transform.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm/mixamorig:RightHand/" +
-        //      "katana").gameObject.GetComponent<BoxCollider>(); // to find a child game object by name   //https://docs.unity3d.com/ScriptReference/Transform.Find.html
-
-        collider = this.transform.Find("metarig/spine/spine.007/spine.001/spine.002/spine.003/shoulder.R/upper_arm.R/forearm.R/hand.R/" +
-        "katana").gameObject.GetComponent<BoxCollider>(); // to find a child game object by name   //https://docs.unity3d.com/ScriptReference/Transform.Find.html
+        collider = katanaObject.GetComponent<BoxCollider>(); // to find a child game object by name   //https://docs.unity3d.com/ScriptReference/Transform.Find.html
     }
 
     void FixedUpdate()
@@ -65,7 +61,6 @@ public class PlayerAnimation : MonoBehaviour
         _anim.SetBool("isFalling", playerJump.isFalling);
         _anim.SetBool("isGrounded", playerJump.isGrounded);
         _anim.SetBool("FallingToGround", playerJump.fallingToGround);
-        _anim.SetInteger("jumpTimes", playerJump.jumpTimes);
         #endregion
         #region Sprint
         _anim.SetBool("isSprinting", playerMovement.isSprinting);
