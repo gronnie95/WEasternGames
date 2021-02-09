@@ -58,7 +58,7 @@ public class CombatWalk : State
 
         //The AI is walking toward the player so it will then enter combat again this will also trigger if the player
         //runs after the AI and catches up to them
-        if (distanceToPlayer < 1.5 && _forward)
+        if (distanceToPlayer < 1.6 && _forward)
         {
             _zVel = 0;
             _anim.SetFloat(_zVelHash, _zVel);

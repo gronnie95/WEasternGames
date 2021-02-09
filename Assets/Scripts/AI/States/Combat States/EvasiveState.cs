@@ -3,6 +3,8 @@ using AI.States;
 using TMPro;
 using UnityEngine;
 
+//https://answers.unity.com/questions/433791/rotate-object-around-moving-object.html
+//Resource used to calculate new circular motion that did not lock the Y 
 public class EvasiveState : State
 {
     private Animator _anim;
@@ -12,6 +14,7 @@ public class EvasiveState : State
     private float _angle;
     private float _radius;
     private float _timer;
+    private float _rotationalSpeed;
     
     #region Blend Tree Parameters
     
@@ -30,7 +33,8 @@ public class EvasiveState : State
         _anim = _go.GetComponent<Animator>();
         _player = GameObject.FindGameObjectWithTag("Player").transform;
         _radius = 5f;
-        _timer = 10f;
+        _timer = 6f;
+        _rotationalSpeed = 30f;
         
         //For the blend tree animation
         _xVelHash = Animator.StringToHash("enemyVelX");
@@ -38,22 +42,21 @@ public class EvasiveState : State
 
     public override void FixedUpdate()
     {
-        _timer -= Time.deltaTime; 
-        
-        //Circular motion
+        _timer -= Time.fixedDeltaTime; 
         _centre = _player.transform.position;
-        _angle += _moveSpeed * Time.deltaTime;
 
-        Vector3 offset = new Vector3(Mathf.Sin(_angle), 0, Mathf.Cos(_angle)) * _radius;
-        _go.transform.position = _centre + offset;
-
-        _go.transform.LookAt(_player.transform.position);
-
+        //Rotates the enemy around the player
+        _go.transform.position =
+            _centre + (_go.transform.position - _centre).normalized * _radius;
+        _go.transform.RotateAround(_centre, Vector3.up, _rotationalSpeed * Time.fixedDeltaTime);
+        
+        //Makes sure that the enemy is still facing the player
+        _go.transform.LookAt(_centre);
+      
         //Updates the blend tree to perform a walk animation
         _xVel = -1f;
         _anim.SetFloat(_xVelHash, _xVel);
 
-        
         if (_timer <= 0)
         {
             //Return to a follow state to get back to the player's position to start combat again

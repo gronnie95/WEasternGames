@@ -34,25 +34,25 @@ namespace AI.States
 
         public override void FixedUpdate()
         {
-           base.FixedUpdate();
+            base.FixedUpdate();
 
-           float distanceToPlayer = Vector3.Distance(_go.transform.position, _fieldOfView.Player.transform.position);
+            float distanceToPlayer = Vector3.Distance(_go.transform.position, _fieldOfView.Player.transform.position);
           
            
-           if (_fieldOfView.Player != null && distanceToPlayer >= 1.5)
-           {
-               _zVel = 2;
-               _go.transform.LookAt(_fieldOfView.Player.transform.position);
-               _go.transform.position += _go.transform.forward * _moveSpeed * Time.deltaTime;
-               _animator.SetFloat(_zVelHash, _zVel);
-           }
+            if (_fieldOfView.Player != null && distanceToPlayer >= 1.5)
+            {
+                _zVel = 2;
+                _go.transform.LookAt(_fieldOfView.Player.transform.position);
+                _go.transform.position += _go.transform.forward * _moveSpeed * Time.deltaTime;
+                _animator.SetFloat(_zVelHash, _zVel);
+            }
 
-           if (distanceToPlayer < 2.5)
-           {
-               _zVel = 0;
-               _animator.SetFloat(_zVelHash, _zVel);
-               _sm._CurState = new AttackingState(_go, _sm);
-           }
+            if (distanceToPlayer <= 1.5)
+            {
+                _zVel = 0;
+                _animator.SetFloat(_zVelHash, _zVel);
+                _sm._CurState = new AttackingState(_go, _sm);
+            }
         }
     }
 }
