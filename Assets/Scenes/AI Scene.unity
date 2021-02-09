@@ -629,7 +629,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fieldOfViewAngle: 20
   lookRadius: 10
-  _player: {fileID: 448092665}
   _rayCastOrigin: {fileID: 0}
 --- !u!114 &637418082
 MonoBehaviour:
@@ -1158,6 +1157,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8322698358705572896, guid: 312fbc14000da2a47b8776171e039e06,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8322698358705572896, guid: 312fbc14000da2a47b8776171e039e06,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8322698358705572896, guid: 312fbc14000da2a47b8776171e039e06,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8322698358705572896, guid: 312fbc14000da2a47b8776171e039e06,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8322698358705572896, guid: 312fbc14000da2a47b8776171e039e06,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8322698358705572896, guid: 312fbc14000da2a47b8776171e039e06,
+        type: 3}
+      propertyPath: m_Drag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8322698358705572898, guid: 312fbc14000da2a47b8776171e039e06,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8322698358705572907, guid: 312fbc14000da2a47b8776171e039e06,
+        type: 3}
+      propertyPath: HP
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8322698358718949355, guid: 312fbc14000da2a47b8776171e039e06,
         type: 3}
