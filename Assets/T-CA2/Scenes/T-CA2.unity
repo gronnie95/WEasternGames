@@ -633,6 +633,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4159577264679706069, guid: 16afc5c4b3e228b46b68ad096ef01bf5,
+        type: 3}
+      propertyPath: combatSoundsLibrary
+      value: 
+      objectReference: {fileID: 1148650994}
+    - target: {fileID: 4159577264679706069, guid: 16afc5c4b3e228b46b68ad096ef01bf5,
+        type: 3}
+      propertyPath: diageticSoundManagerGameObject
+      value: 
+      objectReference: {fileID: 943904271}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16afc5c4b3e228b46b68ad096ef01bf5, type: 3}
 --- !u!1001 &20345227
@@ -782,6 +792,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4159577264679706069, guid: 16afc5c4b3e228b46b68ad096ef01bf5,
+        type: 3}
+      propertyPath: combatSoundsLibrary
+      value: 
+      objectReference: {fileID: 1148650994}
+    - target: {fileID: 4159577264679706069, guid: 16afc5c4b3e228b46b68ad096ef01bf5,
+        type: 3}
+      propertyPath: diageticSoundManagerGameObject
+      value: 
+      objectReference: {fileID: 943904271}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16afc5c4b3e228b46b68ad096ef01bf5, type: 3}
 --- !u!1 &25088710
@@ -6102,6 +6122,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4159577264679706069, guid: 16afc5c4b3e228b46b68ad096ef01bf5,
+        type: 3}
+      propertyPath: combatSoundsLibrary
+      value: 
+      objectReference: {fileID: 1148650994}
+    - target: {fileID: 4159577264679706069, guid: 16afc5c4b3e228b46b68ad096ef01bf5,
+        type: 3}
+      propertyPath: diageticSoundManagerGameObject
+      value: 
+      objectReference: {fileID: 943904271}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16afc5c4b3e228b46b68ad096ef01bf5, type: 3}
 --- !u!1001 &710181358
@@ -10369,6 +10399,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4159577264679706069, guid: 16afc5c4b3e228b46b68ad096ef01bf5,
+        type: 3}
+      propertyPath: combatSoundsLibrary
+      value: 
+      objectReference: {fileID: 1148650994}
+    - target: {fileID: 4159577264679706069, guid: 16afc5c4b3e228b46b68ad096ef01bf5,
+        type: 3}
+      propertyPath: diageticSoundManagerGameObject
+      value: 
+      objectReference: {fileID: 943904271}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16afc5c4b3e228b46b68ad096ef01bf5, type: 3}
 --- !u!4 &1330295657 stripped
