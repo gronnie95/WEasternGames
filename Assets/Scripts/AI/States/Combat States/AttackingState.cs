@@ -47,8 +47,7 @@ public class AttackingState : State
         _enemyAction = _go.GetComponent<EnemyAction>();
         _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         _rnd = new Random();
-        _attackStateCountDown = 10f;
-        Debug.Log("Entering Attacking state");
+        _attackStateCountDown = 7f;
     }
 
     public override void FixedUpdate()
