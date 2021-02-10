@@ -28,8 +28,8 @@ public class EnemyAnimation : MonoBehaviour
     void initialiseAnimatorBool()
     {
         _anim.SetBool("isAttacking", collider.isTrigger);
-        _anim.SetBool("isPerfectBlock", enemyAction.isPerfectBlock);
         _anim.SetBool("isKeepBlocking", enemyAction.isKeepBlocking);
+        _anim.SetBool("isPerfectBlock", enemyAction.isPerfectBlock);
         _anim.SetBool("isInPerfectBlockOnly", enemyAction.isInPerfectBlockOnly);
     }
 
@@ -61,6 +61,11 @@ public class EnemyAnimation : MonoBehaviour
     #endregion
 
     #region Enemy Block Logic
+    public void OnAnimation_isBlockStart()
+    {
+        enemyAction.isKeepBlocking = true;
+    }
+
     public void OnAnimation_BlockStart()
     {
         enemyAction.isKeepBlocking = true;

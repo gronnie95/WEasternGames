@@ -103,7 +103,8 @@ public class WeaponCollision : MonoBehaviour
             // enemy is not in block action and get hit by player (Heavy attack)
             if (playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("HT") &&
                this.GetComponent<Collider>().isTrigger == false &&
-               enemyAction.isKeepBlocking == false)
+               enemyAction.isKeepBlocking == false &&
+               enemyAction.isPerfectBlock == false)
             {
                 this.GetComponent<Collider>().isTrigger = true;
                 enemy.DecreaseHPStamina(10, 10);   //  actual is 20
@@ -116,7 +117,8 @@ public class WeaponCollision : MonoBehaviour
             // enemy is not in block action and get hit by player  (light attack)
             else if (playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("LT") &&
                      this.GetComponent<Collider>().isTrigger == false &&
-                     enemy.GetComponent<EnemyAction>().isKeepBlocking == false)
+                     enemy.GetComponent<EnemyAction>().isKeepBlocking == false &&
+                     enemyAction.isPerfectBlock == false)
             {
                 this.GetComponent<Collider>().isTrigger = true;
                 enemy.DecreaseHPStamina(5, 5);  //  actual is 10
@@ -175,7 +177,7 @@ public class WeaponCollision : MonoBehaviour
             }
 
             // enemy is in perfect block
-            else if (this.GetComponent<Collider>().isTrigger == false && collision.gameObject.GetComponent<EnemyAction>().isPerfectBlock == true)
+            if (collision.gameObject.GetComponent<EnemyAction>().isPerfectBlock == true)
             {
                 player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isGetEnemyPerfectBlock");
                 player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isGetEnemyPerfectBlock");
@@ -184,6 +186,7 @@ public class WeaponCollision : MonoBehaviour
 
                 // spawn sword clash effect
                 collision.gameObject.GetComponentInParent<SwordEffectSpawner>().SpawnBigSwordClash();
+                this.GetComponent<Collider>().isTrigger = true;
             }
         }
     }

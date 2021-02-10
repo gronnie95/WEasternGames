@@ -13680,7 +13680,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: OnAnimation_BlockStart
+    functionName: OnAnimation_isBlockStart
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -22107,6 +22107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _anim: {fileID: 8179728686340255270}
   animatorController: {fileID: 9100000, guid: 6bc72f666845f0d4b9ea4bc8e2e88456, type: 2}
+  collider: {fileID: 8712116367856152360}
 --- !u!114 &8712116369550264002
 MonoBehaviour:
   m_ObjectHideFlags: 0
