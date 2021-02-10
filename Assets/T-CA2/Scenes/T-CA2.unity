@@ -642,7 +642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1711b3daca6b4b14ebb7f34ae6e707f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: 2
+  action: 4
   isPerfectBlock: 0
   isKeepBlocking: 0
   isInPerfectBlockOnly: 0
