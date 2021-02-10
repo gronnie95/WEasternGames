@@ -27002,7 +27002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9768624fbbb4fa741b043579e1d663bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterSoundsLibrary: {fileID: 0}
+  characterSoundsLibrary: {fileID: 441282568}
   head: {fileID: 2539702857218758743}
 --- !u!4 &4159577263430705948
 Transform:
@@ -27454,7 +27454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9768624fbbb4fa741b043579e1d663bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterSoundsLibrary: {fileID: 0}
+  characterSoundsLibrary: {fileID: 441282568}
   head: {fileID: 2539702855912138548}
 --- !u!114 &4159577264662627573
 MonoBehaviour:
@@ -27502,7 +27502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9768624fbbb4fa741b043579e1d663bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterSoundsLibrary: {fileID: 0}
+  characterSoundsLibrary: {fileID: 441282568}
   head: {fileID: 2539702855909101471}
 --- !u!1 &4159577264674413694
 GameObject:
@@ -27576,7 +27576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9768624fbbb4fa741b043579e1d663bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterSoundsLibrary: {fileID: 0}
+  characterSoundsLibrary: {fileID: 441282568}
   head: {fileID: 2539702855499984528}
 --- !u!114 &4159577265076620625
 MonoBehaviour:
