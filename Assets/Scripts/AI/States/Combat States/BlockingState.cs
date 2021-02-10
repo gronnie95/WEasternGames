@@ -7,7 +7,7 @@ using UnityEngine;
 public class BlockingState : State
 {
     private Animator _anim;
-    private EnemyAction _enemyAction;
+    private EnemyAction2 _enemyAction;
     
     private float _blockingCountDown;
     private bool _alreadBlocking;
@@ -20,7 +20,7 @@ public class BlockingState : State
     {
         base.Enter();
         _anim = _go.GetComponent<Animator>();
-        _enemyAction = _go.GetComponent<EnemyAction>();
+        _enemyAction = _go.GetComponent<EnemyAction2>();
         _alreadBlocking = false;
         _blockingCountDown = 5f;
     }
@@ -49,7 +49,7 @@ public class BlockingState : State
     private void DoBlock()
     {
        _enemyAction.isKeepBlocking = true;
-       _enemyAction.action = EnemyAction.EnemyActionType.Block;
+       _enemyAction.action = EnemyAction2.EnemyActionType.Block;
     }
     
 }

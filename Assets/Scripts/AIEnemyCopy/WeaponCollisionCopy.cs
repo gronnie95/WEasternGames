@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponCollision : MonoBehaviour
+public class WeaponCollisionCopy : MonoBehaviour
 {
     public GameObject player;
     public PlayerAction playerAction;
@@ -28,8 +28,8 @@ public class WeaponCollision : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            EnemyAction enemyAction = collision.gameObject.GetComponent<EnemyAction>();
-            EnemyAnimation enemyAnimation = collision.gameObject.GetComponent<EnemyAnimation>();
+            EnemyAction2 enemyAction = collision.gameObject.GetComponent<EnemyAction2>();
+            EnemyAnimationCopy enemyAnimation = collision.gameObject.GetComponent<EnemyAnimationCopy>();
 
             #region Enemy Blocking Collision Logic
             // enemy is blocking and get hit by player
@@ -117,7 +117,7 @@ public class WeaponCollision : MonoBehaviour
             // enemy is not in block action and get hit by player  (light attack)
             else if (playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("LT") &&
                      this.GetComponent<Collider>().isTrigger == false &&
-                     enemy.GetComponent<EnemyAction>().isKeepBlocking == false &&
+                     enemy.GetComponent<EnemyAction2>().isKeepBlocking == false &&
                      enemyAction.isPerfectBlock == false)
             {
                 this.GetComponent<Collider>().isTrigger = true;
@@ -177,7 +177,7 @@ public class WeaponCollision : MonoBehaviour
             }
 
             // enemy is in perfect block
-            if (collision.gameObject.GetComponent<EnemyAction>().isPerfectBlock == true)
+            if (enemyAction.isPerfectBlock == true)
             {
                 player.GetComponent<PlayerAnimation>()._anim.ResetTrigger("isGetEnemyPerfectBlock");
                 player.GetComponent<PlayerAnimation>()._anim.SetTrigger("isGetEnemyPerfectBlock");

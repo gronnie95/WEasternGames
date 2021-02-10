@@ -14,7 +14,7 @@ public class PlayerAnimation : MonoBehaviour
     private PlayerMovement playerMovement;
     private PlayerStats playerStats;
     private AnimatorClipInfo[] clipInfo;
-    private Collider collider;
+    public Collider collider;
 
     void Start()
     {
@@ -32,8 +32,8 @@ public class PlayerAnimation : MonoBehaviour
         // collider = this.transform.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm/mixamorig:RightHand/" +
         //      "katana").gameObject.GetComponent<BoxCollider>(); // to find a child game object by name   //https://docs.unity3d.com/ScriptReference/Transform.Find.html
 
-        collider = this.transform.Find("metarig/spine/spine.007/spine.001/spine.002/spine.003/shoulder.R/upper_arm.R/forearm.R/hand.R/" +
-        "katana").gameObject.GetComponent<BoxCollider>(); // to find a child game object by name   //https://docs.unity3d.com/ScriptReference/Transform.Find.html
+        //collider = this.transform.Find("metarig/spine/spine.007/spine.001/spine.002/spine.003/shoulder.R/upper_arm.R/forearm.R/hand.R/" +
+        //"katana").gameObject.GetComponent<BoxCollider>(); // to find a child game object by name   //https://docs.unity3d.com/ScriptReference/Transform.Find.html
     }
 
     void FixedUpdate()

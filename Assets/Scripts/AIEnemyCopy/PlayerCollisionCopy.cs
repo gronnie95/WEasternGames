@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCollision : MonoBehaviour
+public class PlayerCollisionCopy : MonoBehaviour
 {
     private GameObject player;
     PlayerAnimation playerAnimation;
@@ -22,7 +22,7 @@ public class PlayerCollision : MonoBehaviour
         #region Player Get Enemy Hit
         if (collision.gameObject.tag == "EnemyWeapon")
         {
-            EnemyWeaponCollision enemyWeaponCollision = collision.gameObject.GetComponent<EnemyWeaponCollision>();
+            EnemyWeaponCollisionCopy enemyWeaponCollision = collision.gameObject.GetComponent<EnemyWeaponCollisionCopy>();
             #region Player Blocking Collision Logic
             // player is blocking and get hit by enemy
             if (collision.gameObject.GetComponent<Collider>().isTrigger == false && 
@@ -32,7 +32,7 @@ public class PlayerCollision : MonoBehaviour
             {
                 #region get enemy heavy attack
                 if (playerStats.hitStunValue > 0 && 
-                    enemyWeaponCollision.enemyActionType == EnemyAction.EnemyActionType.HeavyAttack)
+                    enemyWeaponCollision.enemyActionType == EnemyAction2.EnemyActionType.HeavyAttack)
                 {
                     playerStats.hitStunValue -= 100;
                     if (playerStats.hitStunValue <= 0)
@@ -49,7 +49,7 @@ public class PlayerCollision : MonoBehaviour
                 #region get enemy light attack
                 //get enemy light attack
                 if (playerStats.hitStunValue > 0 && 
-                    enemyWeaponCollision.enemyActionType == EnemyAction.EnemyActionType.LightAttack)
+                    enemyWeaponCollision.enemyActionType == EnemyAction2.EnemyActionType.LightAttack)
                 {
                     playerStats.DecreaseHPStamina(1.25f, 1.25f);
                     playerStats.hitStunValue -= 20;
@@ -96,7 +96,7 @@ public class PlayerCollision : MonoBehaviour
             #endregion
 
             // player is not in block action and get hit by enemy (Heavy attack)
-            if (enemyWeaponCollision.enemyActionType == EnemyAction.EnemyActionType.HeavyAttack &&
+            if (enemyWeaponCollision.enemyActionType == EnemyAction2.EnemyActionType.HeavyAttack &&
                collision.gameObject.GetComponent<Collider>().isTrigger == false &&
                player.GetComponent<PlayerAction>().isKeepBlocking == false &&
                !playerMovement.isDodging)
@@ -112,7 +112,7 @@ public class PlayerCollision : MonoBehaviour
             }
 
             // player is not in block action and get hit by enemy  (light attack)
-            else if (enemyWeaponCollision.enemyActionType == EnemyAction.EnemyActionType.LightAttack &&
+            else if (enemyWeaponCollision.enemyActionType == EnemyAction2.EnemyActionType.LightAttack &&
                      collision.gameObject.GetComponent<Collider>().isTrigger == false &&
                      player.GetComponent<PlayerAction>().isKeepBlocking == false &&
                      !playerMovement.isDodging)
@@ -132,7 +132,7 @@ public class PlayerCollision : MonoBehaviour
                 playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("A")) && 
                 player.GetComponent<PlayerAction>().isPerfectBlock == false &&
                 !playerMovement.isDodging &&
-                enemyWeaponCollision.enemyActionType == EnemyAction.EnemyActionType.HeavyAttack)
+                enemyWeaponCollision.enemyActionType == EnemyAction2.EnemyActionType.HeavyAttack)
             {
                 playerStats.DecreaseHPStamina(10, 10);  //  actual is 20
                 playerStats.readyToRestoreStaminaTime = 5.0f;
@@ -150,7 +150,7 @@ public class PlayerCollision : MonoBehaviour
                 player.GetComponent<PlayerAction>().isPerfectBlock == false &&
                 player.GetComponent<PlayerAction>().isKeepBlocking == true &&
                 !playerMovement.isDodging &&
-                enemyWeaponCollision.enemyActionType == EnemyAction.EnemyActionType.LightAttack)
+                enemyWeaponCollision.enemyActionType == EnemyAction2.EnemyActionType.LightAttack)
             {
                 playerStats.DecreaseHPStamina(5, 5);   //  actual is 10
                 playerStats.hitStunValue -= 10;
@@ -171,11 +171,11 @@ public class PlayerCollision : MonoBehaviour
 
             else if(playerAnimation._anim.GetCurrentAnimatorStateInfo(0).IsTag("GH"))
             {
-                if(enemyWeaponCollision.enemyActionType == EnemyAction.EnemyActionType.LightAttack)
+                if(enemyWeaponCollision.enemyActionType == EnemyAction2.EnemyActionType.LightAttack)
                 {
                     playerStats.DecreaseHPStamina(5, 5);   //  actual is 10
                 }
-                else if (enemyWeaponCollision.enemyActionType == EnemyAction.EnemyActionType.HeavyAttack)
+                else if (enemyWeaponCollision.enemyActionType == EnemyAction2.EnemyActionType.HeavyAttack)
                 {
                     playerStats.DecreaseHPStamina(10, 10);   //  actual is 20
                     playerStats.isHitStun = true;

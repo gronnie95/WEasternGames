@@ -25,8 +25,8 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        //HP = 100;
-        //stamina = 100;
+        HP = 100;
+        stamina = 100;
         maxStamina = stamina;
         restorePerSecond = maxStamina * 1 / 50;
         hpUI.SetMaxHP(HP);
