@@ -34,6 +34,17 @@ public class EnemyAnimation : MonoBehaviour
     }
 
     #region Enemy Attack Logic
+
+    public void OnAnimation_IsAttackComboActive()
+    {
+        collider.isTrigger = false;
+    }
+    
+    public void OnAnimation_IsAttackComboDeactivated()
+    {
+        collider.isTrigger = true;
+    }
+
     public void OnAnimation_IsHeavyAttackActive()
     {
         collider.isTrigger = false;

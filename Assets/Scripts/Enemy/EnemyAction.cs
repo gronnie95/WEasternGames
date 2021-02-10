@@ -10,6 +10,7 @@ public class EnemyAction : MonoBehaviour
         Idle,
         LightAttack,
         HeavyAttack,
+        ComboAttack,
         Block,
         PerfectBlockOnly,
     }

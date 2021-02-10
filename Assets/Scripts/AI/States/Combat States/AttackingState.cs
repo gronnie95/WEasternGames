@@ -8,7 +8,8 @@ using UnityEngine;
 enum CombatActionType
 {
     HeavyAttack,
-    LightAttack
+    LightAttack,
+    AttackCombo
 }
 
 public class AttackingState : State
@@ -33,6 +34,7 @@ public class AttackingState : State
 
     private static readonly int LightAttack = Animator.StringToHash("LightAttack");
     private static readonly int HeavyAttack = Animator.StringToHash("HeavyAttack");
+    private static readonly int AttackCombo = Animator.StringToHash("AttackCombo");
 
     #endregion
     
@@ -56,17 +58,21 @@ public class AttackingState : State
         
         if (isReadyNextATK)
         {
-            int action = Random.Range(0,2);
+            int action = Random.Range(0,3);
             _actionType = (CombatActionType) action;
 
             switch (_actionType)
             {
                 case CombatActionType.HeavyAttack:
                     // DoHeavyAttack();
-                    DoLightAttack();
+                    DoAttackCombo();
                     break;
                 case CombatActionType.LightAttack:
-                    DoLightAttack();
+                    //DoLightAttack();
+                    DoAttackCombo();
+                    break;
+                case CombatActionType.AttackCombo:
+                    DoAttackCombo();
                     break;
 
             }
@@ -109,7 +115,16 @@ public class AttackingState : State
         _anim.SetTrigger(HeavyAttack);
         _enemyAction.action = EnemyAction.EnemyActionType.HeavyAttack;
     }
-    
+
+    private void DoAttackCombo()
+    {
+        isReadyNextATK = false;
+        isCDOn = true;
+        AttackCD = AttackCDVal;
+        _anim.SetTrigger(AttackCombo);
+        _enemyAction.action = EnemyAction.EnemyActionType.ComboAttack;
+    }
+
     private void ResetAttackCD()
     {
         if (AttackCD > 0 && isCDOn)
