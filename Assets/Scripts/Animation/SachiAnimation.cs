@@ -60,6 +60,7 @@ public class SachiAnimation : MonoBehaviour
         _anim.SetBool("isFalling", playerJump.isFalling);
         _anim.SetBool("isGrounded", playerJump.isGrounded);
         _anim.SetBool("FallingToGround", playerJump.fallingToGround);
+        _anim.SetInteger("jumpTimes", playerJump.jumpTimes);
         #endregion
         #region Sprint
         _anim.SetBool("isSprinting", playerMovement.isSprinting);
