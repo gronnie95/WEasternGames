@@ -188,6 +188,7 @@ public class WeaponCollisionCopy : MonoBehaviour
                 collision.gameObject.GetComponentInParent<SwordEffectSpawner>().SpawnBigSwordClash();
                 this.GetComponent<Collider>().isTrigger = true;
             }
+            this.GetComponent<Collider>().isTrigger = true;
         }
     }
 }

@@ -24,7 +24,7 @@ public class EnemyWeaponCollisionCopy : MonoBehaviour
         
         if (collision.gameObject.tag == "PlayerWeapon")
         {
-            if (collision.transform.root.Find("Player").gameObject.GetComponent<PlayerAction>().isPerfectBlock == true && this.GetComponent<Collider>().isTrigger == false) //get player perfect block
+            if (collision.transform.root.gameObject.GetComponent<PlayerAction>().isPerfectBlock == true && this.GetComponent<Collider>().isTrigger == false) //get player perfect block
             {
                 enemy.GetComponent<EnemyAnimationCopy>()._anim.SetTrigger("getPlayerPerfectBlockImpact");
                 

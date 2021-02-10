@@ -97,4 +97,9 @@ public class EnemyAnimationCopy : MonoBehaviour
     {
 
     }
+
+    public void OnAnimation_isStunFinished()
+    {
+
+    }
 }
